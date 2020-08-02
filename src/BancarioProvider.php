@@ -24,6 +24,9 @@ class BancarioProvider extends ServiceProvider
 {
     use ConsoleTools;
 
+    public $packageName = 'bancario';
+    const pathVendor = 'sierratecnologia/bancario';
+
     public static $aliasProviders = [
         'Bancario' => \Bancario\Facades\Bancario::class,
     ];
@@ -97,19 +100,11 @@ class BancarioProvider extends ServiceProvider
             return;
         }
 
+
         /**
          * Bancario; Routes
          */
-        Route::group(
-            [
-                'namespace' => '\Bancario\Http\Controllers',
-                'prefix' => \Illuminate\Support\Facades\Config::get('application.routes.main', ''),
-                'as' => 'rica.',
-                // 'middleware' => 'rica',
-            ], function ($router) {
-                include __DIR__.'/../routes/web.php';
-            }
-        );
+        $this->loadRoutesForRiCa(__DIR__.'/../routes');
     }
 
     /**

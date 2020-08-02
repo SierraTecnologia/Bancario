@@ -5,7 +5,7 @@ namespace Population\Services;
 use Informate\Models\Refund;
 use SierraTecnologia\Crypto\Services\Crypto;
 use Illuminate\Support\Facades\Config;
-use Population\Repositories\PersonRepository;
+use Telefonica\Repositories\PersonRepository;
 
 class PersonService
 {

@@ -12,7 +12,8 @@ trait MakeEconomicActions
      */
     public function banks()
     {
-        return $this->morphToMany('Casa\Models\Finance\Bank', 'bankable');
+        return $this->morphMany('Bancario\Models\BankAccount', 'accountable');
+        // return $this->morphMany('Bancario\Models\Bank', 'bankable');
     }
     public function rendas()
     {

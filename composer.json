@@ -37,7 +37,7 @@
             ".discovery"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "Bancario\\": "src/"
         }
     },
     "autoload-dev": {
