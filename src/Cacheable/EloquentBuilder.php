@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-Bancario\Cacheable;
+namespace Bancario\Cacheable;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;

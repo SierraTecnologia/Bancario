@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-Bancario\Scopes;
+namespace Bancario\Scopes;
 
 use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Database\Eloquent\Builder;

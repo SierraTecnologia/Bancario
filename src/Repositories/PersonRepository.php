@@ -1,6 +1,6 @@
 <?php
 
-namespace Population\Repositories;
+namespace Bancario\Repositories;
 
 use Illuminate\Support\Facades\Schema;
 use Bancario\Models\Actors\Person;
