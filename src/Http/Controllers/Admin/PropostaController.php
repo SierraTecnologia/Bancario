@@ -1,25 +1,25 @@
 <?php
 
-namespace Bancario\Http\Controllers;
+namespace Bancario\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use Bancario\Models\Code\Project;
+use Casa\Models\Vendas\Proposta;
 use Yajra\Datatables\Datatables;
 use Facilitador\Exceptions\Exception;
 use Facilitador\Http\Controllers\Admin\Base;
 
-class ProjectController extends Base
+class PropostaController extends Base
 {
     /**
      * @var string
      */
-    protected $title = 'Projects';
-    protected $model = Project::class;
+    protected $title = 'Propostas';
+    protected $model = Proposta::class;
 
     /**
      * @var string
      */
-    protected $description = 'Listagem de Projects.';
+    protected $description = 'Listagem de Propostas.';
 
     /**
      * @var array
@@ -98,7 +98,7 @@ class ProjectController extends Base
     // {
     //     return $this->populateView(
     //         'admin.orders.index', [
-    //         'orders' => Project::orderBy('id', 'DESC')->simplePaginate(50),
+    //         'orders' => Proposta::orderBy('id', 'DESC')->simplePaginate(50),
     //         ]
     //     );
     // }
@@ -140,7 +140,7 @@ class ProjectController extends Base
     // public function index(Request $request)
     // {
     //     // if ($request->ajax()) {
-    //     //     $query = Project::with('user', 'operadora', 'collaborator', 'customer', 'money')->select('orders.*');
+    //     //     $query = Proposta::with('user', 'operadora', 'collaborator', 'customer', 'money')->select('orders.*');
 
     //     //     return Datatables::of($query)->addColumn('action', function ($order) {
     //     //         return '<a href="'.route('admin.orders.show',$order->id).'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-eye"></i> Show</a>';
@@ -148,7 +148,7 @@ class ProjectController extends Base
     //     //         return $order->created_at->format('h:m:s d/m/Y');
     //     //     })
     //     //     ->setRowClass(function ($order) {
-    //     //         return $order->status == Project::$STATUS_APPROVED ? 'alert-success' : 'alert-warning';
+    //     //         return $order->status == Proposta::$STATUS_APPROVED ? 'alert-success' : 'alert-warning';
     //     //     })
     //     //     ->setRowData([
     //     //         'id' => 'test',
@@ -166,9 +166,9 @@ class ProjectController extends Base
 
     //     if ($request->has('query') && !empty($request->input('query'))) {
     //         dd('oi');
-    //         $orders = Project::search($request->input('query'))->orderBy('id', 'DESC')->simplePaginate(50);
+    //         $orders = Proposta::search($request->input('query'))->orderBy('id', 'DESC')->simplePaginate(50);
     //     } else {
-    //         $orders = Project::orderBy('id', 'DESC')->simplePaginate(50);
+    //         $orders = Proposta::orderBy('id', 'DESC')->simplePaginate(50);
     //     }
     //     return view('admin.orders.index', compact('orders'));
     // }
@@ -196,7 +196,7 @@ class ProjectController extends Base
     //     'money'=> 'required|integer',
     //     'operadora' => 'required|integer'
     //   ]);
-    //   $order = new Project([
+    //   $order = new Proposta([
     //     'total' => $request->get('total'),
     //     'money'=> $request->get('money'),
     //     'operadora'=> $request->get('operadora')
@@ -213,7 +213,7 @@ class ProjectController extends Base
     //  */
     // public function show($id)
     // {
-    //     $order = Project::findOrFail($id);
+    //     $order = Proposta::findOrFail($id);
     //     return view('admin.orders.show', compact('order'));
     // }
     
@@ -226,7 +226,7 @@ class ProjectController extends Base
     //  */
     // public function edit($id)
     // {
-    //     $order = Project::find($id);
+    //     $order = Proposta::find($id);
 
     //     return view('admin.orders.edit', compact('order'));
     // }
@@ -246,7 +246,7 @@ class ProjectController extends Base
     //         'operadora' => 'required|integer'
     //     ]);
 
-    //     $order = Project::findOrFail($id);
+    //     $order = Proposta::findOrFail($id);
     //     $order->total = $request->get('total');
     //     $order->money = $request->get('money');
     //     $order->operadora = $request->get('operadora');
@@ -263,7 +263,7 @@ class ProjectController extends Base
     //  */
     // public function destroy($id)
     // {
-    //     $order = Project::findOrFail($id);
+    //     $order = Proposta::findOrFail($id);
     //     $order->delete();
 
     //     return redirect('/orders')->with('success', 'Stock has been deleted Successfully');

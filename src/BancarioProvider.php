@@ -51,23 +51,13 @@ class BancarioProvider extends ServiceProvider
         ],
         'Bancario' => [
             [
-                'text'        => 'Procurar',
-                'icon'        => 'fas fa-fw fa-search',
+                'text'        => 'Propostas',
+                'route'       => 'admin.bancario.propostas.index',
+                'icon'        => 'fas fa-fw fa-ship',
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
                 'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                 // 'access' => \App\Models\Role::$ADMIN
-            ],
-            'Procurar' => [
-                [
-                    'text'        => 'Projetos',
-                    'route'       => 'rica.bancario.projetos.index',
-                    'icon'        => 'fas fa-fw fa-ship',
-                    'icon_color'  => 'blue',
-                    'label_color' => 'success',
-                    'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                    // 'access' => \App\Models\Role::$ADMIN
-                ],
             ],
         ],
     ];
