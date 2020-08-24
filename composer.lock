@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "brick/math",
-            "version": "0.8.15",
+            "version": "0.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/math.git",
-                "reference": "9b08d412b9da9455b210459ff71414de7e6241cd"
+                "reference": "283a40c901101e66de7061bd359252c013dcc43c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/math/zipball/9b08d412b9da9455b210459ff71414de7e6241cd",
-                "reference": "9b08d412b9da9455b210459ff71414de7e6241cd",
+                "url": "https://api.github.com/repos/brick/math/zipball/283a40c901101e66de7061bd359252c013dcc43c",
+                "reference": "283a40c901101e66de7061bd359252c013dcc43c",
                 "shasum": ""
             },
             "require": {
@@ -56,7 +56,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-04-15T15:59:35+00:00"
+            "time": "2020-08-18T23:57:15+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -1301,20 +1301,20 @@
         },
         {
             "name": "ramsey/uuid",
-            "version": "4.1.0",
+            "version": "4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "988dbefc7878d0a35f12afb4df1f7dd0bd153c43"
+                "reference": "cd4032040a750077205918c86049aa0f43d22947"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/988dbefc7878d0a35f12afb4df1f7dd0bd153c43",
-                "reference": "988dbefc7878d0a35f12afb4df1f7dd0bd153c43",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/cd4032040a750077205918c86049aa0f43d22947",
+                "reference": "cd4032040a750077205918c86049aa0f43d22947",
                 "shasum": ""
             },
             "require": {
-                "brick/math": "^0.8",
+                "brick/math": "^0.8 || ^0.9",
                 "ext-json": "*",
                 "php": "^7.2 || ^8",
                 "ramsey/collection": "^1.0",
@@ -1384,7 +1384,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-07-28T16:51:01+00:00"
+            "time": "2020-08-18T17:17:46+00:00"
         },
         {
             "name": "ricardosierra/changelog",
@@ -1501,7 +1501,7 @@
             "dist": {
                 "type": "path",
                 "url": "/sierra/Dev/Libs/Crypto",
-                "reference": "449c37c4b332434b8aea46dba822c058386ecf52"
+                "reference": "2bcfcd9be07b4d14186b419bf6a212fe4f76e6d9"
             },
             "require": {
                 "illuminate/support": "^5.0|^6.0|^7.0|^8.0",
@@ -1568,7 +1568,7 @@
             "dist": {
                 "type": "path",
                 "url": "/sierra/Dev/Libs/Muleta",
-                "reference": "f4409a8536d60b2edc613a008b5f0f25b29ac235"
+                "reference": "a1bbfe2388eab7be56f39bb4550bfcb691f5fec2"
             },
             "require": {
                 "php": ">=7.0",
@@ -1650,7 +1650,7 @@
             "dist": {
                 "type": "path",
                 "url": "/sierra/Dev/Libs/PaymentLaravel",
-                "reference": "b450a092be0176d9b8aedd9097d5bee12cae55fa"
+                "reference": "43ea071f327cf408ff37d3b6005d276716b4cee8"
             },
             "require": {
                 "dompdf/dompdf": ">=0.8.0",
@@ -1726,7 +1726,7 @@
             "dist": {
                 "type": "path",
                 "url": "/sierra/Dev/Libs/Payment",
-                "reference": "ca7c7ff907150589f3e99254e7c81ca042aafaf2"
+                "reference": "44fb01007e63dad0de911037763a98b8122160c4"
             },
             "require": {
                 "ext-curl": "*",
@@ -1784,7 +1784,7 @@
             "dist": {
                 "type": "path",
                 "url": "/sierra/Dev/Libs/Telefonica",
-                "reference": "09fb9e0bad92b3d612639b88062e3bef29c1bb93"
+                "reference": "d7a549bb8b8ae6748b59c3ac8c78b06ca8814d64"
             },
             "require": {
                 "php": "^7.3.0",
