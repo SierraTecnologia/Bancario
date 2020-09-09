@@ -2,23 +2,22 @@
 
 namespace Bancario;
 
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\ServiceProvider;
-use Bancario\Services\BancarioService;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\View;
-
-use Log;
 use App;
-use Config;
-use Route;
-use Illuminate\Routing\Router;
-
-use Muleta\Traits\Providers\ConsoleTools;
-
 use Bancario\Facades\Bancario as BancarioFacade;
+use Bancario\Services\BancarioService;
+use Config;
 use Illuminate\Contracts\Events\Dispatcher;
 
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Routing\Router;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
+
+use Log;
+
+use Muleta\Traits\Providers\ConsoleTools;
+use Route;
 
 class BancarioProvider extends ServiceProvider
 {
@@ -47,6 +46,7 @@ class BancarioProvider extends ServiceProvider
             'icon' => 'fas fa-fw fa-search',
             'icon_color' => "blue",
             'label_color' => "success",
+            'section' => "master",
             'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
         ],
         'Bancario' => [
@@ -56,6 +56,7 @@ class BancarioProvider extends ServiceProvider
                 'icon'        => 'fas fa-fw fa-ship',
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
+                'section' => "master",
                 'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                 // 'access' => \App\Models\Role::$ADMIN
             ],
@@ -187,7 +188,6 @@ class BancarioProvider extends ServiceProvider
 
         $this->loadViews();
         $this->loadTranslations();
-
     }
 
     private function loadViews()
@@ -200,7 +200,6 @@ class BancarioProvider extends ServiceProvider
             $viewsPath => base_path('resources/views/vendor/bancario'),
             ], ['views',  'sitec', 'sitec-views']
         );
-
     }
     
     private function loadTranslations()
@@ -218,7 +217,7 @@ class BancarioProvider extends ServiceProvider
 
 
     /**
-     * 
+     *
      */
     private function loadLogger()
     {
@@ -230,5 +229,4 @@ class BancarioProvider extends ServiceProvider
             ]
         );
     }
-
 }
