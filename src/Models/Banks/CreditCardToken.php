@@ -4,7 +4,7 @@ namespace Bancario\Models\Banks;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Elasticquent\ElasticquentTrait;
+
 use Muleta\Traits\Models\EloquentGetTableNameTrait;
 
 use App\Logic\Integrations\Gateways\Mundipagg;

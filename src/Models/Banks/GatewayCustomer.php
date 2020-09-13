@@ -4,13 +4,13 @@ namespace Bancario\Models\Banks;
 
 use Illuminate\Database\Eloquent\Model;
 
-use Elasticquent\ElasticquentTrait;
+
 use Illuminate\Support\Facades\Hash;
 use Muleta\Traits\Models\EloquentGetTableNameTrait;
 
 class GatewayCustomer extends Model
 {
-    use ElasticquentTrait;
+    // use ElasticquentTrait;
     use EloquentGetTableNameTrait;
 
     protected static $organizationPerspective = true;

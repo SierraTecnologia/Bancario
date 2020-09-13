@@ -4,7 +4,7 @@ namespace Bancario\Models\Banks;
 
 use Illuminate\Database\Eloquent\Model;
 
-use Elasticquent\ElasticquentTrait;
+
 use BankDb\BankDb;
 use Carbon\Carbon;
 use BankDb\BankDbException;

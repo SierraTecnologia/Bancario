@@ -4,7 +4,7 @@ namespace Bancario\Models\Banks;
 
 use Illuminate\Database\Eloquent\Model;
 
-use Elasticquent\ElasticquentTrait;
+
 use Muleta\Traits\Models\EloquentGetTableNameTrait;
 
 class CreditCardBrand extends Model
