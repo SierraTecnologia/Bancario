@@ -138,7 +138,7 @@ class CreditCardToken extends Model
             );
         }
 
-        if ( !is_object($business)) {
+        if (!is_object($business)) {
             // @todo Gambiarra Sinistra, resolver depois
             Log::notice(
                 'Não deveria estar vindo sem ser um objeto!'.
@@ -185,7 +185,8 @@ class CreditCardToken extends Model
     /**
      * Add Novos campos do CArtão caso não existam!
      */
-    public function updateFromParams($params = []) {
+    public function updateFromParams($params = [])
+    {
 
         if (empty($params)) {
             return ;

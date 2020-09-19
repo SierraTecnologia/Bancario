@@ -73,9 +73,11 @@ class BancarioProvider extends ServiceProvider
         $this->registerDirectories();
 
         // COloquei no register pq nao tava reconhecendo as rotas para o adminlte
-        $this->app->booted(function () {
-            $this->routes();
-        });
+        $this->app->booted(
+            function () {
+                $this->routes();
+            }
+        );
 
         $this->loadLogger();
     }

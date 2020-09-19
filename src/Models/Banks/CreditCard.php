@@ -161,15 +161,15 @@ class CreditCard extends Model
             return $this->updateFromParams($params);
         }
 
-        if (!\Validate\Name::isSame($this->card_name, $params['card_name'])){
+        if (!\Validate\Name::isSame($this->card_name, $params['card_name'])) {
             return false;
         }
 
-        if (!\Validate\Birth::isSame($this->birth_date, $params['birth_date'])){
+        if (!\Validate\Birth::isSame($this->birth_date, $params['birth_date'])) {
             return false;
         }
 
-        if (!\Validate\Cpf::isSame($this->cpf, $params['cpf'])){
+        if (!\Validate\Cpf::isSame($this->cpf, $params['cpf'])) {
             return false;
         }
         
@@ -185,7 +185,7 @@ class CreditCard extends Model
     public function isBlock()
     {
         // Se estiver fora da data de validação 
-        if ($this->is_block != 0){
+        if ($this->is_block != 0) {
             return true;
         }
 
@@ -198,7 +198,7 @@ class CreditCard extends Model
     public function isVerify()
     {
         // Se estiver fora da data de validação 
-        if ($this->is_verify != 0){
+        if ($this->is_verify != 0) {
             return true;
         }
 
@@ -208,11 +208,11 @@ class CreditCard extends Model
 
     public function isValid()
     {
-        if ($this->isBlock()){
+        if ($this->isBlock()) {
             return false;
         }
         // Se estiver fora da data de validação 
-        if (!\Validate\CreditCard::expirationIsValid($this->exp_month, $this->exp_year)){
+        if (!\Validate\CreditCard::expirationIsValid($this->exp_month, $this->exp_year)) {
             return false;
         }
 
@@ -226,9 +226,12 @@ class CreditCard extends Model
         }
 
         try {
-            if ($holder = Customer::where([
+            if ($holder = Customer::where(
+                [
                 'cpf' => $this->cpf
-            ])->first()){
+                ]
+            )->first()
+            ) {
                 $this->holder_id = $holder->id;
             }
         } catch (BankDbException $e) {
@@ -249,12 +252,14 @@ class CreditCard extends Model
                 $bank_db = new BankDb();
                 $bank_info = $bank_db->getBankInfo($card_prefix);
 
-                $brand = CreditCardBrand::firstOrCreate([
+                $brand = CreditCardBrand::firstOrCreate(
+                    [
                     'is_unknown' => $bank_info->isUnknown(), // is bank unknown
                     'name' => $bank_info->getTitle(true),
                     'color' => $bank_info->getColor(),
                     'type' => $bank_info->getCardType()
-                ]);
+                    ]
+                );
                 $this->brand_name = $bank_info->getTitle(true);
 
                 $this->brand_id = $brand->id;
@@ -269,7 +274,8 @@ class CreditCard extends Model
     /**
      * Add Novos campos do CArtão caso não existam!
      */
-    public function updateFromParams($params = []) {
+    public function updateFromParams($params = [])
+    {
         $updated = false;
 
         if (empty($params)) {
