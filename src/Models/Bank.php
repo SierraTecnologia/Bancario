@@ -2,7 +2,7 @@
 
 namespace Bancario\Models;
 
-use Support\Models\Base;
+use Pedreiro\Models\Base;
 use Muleta\Traits\Models\ComplexRelationamentTrait;
 
 class Bank extends Base
