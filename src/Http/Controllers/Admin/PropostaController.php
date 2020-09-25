@@ -13,18 +13,18 @@ class PropostaController extends Base
     /**
      * @var string
      */
-    protected $title = 'Propostas';
-    protected $model = Proposta::class;
+    public $title = 'Propostas';
+    public $model = Proposta::class;
 
     /**
      * @var string
      */
-    protected $description = 'Listagem de Propostas.';
+    public $description = 'Listagem de Propostas.';
 
     /**
      * @var array
      */
-    protected $columns = [
+    public $columns = [
         'name' => 'getName',
     ];
 
