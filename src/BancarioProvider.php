@@ -22,65 +22,28 @@ use Route;
 class BancarioProvider extends ServiceProvider
 {
     use ConsoleTools;
-
-    public $packageName = 'bancario';
     const pathVendor = 'sierratecnologia/bancario';
 
-    public static $aliasProviders = [
+    /**
+     * @var Facades\Bancario::class[]
+     *
+     * @psalm-var array{Bancario: Facades\Bancario::class}
+     */
+    public static array $aliasProviders = [
         'Bancario' => \Bancario\Facades\Bancario::class,
     ];
 
-    public static $providers = [
+    /**
+     * @var \Support\SupportProviderService::class[]
+     *
+     * @psalm-var array{0: \Support\SupportProviderService::class}
+     */
+    public static array $providers = [
 
         \Support\SupportProviderService::class,
 
         
     ];
-
-    /**
-     * Rotas do Menu
-     */
-    public static $menuItens = [
-        [
-            'text' => 'Bancario',
-            'icon' => 'fas fa-fw fa-search',
-            'icon_color' => "blue",
-            'label_color' => "success",
-            'section' => "master",
-            'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        ],
-        'Bancario' => [
-            [
-                'text'        => 'Propostas',
-                'route'       => 'admin.bancario.propostas.index',
-                'icon'        => 'fas fa-fw fa-ship',
-                'icon_color'  => 'blue',
-                'label_color' => 'success',
-                'section' => "master",
-                'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                // 'access' => \App\Models\Role::$ADMIN
-            ],
-        ],
-    ];
-
-    /**
-     * Alias the services in the boot.
-     */
-    public function boot()
-    {
-        
-        // Register configs, migrations, etc
-        $this->registerDirectories();
-
-        // COloquei no register pq nao tava reconhecendo as rotas para o adminlte
-        $this->app->booted(
-            function () {
-                $this->routes();
-            }
-        );
-
-        $this->loadLogger();
-    }
 
     /**
      * Register the tool's routes.
@@ -159,7 +122,9 @@ class BancarioProvider extends ServiceProvider
     /**
      * Get the services provided by the provider.
      *
-     * @return array
+     * @return string[]
+     *
+     * @psalm-return array{0: string}
      */
     public function provides()
     {
@@ -192,7 +157,7 @@ class BancarioProvider extends ServiceProvider
         $this->loadTranslations();
     }
 
-    private function loadViews()
+    private function loadViews(): void
     {
         // View namespace
         $viewsPath = $this->getResourcesPath('views');
@@ -204,7 +169,7 @@ class BancarioProvider extends ServiceProvider
         );
     }
     
-    private function loadTranslations()
+    private function loadTranslations(): void
     {
         // Publish lanaguage files
         $this->publishes(
@@ -219,9 +184,9 @@ class BancarioProvider extends ServiceProvider
 
 
     /**
-     *
+     * @return void
      */
-    private function loadLogger()
+    private function loadLogger(): void
     {
         Config::set(
             'logging.channels.sitec-bancario', [

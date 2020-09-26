@@ -11,7 +11,10 @@ class Gateway extends Model
 {
     use EloquentGetTableNameTrait;
 
-    protected static $organizationPerspective = false;
+    /**
+     * @var false
+     */
+    protected static bool $organizationPerspective = false;
 
     /**
      * The attributes that are mass assignable.
@@ -26,7 +29,7 @@ class Gateway extends Model
     ];
     
 
-    public function processingFailedPayments()
+    public function processingFailedPayments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany('App\Models\Shopping\ProcessingFailedPayment');
     }

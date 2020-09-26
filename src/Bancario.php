@@ -22,13 +22,6 @@ class Bancario
     protected $version;
     protected $filesystem;
 
-    /**
-     * The current locale, cached in memory
-     *
-     * @var string
-     */
-    private $locale;
-
     public function __construct()
     {
         $this->filesystem = app(Filesystem::class);
@@ -36,11 +29,9 @@ class Bancario
         $this->findVersion();
     }
 
-    public function getVersion()
-    {
-        return $this->version;
-    }
-
+    /**
+     * @return void
+     */
     protected function findVersion()
     {
         if (!is_null($this->version)) {

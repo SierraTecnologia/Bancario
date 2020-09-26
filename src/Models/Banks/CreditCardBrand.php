@@ -12,7 +12,10 @@ class CreditCardBrand extends Model
     use EloquentGetTableNameTrait;
     // use ElasticquentTrait;
 
-    protected static $organizationPerspective = false;
+    /**
+     * @var false
+     */
+    protected static bool $organizationPerspective = false;
 
     /**
      * The attributes that are mass assignable.
@@ -26,7 +29,12 @@ class CreditCardBrand extends Model
         'is_unknown',
     ];
 
-    protected $mappingProperties = array(
+    /**
+     * @var string[][]
+     *
+     * @psalm-var array{name: array{type: string, analyzer: string}, color: array{type: string, analyzer: string}, type: array{type: string, analyzer: string}, is_unknown: array{type: string, analyzer: string}}
+     */
+    protected array $mappingProperties = array(
         'name' => [
           'type' => 'string',
           "analyzer" => "standard",
@@ -45,7 +53,7 @@ class CreditCardBrand extends Model
         ],
     );
 
-    public function creditCards()
+    public function creditCards(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany('Bancario\Models\Banks\CreditCard');
     }

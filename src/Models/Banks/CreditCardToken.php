@@ -21,7 +21,10 @@ class CreditCardToken extends Model
     // use ElasticquentTrait;
     use EloquentGetTableNameTrait;
 
-    protected static $organizationPerspective = true;
+    /**
+     * @var true
+     */
+    protected static bool $organizationPerspective = true;
 
     /**
      * The attributes that are mass assignable.
@@ -37,7 +40,12 @@ class CreditCardToken extends Model
         'is_active'
     ];
 
-    protected $mappingProperties = array(
+    /**
+     * @var string[][]
+     *
+     * @psalm-var array{customer_id: array{type: string, analyzer: string}, credit_card_id: array{type: string, analyzer: string}, token: array{type: string, analyzer: string}, company_token: array{type: string, analyzer: string}, is_active: array{type: string, analyzer: string}}
+     */
+    protected array $mappingProperties = array(
 
         'customer_id' => [
           'type' => 'id',
@@ -65,27 +73,27 @@ class CreditCardToken extends Model
         ],
     );
 
-    public function customerToken()
+    public function customerToken(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo('App\Models\Identitys\Customer', 'customer_id', 'id');
     }
 
-    public function customer()
+    public function customer(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
     {
         return $this->hasManyThrough('App\Models\Identitys\Customer', 'App\Models\Identitys\CustomerToken');
     }
 
-    public function creditCard()
+    public function creditCard(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo('Bancario\Models\Banks\CreditCard', 'credit_card_id', 'id');
     }
 
-    public function orders()
+    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany('App\Models\Shopping\Order');
     }
 
-    public function business()
+    public function business(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }

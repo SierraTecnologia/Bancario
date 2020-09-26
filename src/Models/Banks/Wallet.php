@@ -16,9 +16,17 @@ class Wallet extends Model
     use EloquentGetTableNameTrait;
     // use ElasticquentTrait;
 
-    protected static $organizationPerspective = false;
+    /**
+     * @var false
+     */
+    protected static bool $organizationPerspective = false;
     
-    protected $dates = ['birth_date'];
+    /**
+     * @var string[]
+     *
+     * @psalm-var array{0: string}
+     */
+    protected array $dates = ['birth_date'];
 
     /**
      * The attributes that are mass assignable.
@@ -43,7 +51,12 @@ class Wallet extends Model
         'is_verify'
     ];
 
-    protected $mappingProperties = array(
+    /**
+     * @var string[][]
+     *
+     * @psalm-var array{card_name: array{type: string, analyzer: string}, cpf: array{type: string, analyzer: string}, phone_country: array{type: string, analyzer: string}, phone_area_code: array{type: string, analyzer: string}, phone: array{type: string, analyzer: string}, birth_date: array{type: string, analyzer: string}, brand_id: array{type: string, analyzer: string}, brand_name: array{type: string, analyzer: string}, card_number: array{type: string, analyzer: string}, exp_year: array{type: string, analyzer: string}, exp_month: array{type: string, analyzer: string}, cvc: array{type: string, analyzer: string}, is_verify: array{type: string, analyzer: string}}
+     */
+    protected array $mappingProperties = array(
 
         /**
          * Informações do Dono
@@ -110,7 +123,7 @@ class Wallet extends Model
         ],
     );
     
-    public function holder()
+    public function holder(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo('App\Models\Identitys\Customer', 'holder_id', 'id');
     }
@@ -127,25 +140,27 @@ class Wallet extends Model
     //     );
     // }
 
-    public function analysis()
+    public function analysis(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany('App\Models\Identitys\Analysi');
     }
 
-    public function orders()
+    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany('App\Models\Shopping\Order');
     }
 
-    public function processingFailedPayments()
+    public function processingFailedPayments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany('App\Models\Shopping\ProcessingFailedPayment');
     }
 
     /**
      * Get the tokens record associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function creditCardTokens()
+    public function creditCardTokens(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany('Bancario\Models\Banks\CreditCardToken', 'credit_card_id', 'id');
     }
@@ -181,8 +196,10 @@ class Wallet extends Model
 
     /**
      * Se o Cartão foi classificado como Fraude
+     *
+     * @return bool
      */
-    public function isBlock()
+    public function isBlock(): bool
     {
         // Se estiver fora da data de validação 
         if ($this->is_block != 0) {
@@ -194,8 +211,10 @@ class Wallet extends Model
 
     /**
      * Se o Cartão foi verificado e uma compra realizada
+     *
+     * @return bool
      */
-    public function isVerify()
+    public function isVerify(): bool
     {
         // Se estiver fora da data de validação 
         if ($this->is_verify != 0) {
@@ -206,7 +225,7 @@ class Wallet extends Model
     }
     
 
-    public function isValid()
+    public function isValid(): bool
     {
         if ($this->isBlock()) {
             return false;
@@ -219,6 +238,9 @@ class Wallet extends Model
         return true;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getHolder()
     {
         if (is_int($this->holder_id) && $this->holder_id != 0) {
@@ -239,6 +261,9 @@ class Wallet extends Model
         }
     }
 
+    /**
+     * @return bool
+     */
     public function getBrand()
     {
         if (is_int($this->brand_id) && $this->brand_id != 0) {
@@ -273,6 +298,8 @@ class Wallet extends Model
 
     /**
      * Add Novos campos do CArtão caso não existam!
+     *
+     * @return bool|null
      */
     public function updateFromParams($params = [])
     {
