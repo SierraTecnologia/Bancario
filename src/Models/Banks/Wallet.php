@@ -2,13 +2,13 @@
 
 namespace Bancario\Models\Banks;
 
-use Illuminate\Database\Eloquent\Model;
-
-
 use BankDb\BankDb;
-use Carbon\Carbon;
+
+
 use BankDb\BankDbException;
+use Carbon\Carbon;
 use Exception;
+use Illuminate\Database\Eloquent\Model;
 use Muleta\Traits\Models\EloquentGetTableNameTrait;
 
 class Wallet extends Model
@@ -26,7 +26,7 @@ class Wallet extends Model
      *
      * @psalm-var array{0: string}
      */
-    protected array $dates = ['birth_date'];
+    protected $dates = ['birth_date'];
 
     /**
      * The attributes that are mass assignable.
@@ -56,7 +56,7 @@ class Wallet extends Model
      *
      * @psalm-var array{card_name: array{type: string, analyzer: string}, cpf: array{type: string, analyzer: string}, phone_country: array{type: string, analyzer: string}, phone_area_code: array{type: string, analyzer: string}, phone: array{type: string, analyzer: string}, birth_date: array{type: string, analyzer: string}, brand_id: array{type: string, analyzer: string}, brand_name: array{type: string, analyzer: string}, card_number: array{type: string, analyzer: string}, exp_year: array{type: string, analyzer: string}, exp_month: array{type: string, analyzer: string}, cvc: array{type: string, analyzer: string}, is_verify: array{type: string, analyzer: string}}
      */
-    protected array $mappingProperties = array(
+    protected $mappingProperties = array(
 
         /**
          * Informações do Dono
@@ -201,7 +201,7 @@ class Wallet extends Model
      */
     public function isBlock(): bool
     {
-        // Se estiver fora da data de validação 
+        // Se estiver fora da data de validação
         if ($this->is_block != 0) {
             return true;
         }
@@ -216,7 +216,7 @@ class Wallet extends Model
      */
     public function isVerify(): bool
     {
-        // Se estiver fora da data de validação 
+        // Se estiver fora da data de validação
         if ($this->is_verify != 0) {
             return true;
         }
@@ -230,7 +230,7 @@ class Wallet extends Model
         if ($this->isBlock()) {
             return false;
         }
-        // Se estiver fora da data de validação 
+        // Se estiver fora da data de validação
         if (!\Validate\CreditCard::expirationIsValid($this->exp_month, $this->exp_year)) {
             return false;
         }
