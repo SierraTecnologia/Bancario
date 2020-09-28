@@ -1,6 +1,6 @@
 <?php
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateCasaFinancesTables extends Migration
 {
@@ -12,22 +12,25 @@ class CreateCasaFinancesTables extends Migration
      */
     public function up()
     {
-
         Schema::create(
-            'transfers', function (Blueprint $table) {
+            'transfers',
+            function (Blueprint $table) {
                 $table->engine = 'InnoDB';
                 $table->increments('id')->unsigned();
-                $table->string('target', 255)->nullable();
+                // $table->string('target', 255)->nullable();
                 $table->string('money_code')->default('BRL');
                 $table->decimal('amount', 8, 2);
-                $table->string('transferable_id');
-                $table->string('transferable_type', 255);
+                $table->string('originable_id')->nullable();
+                $table->string('originable_type', 255)->nullable();
+                $table->string('transferable_id')->nullable();
+                $table->string('transferable_type', 255)->nullable();
                 $table->timestamps();
                 $table->softDeletes();
             }
         );
         Schema::create(
-            'rendas', function (Blueprint $table) {
+            'rendas',
+            function (Blueprint $table) {
                 $table->engine = 'InnoDB';
                 $table->increments('id')->unsigned();
                 $table->string('target', 255)->nullable();
@@ -43,7 +46,8 @@ class CreateCasaFinancesTables extends Migration
             }
         );
         Schema::create(
-            'gastos', function (Blueprint $table) {
+            'gastos',
+            function (Blueprint $table) {
                 $table->engine = 'InnoDB';
                 $table->increments('id')->unsigned();
                 $table->string('target', 255)->nullable();
@@ -70,7 +74,8 @@ class CreateCasaFinancesTables extends Migration
          */
 
         Schema::create(
-            'saldos', function (Blueprint $table) {
+            'saldos',
+            function (Blueprint $table) {
                 $table->engine = 'InnoDB';
                 $table->increments('id')->unsigned();
                 $table->string('description', 255)->nullable();
@@ -85,7 +90,6 @@ class CreateCasaFinancesTables extends Migration
                 $table->softDeletes();
             }
         );
-
     }
 
     /**
@@ -99,5 +103,4 @@ class CreateCasaFinancesTables extends Migration
         Schema::dropIfExists('rendas');
         Schema::dropIfExists('gastos');
     }
-
 }
