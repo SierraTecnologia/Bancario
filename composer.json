@@ -58,18 +58,6 @@
             "@php artisan key:generate --ansi"
         ]
     },
-        {
-            "type": "path",
-            "url": "/sierra/Dev/Libs/**",
-            "options": {
-                "symlink": true
-            }
-        },
-        {
-            "type": "vcs",
-            "url":  "git@github.com:botman/studio-addons.git"
-        }
-    ],
     "extra": {
         "laravel": {
             "dont-discover": [
