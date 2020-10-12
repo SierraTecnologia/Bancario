@@ -2,11 +2,11 @@
 
 namespace Bancario\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use Casa\Models\Vendas\Proposta;
+use Illuminate\Http\Request;
+use Pedreiro\Exceptions\Exception;
+use Pedreiro\Http\Controllers\Admin\Base;
 use Yajra\Datatables\Datatables;
-use Facilitador\Exceptions\Exception;
-use Facilitador\Http\Controllers\Admin\Base;
 
 class PropostaController extends Base
 {
