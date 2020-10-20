@@ -226,7 +226,7 @@ class BancarioProvider extends ServiceProvider
         Config::set(
             'logging.channels.sitec-bancario', [
             'driver' => 'single',
-            'path' => storage_path('logs'.DIRECTORY_SEPARACTOR.'sitec-bancario.log'),
+            'path' => storage_path('logs'.DIRECTORY_SEPARATOR.'sitec-bancario.log'),
             'level' => env('APP_LOG_LEVEL', 'debug'),
             ]
         );
