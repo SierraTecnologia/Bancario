@@ -97,7 +97,7 @@ class BancarioProvider extends ServiceProvider
         /**
          * Bancario; Routes
          */
-        $this->loadRoutesForRiCa(__DIR__.'/../routes');
+        $this->loadRoutesForRiCa(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'routes');
     }
 
     /**
@@ -105,7 +105,7 @@ class BancarioProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom($this->getPublishesPath('config/sitec/bancario.php'), 'sitec.bancario');
+        $this->mergeConfigFrom($this->getPublishesPath('config'.DIRECTORY_SEPARATOR.'sitec'.DIRECTORY_SEPARATOR.'bancario.php'), 'sitec.bancario');
         
 
         $this->setProviders();
@@ -114,7 +114,7 @@ class BancarioProvider extends ServiceProvider
 
 
         // Register Migrations
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations');
 
         $this->app->singleton(
             'bancario', function () {
@@ -179,7 +179,7 @@ class BancarioProvider extends ServiceProvider
         $this->publishes(
             [
             // Paths
-            $this->getPublishesPath('config/sitec') => config_path('sitec'),
+            $this->getPublishesPath('config'.DIRECTORY_SEPARATOR.'sitec') => config_path('sitec'),
             ], ['config',  'sitec', 'sitec-config']
         );
 
@@ -199,7 +199,7 @@ class BancarioProvider extends ServiceProvider
         $this->loadViewsFrom($viewsPath, 'bancario');
         $this->publishes(
             [
-            $viewsPath => base_path('resources/views/vendor/bancario'),
+            $viewsPath => base_path('resources'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'bancario'),
             ], ['views',  'sitec', 'sitec-views']
         );
     }
@@ -209,7 +209,7 @@ class BancarioProvider extends ServiceProvider
         // Publish lanaguage files
         $this->publishes(
             [
-            $this->getResourcesPath('lang') => resource_path('lang/vendor/bancario')
+            $this->getResourcesPath('lang') => resource_path('lang'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'bancario')
             ], ['lang',  'sitec', 'sitec-lang', 'translations']
         );
 
@@ -226,7 +226,7 @@ class BancarioProvider extends ServiceProvider
         Config::set(
             'logging.channels.sitec-bancario', [
             'driver' => 'single',
-            'path' => storage_path('logs/sitec-bancario.log'),
+            'path' => storage_path('logs'.DIRECTORY_SEPARATOR.'sitec-bancario.log'),
             'level' => env('APP_LOG_LEVEL', 'debug'),
             ]
         );
