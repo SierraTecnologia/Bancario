@@ -165,7 +165,6 @@ class PropostaController extends Base
     //     // return $dataTable->render('orders.index');
 
     //     if ($request->has('query') && !empty($request->input('query'))) {
-    //         dd('oi');
     //         $orders = Proposta::search($request->input('query'))->orderBy('id', 'DESC')->simplePaginate(50);
     //     } else {
     //         $orders = Proposta::orderBy('id', 'DESC')->simplePaginate(50);
