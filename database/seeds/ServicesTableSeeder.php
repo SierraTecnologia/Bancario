@@ -2,7 +2,7 @@
 
 use App\Models\Identitys\Collaborator;
 
-use App\Models\Role;
+use Porteiro\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 

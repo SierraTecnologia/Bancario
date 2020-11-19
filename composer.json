@@ -29,7 +29,7 @@
         "php": "^7.4",
         "sierratecnologia/muleta": "^0.4.0",
         "sierratecnologia/crypto": "^0.4.0",
-        "sierratecnologia/payment-laravel": "^0.4.0"
+        "sierratecnologia/payment-laravel": "^0.3.0 | ^0.4.0"
     },
     "autoload": {
         "classmap": [
