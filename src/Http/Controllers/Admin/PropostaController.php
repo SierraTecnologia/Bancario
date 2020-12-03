@@ -177,7 +177,7 @@ class PropostaController extends Base
     //  *
     //  * @return \Illuminate\Http\Response
     //  */
-    // public function create()
+    // public function create(Request $request)
     // {
     //     return view('admin.orders.create');
     // }
