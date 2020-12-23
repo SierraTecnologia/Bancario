@@ -47,7 +47,7 @@ class BancarioProvider extends ServiceProvider
             'icon_color' => "blue",
             'label_color' => "success",
             'section' => "master",
-            'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+            'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
         ],
         'Bancario' => [
             [
@@ -57,7 +57,7 @@ class BancarioProvider extends ServiceProvider
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
                 'section' => "master",
-                'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                 // 'access' => \Porteiro\Models\Role::$ADMIN
             ],
         ],
