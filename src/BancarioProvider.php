@@ -51,6 +51,16 @@ class BancarioProvider extends ServiceProvider
         ],
         'Bancario' => [
             [
+                'text'        => 'Bancos',
+                'route'       => 'master.bancario.banks.index',
+                'icon'        => 'fas fa-fw fa-ship',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section' => "master",
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                // 'access' => \Porteiro\Models\Role::$ADMIN
+            ],
+            [
                 'text'        => 'Propostas',
                 'route'       => 'admin.bancario.propostas.index',
                 'icon'        => 'fas fa-fw fa-ship',

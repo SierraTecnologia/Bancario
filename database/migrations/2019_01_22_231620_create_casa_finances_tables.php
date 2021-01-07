@@ -20,6 +20,8 @@ class CreateCasaFinancesTables extends Migration
                 $table->string('target', 255)->nullable();
                 $table->string('money_code')->default('BRL');
                 $table->decimal('amount', 8, 2);
+                $table->string('date', 30)->nullable();
+                $table->string('payment_type_id', 255)->nullable(); // @todo
                 $table->string('transferable_id');
                 $table->string('transferable_type', 255);
                 $table->timestamps();
@@ -35,6 +37,8 @@ class CreateCasaFinancesTables extends Migration
                 $table->decimal('value');
                 $table->string('init', 30)->nullable();
                 $table->string('end', 30)->nullable();
+                $table->string('date', 30)->nullable();
+                $table->string('payment_type_id', 255)->nullable(); // @todo
                 $table->string('rendable_id')->nullable();
                 $table->string('rendable_type', 255)->nullable();
                 $table->string('obs', 255)->nullable();
@@ -77,6 +81,7 @@ class CreateCasaFinancesTables extends Migration
                 $table->decimal('value');
                 $table->string('date', 30)->nullable();
                 $table->string('local_id', 255)->nullable(); // @todo
+                $table->string('payment_type_id')->nullable();
                 $table->string('saldoable_id')->nullable();
                 $table->string('saldoable_type', 255)->nullable();
 
