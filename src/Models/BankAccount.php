@@ -18,6 +18,8 @@ class BankAccount extends Base
         'name',
         'agencia',
         'conta',
+        'password_id',
+        'obs',
     ];
 
     protected $mappingProperties = array(
