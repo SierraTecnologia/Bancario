@@ -47,8 +47,10 @@ class CreateMercadoEmpresasTables extends Migration
                 $table->string('name', 255)->nullable();
                 $table->string('agencia', 255)->nullable();
                 $table->string('conta', 255)->nullable();
-                $table->string('accountable_id');
-                $table->string('accountable_type', 255);
+                $table->string('proprietário', 255)->nullable();
+                $table->string('type', 255)->default('pf');
+                $table->string('accountable_id')->nullable();
+                $table->string('accountable_type', 255)->nullable();
 
                 $table->unsignedInteger('bank_id')->nullable();
                 $table->foreign('bank_id')->references('id')->on('banks');

@@ -4,6 +4,7 @@ namespace Bancario\Models;
 
 use Pedreiro\Models\Base;
 use Muleta\Traits\Models\ComplexRelationamentTrait;
+use Telefonica\Models\Digital\Password;
 
 class BankAccount extends Base
 {
@@ -47,5 +48,12 @@ class BankAccount extends Base
     public function accountable()
     {
         return $this->morphTo();
+    }
+    /**
+     * Get all of the passwords for the post.
+     */
+    public function passwords()
+    {
+        return $this->morphToMany(Password::class, 'passwordable');
     }
 }
