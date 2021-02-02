@@ -32,7 +32,7 @@ class BancarioProvider extends ServiceProvider
 
     public static $providers = [
 
-        \Support\SupportProviderService::class,
+        // \Support\SupportProviderService::class,
 
         
     ];
