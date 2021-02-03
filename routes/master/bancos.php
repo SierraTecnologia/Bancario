@@ -1,5 +1,5 @@
 <?php
 
-Route::resource('/banks', 'BankController')->parameters([
-    'banks' => 'id'
+Route::resource('/bankAccounts', 'BankAccountController')->parameters([
+    'bankAccounts' => 'id'
 ]);

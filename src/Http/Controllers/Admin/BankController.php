@@ -1,6 +1,6 @@
 <?php
 
-namespace Bancario\Http\Controllers\Master;
+namespace Bancario\Http\Controllers\Admin;
 
 use Bancario\Models\Bank;
 use Pedreiro\CrudController;

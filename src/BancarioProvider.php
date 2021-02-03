@@ -51,10 +51,33 @@ class BancarioProvider extends ServiceProvider
             'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
             'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
         ],
-        'Bancario' => [
+        [
+            'text' => 'Universo',
+            'icon' => 'fas fa-fw fa-search',
+            'icon_color' => "blue",
+            'label_color' => "success",
+            'section' => "admin",
+            'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+            'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        ],
+        'Universo' => [
             [
                 'text'        => 'Bancos',
-                'route'       => 'master.bancario.banks.index',
+                'route'       => 'admin.bancario.banks.index',
+                'icon'        => 'fas fa-fw fa-ship',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section' => "admin",
+                'feature' => 'bancario',
+                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                // 'access' => \Porteiro\Models\Role::$ADMIN
+            ],
+        ],
+        'Bancario' => [
+            [
+                'text'        => 'Contas Bancarias',
+                'route'       => 'master.bancario.bankAccounts.index',
                 'icon'        => 'fas fa-fw fa-ship',
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
