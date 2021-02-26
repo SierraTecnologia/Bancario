@@ -73,6 +73,18 @@ class BancarioProvider extends ServiceProvider
                 'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                 // 'access' => \Porteiro\Models\Role::$ADMIN
             ],
+            [
+                'text'        => 'Moneys',
+                'route'       => 'admin.bancario.moneys.index',
+                'icon'        => 'fas fa-fw fa-ship',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section' => "admin",
+                'feature' => 'bancario',
+                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                // 'access' => \Porteiro\Models\Role::$ADMIN
+            ],
         ],
         'Bancario' => [
             [

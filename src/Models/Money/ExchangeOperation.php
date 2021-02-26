@@ -1,6 +1,6 @@
 <?php
 /**
- * Armazena os tipos de pagamentos que fazem com cada moeda e suas taxas
+ * Armazena os tipos de pagamentos que fazem com cada moeda e suas taxas @todo
  */
 
 namespace Bancario\Models\Money;
