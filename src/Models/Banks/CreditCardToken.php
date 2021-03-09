@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
 use Muleta\Traits\Models\EloquentGetTableNameTrait;
+use Muleta\Traits\ManipuleTokenTrait;
 
 use App\Logic\Integrations\Gateways\Mundipagg;
 use Illuminate\Support\Facades\Log;
@@ -19,7 +20,7 @@ use App\Http\Requests\CreditCardRequest;
 class CreditCardToken extends Model
 {
     // use ElasticquentTrait;
-    use EloquentGetTableNameTrait;
+    use EloquentGetTableNameTrait, ManipuleTokenTrait;
 
     protected static $organizationPerspective = true;
 
