@@ -75,7 +75,7 @@ class BancarioProvider extends ServiceProvider
                 // 'access' => \Porteiro\Models\Role::$ADMIN
             ],
             [
-                'text'        => 'Moneys',
+                'text'        => 'Moedas',
                 'route'       => 'admin.bancario.moneys.index',
                 'icon'        => 'fas fa-fw fa-ship',
                 'icon_color'  => 'blue',

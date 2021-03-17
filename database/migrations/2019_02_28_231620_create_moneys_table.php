@@ -96,6 +96,14 @@ class CreateMoneysTable extends Migration
                 'status' => 1
             ]
         );
+        Money::firstOrCreate(
+            [
+                'code' => 'USDT',
+                'name' => 'Dolar Tether',
+                'symbol' => 'USDT',
+                'status' => 1
+            ]
+        );
     }
 
 }
