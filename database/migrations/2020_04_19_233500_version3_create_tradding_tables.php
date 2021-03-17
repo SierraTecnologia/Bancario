@@ -12,51 +12,20 @@ class Version3CreateTraddingTables extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('exchanges', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->string('name', 50)->nullable()->unique('name');
-			$table->boolean('ccxt')->nullable()->default(0);
-			$table->boolean('coinigy')->nullable()->default(0)->index('coinigy');
-			$table->integer('coinigy_id')->nullable();
-			$table->string('coinigy_exch_code', 10)->nullable()->index('coinigy_exch_code');
-			$table->float('coinigy_exch_fee', 10, 0)->nullable();
-			$table->boolean('coinigy_trade_enabled')->nullable()->default(0)->index('trade_enabled');
-			$table->boolean('coinigy_balance_enabled')->nullable()->default(0)->index('balance_enabled');
-			$table->boolean('hasFetchTickers')->nullable()->default(0);
-			$table->boolean('hasFetchOHLCV')->nullable()->default(0);
-			$table->integer('use')->nullable()->default(0);
-			$table->text('data', 65535)->nullable();
-			$table->string('url', 200)->nullable();
-			$table->string('url_api', 200)->nullable();
-			$table->string('url_doc', 200)->nullable();
-			$table->timestamps();
-			$table->softDeletes();
-		});
-		Schema::create('popular_exchanges', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->integer('exchange_id')->unsigned();
-			$table->boolean('public_api')->nullable()->default(0);
-			$table->boolean('coinigy')->nullable()->default(0);
-			$table->boolean('ccxt')->nullable()->default(0);
-			$table->string('link')->nullable();
-			$table->text('about', 65535)->nullable();
-
-
-            $table->foreign('exchange_id')->references('id')->on('exchanges');
-			$table->timestamps();
-			$table->softDeletes();
-		});
-
 
 		Schema::create('configs', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->integer('trader_id')->unsigned();
 			$table->string('item', 80)->nullable()->index('item');
 			$table->string('value', 1500)->nullable();
-			$table->integer('exchange_id')->unsigned();
-            $table->foreign('exchange_id')->references('id')->on('exchanges');
+
+            $table->foreign('trader_id')->references('id')->on('traders');
+
+
+			$table->unique(['trader_id','item'], 'trader_item_config');
+			// $table->integer('exchange_id')->unsigned();
+            // $table->foreign('exchange_id')->references('id')->on('exchanges');
 			$table->timestamps();
 			$table->softDeletes();
         });
@@ -64,7 +33,7 @@ class Version3CreateTraddingTables extends Migration {
 		Schema::create('exchange_accounts', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('auth_id')->nullable()->index('auth_id');
+			$table->integer('trader_id')->unsigned();
 			$table->integer('exchange_id')->unsigned();
 			$table->string('auth_key')->unique();
 			$table->string('auth_secret')->nullable();
@@ -75,7 +44,7 @@ class Version3CreateTraddingTables extends Migration {
 			$table->boolean('auth_trade')->nullable();
 			$table->boolean('exch_trade_enabled')->nullable();
 
-
+            $table->foreign('trader_id')->references('id')->on('traders');
             $table->foreign('exchange_id')->references('id')->on('exchanges');
 			$table->timestamps();
 			$table->softDeletes();
@@ -94,7 +63,7 @@ class Version3CreateTraddingTables extends Migration {
 		Schema::create('exchange_balances', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('auth_id')->nullable()->index('auth_id1');
+			$table->integer('trader_id')->unsigned();
 			$table->integer('exchange_id')->unsigned();
             $table->string('money_code');
             $table->foreign('money_code')->references('code')->on('moneys');
@@ -104,6 +73,7 @@ class Version3CreateTraddingTables extends Migration {
 			$table->float('btc_balance', 10, 0)->nullable();
 			$table->float('last_price', 10, 0)->nullable();
 
+            $table->foreign('trader_id')->references('id')->on('traders');
             $table->foreign('exchange_id')->references('id')->on('exchanges');
 			$table->timestamps();
 			$table->softDeletes();
@@ -188,7 +158,6 @@ class Version3CreateTraddingTables extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('popular_exchanges');
 		Schema::drop('tickers');
 		Schema::drop('ohlcvs');
 		Schema::drop('exchange_pairs');
@@ -196,7 +165,6 @@ class Version3CreateTraddingTables extends Migration {
 		Schema::drop('exchange_addresses');
 		Schema::drop('exchange_accounts');
 		Schema::drop('configs');
-		Schema::drop('exchanges');
 	}
 
 }

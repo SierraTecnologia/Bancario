@@ -6,6 +6,7 @@
 namespace Bancario\Models\Tradding;
 
 use Pedreiro\Models\Base;
+use Illuminate\Support\Str;
 
 class ExchangeAccount extends Base
 {
@@ -15,14 +16,15 @@ class ExchangeAccount extends Base
 
     protected $table = 'exchange_accounts';
 
+    public $api = false;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'auth_id',
-        'exch_name',
+        'trader_id',
         'exchange_id',
         'auth_key',
         'auth_secret',
@@ -44,8 +46,8 @@ class ExchangeAccount extends Base
         //     'relationship' => 'exchange'
         // ],
         [
-            'name' => 'auth_id',
-            'label' => 'auth_id',
+            'name' => 'trader_id',
+            'label' => 'trader_id',
             'type' => 'text'
         ],
         [
@@ -136,5 +138,70 @@ class ExchangeAccount extends Base
     public function exchange()
     {
         return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_id', 'id');
+    }
+
+    /**
+     * Brincando com a Api
+     */
+    public function getApi()
+    {
+        if (!$this->api) {
+            // @todo Mudar de acordo com a corretora
+            $this->api = new \Bancario\Util\Integrations\Exchanges\Binance(
+                $this->auth_key,
+                $this->auth_secret
+            );
+        }
+        return $this->api;
+    }
+
+    public function getBalances()
+    {
+        return $this->getApi()->getBalances();
+    }
+
+    public function getPrice($symbol)
+    {
+        $price = $this->getApi()->getPrice($symbol);
+
+        $time = time();
+        \Bancario\Models\Tradding\TraddingHistory::updateOrCreate(
+            [
+                'exchange_id' => $this->exchange_id,
+                'symbol' => $symbol,
+                'time' => $time
+            ],
+            [
+                'exchange_id' => $this->exchange_id,
+                'symbol' => $symbol,
+                'time' => $time,
+                'price' => $price
+            ]
+        );
+
+        return $price;
+    }
+
+    public function getCandlesticks($symbol, $candleSize)
+    {
+        $ticks = $this->getApi()->getCandlesticks($symbol, $candleSize);
+        foreach ($ticks as $tick) {
+            $arrayNew = [];
+            $arrayNew['exchange_id'] = $this->exchange_id;
+            $arrayNew['period'] = $candleSize;
+            $arrayNew['symbol'] = $symbol;
+            foreach ($tick as $indice=>$value) {
+                $arrayNew[Str::snake($indice)] = $value;
+            }
+            \Bancario\Models\Tradding\Ticker::updateOrCreate(
+                [
+                    'exchange_id' => $arrayNew['exchange_id'],
+                    'period' => $candleSize,
+                    'symbol' => $arrayNew['symbol'],
+                    'close_time' => $arrayNew['close_time']],
+                $arrayNew
+            );
+        }
+        return $ticks;
     }
 }

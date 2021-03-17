@@ -21,6 +21,7 @@ final class WalletEntity extends AbstractEntity
     // private $description;
     private $balance;
     private $money;
+    private $trader;
     // private $createdAt;
     // private $updatedAt;
     // private $publishedAt;
@@ -37,7 +38,8 @@ final class WalletEntity extends AbstractEntity
         }
         // $this->setCreatedByUserId($attributes['created_by_user_id'] ?? null);
         $this->setBalance($attributes['balance'] ?? null);
-        $this->setMoney(new MoneyEntity($attributes['money'] ?? null));
+        $this->setMoney(new MoneyEntity($attributes['money'] ?? []));
+        $this->setTrader(new TraderEntity($attributes['trader'] ?? []));
         // $this->setExchangeAccounts(
         //     collect($attributes['exchangeAccounts'])->map(
         //         function (array $attributes) {
@@ -50,6 +52,7 @@ final class WalletEntity extends AbstractEntity
         // $this->setPublishedAt(isset($attributes['published_at']) ? new Carbon($attributes['published_at']) : null);
 
         $this->eloquent = \Bancario\Models\Tradding\ExchangeBalance::firstOrCreate([
+            'trader_id' => $this->trader->getId(),
             'money_code' => $this->money->getCode(),
             'exchange_id' => 6
         ]);
@@ -70,6 +73,7 @@ final class WalletEntity extends AbstractEntity
             'id' => $this->getId(),
             'balance' => $this->getBalance(),
             'money' => $this->getMoney()->toArray(),
+            'trader' => $this->getTrader()->toArray(),
             // 'exchangeAccounts' => $this->setExchangeAccounts()->toArray(),
             // 'created_by_user_id' => $this->getCreatedByUserId(),
             // 'created_at' => $this->getCreatedAt() ? $this->getCreatedAt()->toAtomString() : null,
@@ -169,6 +173,24 @@ final class WalletEntity extends AbstractEntity
     public function getMoney(): MoneyEntity
     {
         return $this->money;
+    }
+    /**
+     * @param  TraderEntity $money
+     * @return $this
+     */
+    private function setTrader(TraderEntity $trader): WalletEntity
+    {
+        $this->trader = $trader;
+
+        return $this;
+    }
+
+    /**
+     * @return TraderEntity
+     */
+    public function getTrader(): TraderEntity
+    {
+        return $this->trader;
     }
 
     // /**

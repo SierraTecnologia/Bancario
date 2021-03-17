@@ -5,16 +5,16 @@
 
 namespace Bancario\Models\Tradding;
 
-use Fabrica\Tools\Ssh;
 use Pedreiro\Models\Base;
 
-class ExchangeBalance extends Base
+class TraderTimeline extends Base
 {
-    public static $apresentationName = 'Balanço nas Exchanges';
+    public static $apresentationName = 'Timeline do Trader';
 
     protected $organizationPerspective = true;
 
-    protected $table = 'exchange_balances';
+    protected $table = 'trader_timelines';
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -23,29 +23,14 @@ class ExchangeBalance extends Base
      */
     protected $fillable = [
         'trader_id',
-        'exchange_id',
-        'money_code',
-        'balance_amount_avail',
-        'balance_amount_held',
-        'balance',
-        'btc_balance',
-        'last_price',
+        'symbol',
+        'data',
+        'time',
     ];
 
 
     
     public $formFields = [
-        // [
-        //     'name' => 'exchange_id',
-        //     'label' => 'Exchange',
-        //     'type' => 'select',
-        //     'relationship' => 'exchange'
-        // ],
-        [
-            'name' => 'trader_id',
-            'label' => 'trader_id',
-            'type' => 'text'
-        ],
         [
             'name' => 'exchange_id',
             'label' => 'Exchange',
@@ -53,35 +38,19 @@ class ExchangeBalance extends Base
             'relationship' => 'exchange'
         ],
         [
-            'name' => 'money_code',
-            'label' => 'Money',
-            'type' => 'select',
-            'relationship' => 'money'
+            'name' => 'symbol',
+            'label' => 'symbol',
+            'type' => 'text'
         ],
         [
-            'name' => 'balance_amount_avail',
-            'label' => 'balance_amount_avail',
+            'name' => 'price',
+            'label' => 'price',
             'type' => 'float'
         ],
         [
-            'name' => 'balance_amount_held',
-            'label' => 'balance_amount_held',
-            'type' => 'float'
-        ],
-        [
-            'name' => 'balance',
-            'label' => 'balance',
-            'type' => 'float'
-        ],
-        [
-            'name' => 'btc_balance',
-            'label' => 'btc_balance',
-            'type' => 'float'
-        ],
-        [
-            'name' => 'last_price',
-            'label' => 'last_price',
-            'type' => 'float'
+            'name' => 'time',
+            'label' => 'time',
+            'type' => 'timestamp'
         ],
         // [
         //     'name' => 'status',
@@ -94,14 +63,10 @@ class ExchangeBalance extends Base
     ];
 
     public $indexFields = [
-        'trader_id',
         'exchange_id',
-        'money_code',
-        'balance_amount_avail',
-        'balance_amount_held',
-        'balance',
-        'btc_balance',
-        'last_price',
+        'symbol',
+        'price',
+        'time',
     ];
 
     public $validationRules = [
@@ -124,10 +89,5 @@ class ExchangeBalance extends Base
     public function exchange()
     {
         return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_id', 'id');
-    }
-
-    public function money()
-    {
-        return $this->belongsTo(\Bancario\Models\Money\Money::class, 'money_id', 'id');
     }
 }

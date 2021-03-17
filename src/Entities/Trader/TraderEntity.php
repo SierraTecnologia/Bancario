@@ -37,13 +37,15 @@ final class TraderEntity extends AbstractEntity
         // $this->setCreatedByUserId($attributes['created_by_user_id'] ?? null);
         // $this->setDescription($attributes['description'] ?? null);
         // $this->setPhoto(new PhotoEntity($attributes['photo'] ?? null));
-        $this->setExchangeAccounts(
-            collect($attributes['exchange_accounts'])->map(
-                function (array $attributes) {
-                    return new ExchangeAccountEntity($attributes);
-                }
-            )
-        );
+        if (isset($attributes['exchange_accounts']) && !empty($attributes['exchange_accounts'])){
+            $this->setExchangeAccounts(
+                collect($attributes['exchange_accounts'])->map(
+                    function (array $attributes) {
+                        return new ExchangeAccountEntity($attributes);
+                    }
+                )
+            );
+        }
         // $this->setCreatedAt(isset($attributes['created_at']) ? new Carbon($attributes['created_at']) : null);
         // $this->setUpdatedAt(isset($attributes['updated_at']) ? new Carbon($attributes['updated_at']) : null);
         // $this->setPublishedAt(isset($attributes['published_at']) ? new Carbon($attributes['published_at']) : null);
