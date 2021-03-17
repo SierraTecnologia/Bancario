@@ -49,24 +49,20 @@ class ExchangeAccount extends Base
             'type' => 'text'
         ],
         [
-            'name' => 'exch_name',
-            'label' => 'exch_name',
-            'type' => 'text'
-        ],
-        [
             'name' => 'exchange_id',
-            'label' => 'exchange_id',
-            'type' => 'text'
+            'label' => 'Exchange',
+            'type' => 'select',
+            'relationship' => 'exchange'
         ],
         [
             'name' => 'auth_key',
             'label' => 'auth_key',
-            'type' => 'float'
+            'type' => 'text'
         ],
         [
             'name' => 'auth_secret',
             'label' => 'auth_secret',
-            'type' => 'float'
+            'type' => 'text'
         ],
         [
             'name' => 'auth_optional1',
@@ -110,10 +106,8 @@ class ExchangeAccount extends Base
 
     public $indexFields = [
         'auth_id',
-        'exch_name',
         'exchange_id',
         'auth_key',
-        'auth_secret',
         'auth_optional1',
         'auth_nickname',
         'auth_updated',
