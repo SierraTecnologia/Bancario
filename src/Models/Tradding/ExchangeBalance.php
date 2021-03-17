@@ -10,7 +10,7 @@ use Pedreiro\Models\Base;
 
 class ExchangeBalance extends Base
 {
-    public static $apresentationName = 'Contas de Exchanges';
+    public static $apresentationName = 'Balanço nas Exchanges';
 
     protected $organizationPerspective = true;
 
@@ -23,12 +23,11 @@ class ExchangeBalance extends Base
      */
     protected $fillable = [
         'auth_id',
-        'exch_name',
         'exchange_id',
-        'balance_curr_code',
+        'money_code',
         'balance_amount_avail',
         'balance_amount_held',
-        'balance_amount_total',
+        'balance',
         'btc_balance',
         'last_price',
     ];
@@ -48,18 +47,14 @@ class ExchangeBalance extends Base
             'type' => 'text'
         ],
         [
-            'name' => 'exch_name',
-            'label' => 'exch_name',
-            'type' => 'text'
-        ],
-        [
             'name' => 'exchange_id',
-            'label' => 'exchange_id',
-            'type' => 'text'
+            'label' => 'Exchange',
+            'type' => 'select',
+            'relationship' => 'exchange'
         ],
         [
-            'name' => 'balance_curr_code',
-            'label' => 'balance_curr_code',
+            'name' => 'money_code',
+            'label' => 'money_code',
             'type' => 'float'
         ],
         [
@@ -73,8 +68,8 @@ class ExchangeBalance extends Base
             'type' => 'float'
         ],
         [
-            'name' => 'balance_amount_total',
-            'label' => 'balance_amount_total',
+            'name' => 'balance',
+            'label' => 'balance',
             'type' => 'float'
         ],
         [
@@ -99,12 +94,11 @@ class ExchangeBalance extends Base
 
     public $indexFields = [
         'auth_id',
-        'exch_name',
         'exchange_id',
         'balance_curr_code',
         'balance_amount_avail',
         'balance_amount_held',
-        'balance_amount_total',
+        'balance',
         'btc_balance',
         'last_price',
     ];
