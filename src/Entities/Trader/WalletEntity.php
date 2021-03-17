@@ -14,12 +14,13 @@ use Bancario\Entities\AbstractEntity;
 final class WalletEntity extends AbstractEntity
 {
     // public $model = \Bancario\Models\Tradding\Wallet::class;
+    public $eloquent;
 
     private $id;
     // private $createdByUserId;
     // private $description;
     private $balance;
-    private $exchangeAccounts;
+    private $money;
     // private $createdAt;
     // private $updatedAt;
     // private $publishedAt;
@@ -47,6 +48,17 @@ final class WalletEntity extends AbstractEntity
         // $this->setCreatedAt(isset($attributes['created_at']) ? new Carbon($attributes['created_at']) : null);
         // $this->setUpdatedAt(isset($attributes['updated_at']) ? new Carbon($attributes['updated_at']) : null);
         // $this->setPublishedAt(isset($attributes['published_at']) ? new Carbon($attributes['published_at']) : null);
+
+        $this->eloquent = \Bancario\Models\Tradding\ExchangeBalance::firstOrCreate([
+            'money_code' => $this->money->getCode(),
+            'exchange_id' => 6
+        ]);
+        if (!is_null($this->eloquent->balance)) {
+            $this->setBalance($this->eloquent->balance);
+        } else {
+            $this->eloquent->balance = $this->getBalance();
+            $this->eloquent->save();
+        }
     }
 
     /**
@@ -79,6 +91,8 @@ final class WalletEntity extends AbstractEntity
     public function removeFromBalance(float $quantity): WalletEntity
     {
         $this->balance -= $quantity;
+        $this->eloquent->balance = $this->setBalance();
+        $this->eloquent->save();
 
         return $this;
     }
@@ -90,6 +104,8 @@ final class WalletEntity extends AbstractEntity
     public function addToBalance(float $quantity): WalletEntity
     {
         $this->balance += $quantity;
+        $this->eloquent->balance = $this->setBalance();
+        $this->eloquent->save();
 
         return $this;
     }
