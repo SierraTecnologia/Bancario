@@ -1,9 +1,5 @@
 <?php
 
-Route::group(
-    ['as' => 'bancario.'], function () {
-
-
 
 
         Route::resource('propostas', 'PropostaController');
@@ -32,5 +28,3 @@ Route::group(
         //     }
         // );
 
-    }
-);
