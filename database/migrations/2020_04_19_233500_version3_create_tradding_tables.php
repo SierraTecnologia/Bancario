@@ -16,7 +16,7 @@ class Version3CreateTraddingTables extends Migration {
 		Schema::create('configs', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('trader_id')->unsigned();
+			$table->integer('trader_id')->nullable()->unsigned();
 			$table->string('item', 80)->nullable()->index('item');
 			$table->string('value', 1500)->nullable();
 

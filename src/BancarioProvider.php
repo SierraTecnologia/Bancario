@@ -46,6 +46,7 @@ class BancarioProvider extends ServiceProvider
             'icon' => 'fas fa-fw fa-search',
             'icon_color' => "blue",
             'label_color' => "success",
+            'order' => 1550,
             'section' => "master",
             'feature' => 'bancario',
             'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
@@ -56,6 +57,7 @@ class BancarioProvider extends ServiceProvider
             'icon' => 'fas fa-fw fa-search',
             'icon_color' => "blue",
             'label_color' => "success",
+            'order' => 2550,
             'section' => "admin",
             'feature' => 'bancario',
             'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)

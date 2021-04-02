@@ -83,4 +83,24 @@ class Config extends Base
     {
         return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_id', 'id');
     }
+
+
+    /**
+     * Register events
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(
+            function ($model) {
+                if (is_null($model->trader_id)) {
+                    $model->trader_id = Trader::first()->id;
+                }
+                
+            }
+        );
+    }
 }

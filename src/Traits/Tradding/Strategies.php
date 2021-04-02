@@ -238,6 +238,8 @@ trait Strategies
             $return['strategy'] = 'adx_smas';
             return ($return_full ? $return : 1);
         }
+
+        return 0;
     }
 
     /**
@@ -295,11 +297,15 @@ trait Strategies
             $return['side']     = 'short';
             $return['strategy'] = 'sar_rsi';
             return ($return_full ? $return : -1);
-        } elseif ($fsar == 1 && $rsi > 0) {
+        }
+        
+        if ($fsar == 1 && $rsi > 0) {
             $return['side']     = 'long';
             $return['strategy'] = 'sar_rsi';
             return ($return_full ? $return : 1);
         }
+
+        return 0;
     }
 
     /**
@@ -336,11 +342,15 @@ trait Strategies
             $return['side']     = 'short';
             $return['strategy'] = 'stoch_adx';
             return ($return_full ? $return : -1);
-        } elseif ($adx == 1 && $stoch > 0 && $bullish) {
+        } 
+        
+        if ($adx == 1 && $stoch > 0 && $bullish) {
             $return['side']     = 'long';
             $return['strategy'] = 'stoch_adx';
             return ($return_full ? $return : 1);
         }
+
+        return 0;
     }
 
     /**
@@ -868,13 +878,15 @@ trait Strategies
             $return['side']     = 'long';
             $return['strategy'] = 'sar_sma';
             return ($return_full ? $return : 1);
-        } elseif ($price < $sma60 && $sar == -1) {
+        }
+        
+        if ($price < $sma60 && $sar == -1) {
             $return['side']     = 'short';
             $return['strategy'] = 'sar_sma';
             return ($return_full ? $return : -1);
-        } else {
-            return 0;
         }
+        
+        return 0;
     }
 
     /**
@@ -903,13 +915,15 @@ trait Strategies
             $return['side'] = 'long';
             $return['strategy'] = 'ema_adx';
             return ($return_full ? $return : 1);
-        } elseif ($ema12 < $ema36 && $ema12p > $ema36 && $adx) {
+        }
+        
+        if ($ema12 < $ema36 && $ema12p > $ema36 && $adx) {
             $return['side']     = 'short';
             $return['strategy'] = 'ema_adx';
             return ($return_full ? $return : -1);
-        } else {
-            return 0;
         }
+            
+        return 0;
     }
 
 
@@ -947,13 +961,15 @@ trait Strategies
             $return['side'] = 'long';
             $return['strategy'] = 'trend_bounce';
             return ($return_full ? $return : 1);
-        } elseif ($high >= $upper1 && ($price <= $middle1 || $low <= $middle1)) {
+        }
+        
+        if ($high >= $upper1 && ($price <= $middle1 || $low <= $middle1)) {
             $return['side'] = 'short';
             $return['strategy'] = 'trend_bounce';
             return ($return_full ? $return : -11);
-        } else {
-            return 0;
         }
+        
+        return 0;
     }
 
     /**
@@ -990,13 +1006,15 @@ trait Strategies
             $return['side'] = 'long';
             $return['strategy'] = '5th_element';
             return ($return_full ? $return : 1);
-        } elseif ($macd_base && ($h1 < $h2 && $h2 < $h3 && $h3 < $h4 && $h4 < $h5)) {
+        }
+        
+        if ($macd_base && ($h1 < $h2 && $h2 < $h3 && $h3 < $h4 && $h4 < $h5)) {
             $return['side'] = 'short';
             $return['strategy'] = '5th_element';
             return ($return_full ? $return : -1);
-        } else {
-            return 0;
         }
+        
+        return 0;
 
     }
 
@@ -1038,13 +1056,15 @@ trait Strategies
             $return['side'] = 'long';
             $return['strategy'] = 'powerranger';
             return 1;
-        }elseif ($slowka < 80 && $slowkp > 80 || $slowda < 80 && $slowdp > 80) {
+        }
+        
+        if ($slowka < 80 && $slowkp > 80 || $slowda < 80 && $slowdp > 80) {
             $return['side'] = 'short';
             $return['strategy'] = 'powerranger';
             return -1;
-        } else {
-            return 0;
         }
+
+        return 0;
     }
 
     /**
@@ -1076,13 +1096,15 @@ trait Strategies
             $return['side'] = 'long';
             $return['strategy'] = 'famamama';
             return 1;
-        } elseif($fama_current < $mama_current && $fama_prior > $mama_current) {
+        }
+        
+        if($fama_current < $mama_current && $fama_prior > $mama_current) {
             $return['side'] = 'short';
             $return['strategy'] = 'famamama';
             return -1;
-        } else {
-            return 0;
-        }
+        } 
+
+        return 0;
     }
 
 
