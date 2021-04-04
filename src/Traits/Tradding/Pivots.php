@@ -38,7 +38,7 @@ trait Pivots
         Resistance 2 (R2) = P + {.618 * (High  -  Low)}
         Resistance 3 (R3) = P + {1 * (High  -  Low)}
         //*/
-        dd($data);
+        dd('Pivots', $data);
         $data['high']  = array_values($data['high']);
         $data['low']   = array_values($data['low']);
         $data['close'] = array_values($data['close']);
