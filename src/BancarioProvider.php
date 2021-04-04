@@ -32,7 +32,7 @@ class BancarioProvider extends ServiceProvider
 
     public static $providers = [
 
-        // \Support\SupportProviderService::class,
+        \Telefonica\TelefonicaProvider::class,
 
         
     ];
@@ -52,41 +52,44 @@ class BancarioProvider extends ServiceProvider
             'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
             'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
         ],
-        [
-            'text' => 'Universo',
-            'icon' => 'fas fa-fw fa-search',
-            'icon_color' => "blue",
-            'label_color' => "success",
-            'order' => 2550,
-            'section' => "admin",
-            'feature' => 'bancario',
-            'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
-            'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        ],
         'Universo' => [
             [
-                'text'        => 'Bancos',
-                'route'       => 'admin.bancario.banks.index',
-                'icon'        => 'fas fa-fw fa-ship',
-                'icon_color'  => 'blue',
-                'label_color' => 'success',
-                'section' => "admin",
+                'text' => 'Bancario',
+                'icon' => 'fas fa-fw fa-search',
+                'icon_color' => "blue",
+                'label_color' => "success",
+                'order' => 1550,
+                'section' => "master",
                 'feature' => 'bancario',
+                'order' => 2840,
                 'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
                 'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                // 'access' => \Porteiro\Models\Role::$ADMIN
             ],
-            [
-                'text'        => 'Moedas',
-                'route'       => 'admin.bancario.moneys.index',
-                'icon'        => 'fas fa-fw fa-ship',
-                'icon_color'  => 'blue',
-                'label_color' => 'success',
-                'section' => "admin",
-                'feature' => 'bancario',
-                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
-                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                // 'access' => \Porteiro\Models\Role::$ADMIN
+            'Bancario' => [
+                [
+                    'text'        => 'Bancos',
+                    'route'       => 'admin.bancario.banks.index',
+                    'icon'        => 'fas fa-fw fa-ship',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    'section' => "admin",
+                    'feature' => 'bancario',
+                    'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                    'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                    // 'access' => \Porteiro\Models\Role::$ADMIN
+                ],
+                [
+                    'text'        => 'Moedas',
+                    'route'       => 'admin.bancario.moneys.index',
+                    'icon'        => 'fas fa-fw fa-coins',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    'section' => "admin",
+                    'feature' => 'bancario',
+                    'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                    'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                    // 'access' => \Porteiro\Models\Role::$ADMIN
+                ],
             ],
         ],
         'Bancario' => [
