@@ -63,6 +63,7 @@ class CreateTraddingJesseTables extends Migration {
 			$table->string('exchange');
 			$table->string('asset');
 			$table->double('balance', 8, 2);
+			
 			$table->primary('id');
 			$table->unique(['identifier','exchange','timestamp', 'asset']);
 			$table->index(['identifier','exchange']);

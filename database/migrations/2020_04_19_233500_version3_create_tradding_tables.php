@@ -25,8 +25,8 @@ class Version3CreateTraddingTables extends Migration {
 
 			$table->unique(['trader_id','item'], 'trader_item_config');
 			// 
-            $table->string('exchange_code');
-            $table->foreign('exchange_code')->references('code')->on('exchanges');
+            // $table->string('exchange_code');
+            // $table->foreign('exchange_code')->references('code')->on('exchanges');
             // $table->foreign('exchange_code')->references('code')->on('exchanges');
 			$table->timestamps();
 			$table->softDeletes();

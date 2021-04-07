@@ -15,6 +15,13 @@ class Exchange extends Base
     protected $organizationPerspective = true;
 
     protected $table = 'exchanges';
+    
+    public $incrementing = false;
+    protected $casts = [
+        'code' => 'string',
+    ];
+    protected $primaryKey = 'code';
+    protected $keyType = 'string';
 
     /**
      * The attributes that are mass assignable.

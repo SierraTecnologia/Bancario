@@ -52,6 +52,17 @@ class BancarioProvider extends ServiceProvider
             'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
             'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
         ],
+        [
+            'text' => 'Jesse',
+            'icon' => 'fas fa-fw fa-search',
+            'icon_color' => "blue",
+            'label_color' => "success",
+            'order' => 1450,
+            'section' => "master",
+            'feature' => 'bancario',
+            'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+            'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        ],
         'Universo' => [
             [
                 'text' => 'Bancario',
@@ -59,7 +70,7 @@ class BancarioProvider extends ServiceProvider
                 'icon_color' => "blue",
                 'label_color' => "success",
                 'order' => 1550,
-                'section' => "master",
+                'section' => "admin",
                 'feature' => 'bancario',
                 'order' => 2840,
                 'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
@@ -108,6 +119,92 @@ class BancarioProvider extends ServiceProvider
             [
                 'text'        => 'Propostas',
                 'route'       => 'admin.bancario.propostas.index',
+                'icon'        => 'fas fa-fw fa-ship',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section' => "master",
+                'feature' => 'bancario',
+                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                // 'access' => \Porteiro\Models\Role::$ADMIN
+            ],
+        ],
+        'Jesse' => [
+            [
+                'text'        => 'candles',
+                'route'       => 'master.bancario.candles.index',
+                'icon'        => 'fas fa-fw fa-ship',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section' => "master",
+                'feature' => 'bancario',
+                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                // 'access' => \Porteiro\Models\Role::$ADMIN
+            ],
+            [
+                'text'        => 'completedTraders',
+                'route'       => 'admin.bancario.completedTraders.index',
+                'icon'        => 'fas fa-fw fa-ship',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section' => "master",
+                'feature' => 'bancario',
+                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                // 'access' => \Porteiro\Models\Role::$ADMIN
+            ],
+            [
+                'text'        => 'dailyBalances',
+                'route'       => 'admin.bancario.dailyBalances.index',
+                'icon'        => 'fas fa-fw fa-ship',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section' => "master",
+                'feature' => 'bancario',
+                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                // 'access' => \Porteiro\Models\Role::$ADMIN
+            ],
+            [
+                'text'        => 'orderBooks',
+                'route'       => 'admin.bancario.orderBooks.index',
+                'icon'        => 'fas fa-fw fa-ship',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section' => "master",
+                'feature' => 'bancario',
+                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                // 'access' => \Porteiro\Models\Role::$ADMIN
+            ],
+            [
+                'text'        => 'orders',
+                'route'       => 'admin.bancario.orders.index',
+                'icon'        => 'fas fa-fw fa-ship',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section' => "master",
+                'feature' => 'bancario',
+                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                // 'access' => \Porteiro\Models\Role::$ADMIN
+            ],
+            [
+                'text'        => 'tickers',
+                'route'       => 'admin.bancario.tickers.index',
+                'icon'        => 'fas fa-fw fa-ship',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section' => "master",
+                'feature' => 'bancario',
+                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                // 'access' => \Porteiro\Models\Role::$ADMIN
+            ],
+            [
+                'text'        => 'traders',
+                'route'       => 'admin.bancario.traders.index',
                 'icon'        => 'fas fa-fw fa-ship',
                 'icon_color'  => 'blue',
                 'label_color' => 'success',

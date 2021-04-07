@@ -1,20 +1,17 @@
 <?php
-/**
- * @todo
- */
 
 namespace Bancario\Models\Jesse;
 
 use Fabrica\Tools\Ssh;
 use Pedreiro\Models\Base;
 
-class Config extends Base
+class OrderBook extends Base
 {
-    public static $apresentationName = 'Endereços de Exchanges';
+    public static $apresentationName = 'Livro de Ofertas';
 
     protected $organizationPerspective = true;
 
-    protected $table = 'configs';
+    protected $table = 'orderbook';
 
     /**
      * The attributes that are mass assignable.
@@ -22,28 +19,34 @@ class Config extends Base
      * @var array
      */
     protected $fillable = [
-        'item',
-        'value',
-        'exchange_code',
+        'timestamp',
+        'symbol',
+        'data',
+        'exchange',
     ];
 
 
     
     public $formFields = [
         [
-            'name' => 'exchange_code',
+            'name' => 'timestamp',
+            'label' => 'timestamp',
+            'type' => 'integer'
+        ],
+        [
+            'name' => 'symbol',
+            'label' => 'symbol',
+            'type' => 'text'
+        ],
+        [
+            'name' => 'exchange',
             'label' => 'Exchange',
             'type' => 'select',
             'relationship' => 'exchange'
         ],
         [
-            'name' => 'item',
-            'label' => 'item',
-            'type' => 'text'
-        ],
-        [
-            'name' => 'value',
-            'label' => 'value',
+            'name' => 'data',
+            'label' => 'data',
             'type' => 'text'
         ],
         // [
@@ -57,9 +60,10 @@ class Config extends Base
     ];
 
     public $indexFields = [
-        'exchange_code',
-        'item',
-        'value',
+        'timestamp',
+        'symbol',
+        'data',
+        'exchange',
     ];
 
     public $validationRules = [
@@ -81,26 +85,14 @@ class Config extends Base
 
     public function exchange()
     {
-        return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_code', 'id');
+        return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange', 'code');
     }
 
-
     /**
-     * Register events
-     *
-     * @return void
+     * Par @todo
      */
-    public static function boot()
+    public function symbol()
     {
-        parent::boot();
-
-        static::creating(
-            function ($model) {
-                if (is_null($model->trader_id)) {
-                    $model->trader_id = Trader::first()->id;
-                }
-                
-            }
-        );
+        return $this->belongsTo(\Bancario\Models\Money\Pair::class, 'symbol', 'code');
     }
 }

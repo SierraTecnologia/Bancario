@@ -5,14 +5,13 @@ namespace Bancario\Models\Jesse;
 use Fabrica\Tools\Ssh;
 use Pedreiro\Models\Base;
 
-class Ticker extends Base
+class Candle extends Base
 {
-    public static $apresentationName = 'Tickers';
+    public static $apresentationName = 'Candles';
 
     protected $organizationPerspective = true;
 
-    protected $table = 'ticker';
-
+    protected $table = 'candle';
     
     /**
      * The attributes that are mass assignable.
@@ -21,10 +20,11 @@ class Ticker extends Base
      */
     protected $fillable = [
         'timestamp',
-        'last_price',
+        'open',
+        'close',
+        'high',
+        'low',
         'volume',
-        'high_price',
-        'low_price',
         'symbol',
         'exchange',
     ];
@@ -38,23 +38,28 @@ class Ticker extends Base
             'type' => 'integer'
         ],
         [
-            'name' => 'last_price',
-            'label' => 'last_price',
+            'name' => 'open',
+            'label' => 'open',
+            'type' => 'float'
+        ],
+        [
+            'name' => 'close',
+            'label' => 'close',
+            'type' => 'float'
+        ],
+        [
+            'name' => 'high',
+            'label' => 'high',
+            'type' => 'float'
+        ],
+        [
+            'name' => 'low',
+            'label' => 'low',
             'type' => 'float'
         ],
         [
             'name' => 'volume',
             'label' => 'volume',
-            'type' => 'float'
-        ],
-        [
-            'name' => 'high_price',
-            'label' => 'high_price',
-            'type' => 'float'
-        ],
-        [
-            'name' => 'low_price',
-            'label' => 'low_price',
             'type' => 'float'
         ],
         [
@@ -80,10 +85,11 @@ class Ticker extends Base
 
     public $indexFields = [
         'timestamp',
-        'last_price',
+        'open',
+        'close',
+        'high',
+        'low',
         'volume',
-        'high_price',
-        'low_price',
         'symbol',
         'exchange',
     ];

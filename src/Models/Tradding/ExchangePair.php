@@ -96,7 +96,6 @@ class ExchangePair extends Base
 
         static::creating(
             function ($model) {
-
                 // \Bancario\Models\Money\Money::firstOrCreate(
                 //     [
                 //     // 'id'              => Role::$GOOD,

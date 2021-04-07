@@ -15,6 +15,13 @@ class PopularExchange extends Base
     protected $organizationPerspective = true;
 
     protected $table = 'popular_exchanges';
+    
+    public $incrementing = false;
+    protected $casts = [
+        'code' => 'string',
+    ];
+    protected $primaryKey = 'code';
+    protected $keyType = 'string';
 
     /**
      * The attributes that are mass assignable.
@@ -22,7 +29,7 @@ class PopularExchange extends Base
      * @var array
      */
     protected $fillable = [
-        'exchange_code',
+        // 'exchange_code',
         'public_api',
         'coinigy',
         'ccxt',
@@ -33,12 +40,12 @@ class PopularExchange extends Base
 
     
     public $formFields = [
-        [
-            'name' => 'exchange_code',
-            'label' => 'Exchange',
-            'type' => 'select',
-            'relationship' => 'exchange'
-        ],
+        // [
+        //     'name' => 'exchange_code',
+        //     'label' => 'Exchange',
+        //     'type' => 'select',
+        //     'relationship' => 'exchange'
+        // ],
         [
             'name' => 'public_api',
             'label' => 'public_api',
@@ -75,7 +82,7 @@ class PopularExchange extends Base
     ];
 
     public $indexFields = [
-        'exchange_code',
+        // 'exchange_code',
         'symbol',
         'timestamp',
         'datetime',
@@ -114,6 +121,6 @@ class PopularExchange extends Base
 
     public function exchange()
     {
-        return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_code', 'id');
+        return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'code', 'code');
     }
 }

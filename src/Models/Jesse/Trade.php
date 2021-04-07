@@ -5,15 +5,14 @@ namespace Bancario\Models\Jesse;
 use Fabrica\Tools\Ssh;
 use Pedreiro\Models\Base;
 
-class Ticker extends Base
+class Trade extends Base
 {
-    public static $apresentationName = 'Tickers';
+    public static $apresentationName = 'Trades';
 
     protected $organizationPerspective = true;
 
-    protected $table = 'ticker';
+    protected $table = 'trade';
 
-    
     /**
      * The attributes that are mass assignable.
      *
@@ -21,10 +20,11 @@ class Ticker extends Base
      */
     protected $fillable = [
         'timestamp',
-        'last_price',
-        'volume',
-        'high_price',
-        'low_price',
+        'price',
+        'buy_qty',
+        'sell_qty',
+        'buy_count',
+        'sell_count',
         'symbol',
         'exchange',
     ];
@@ -38,24 +38,29 @@ class Ticker extends Base
             'type' => 'integer'
         ],
         [
-            'name' => 'last_price',
-            'label' => 'last_price',
+            'name' => 'price',
+            'label' => 'price',
             'type' => 'float'
         ],
         [
-            'name' => 'volume',
-            'label' => 'volume',
+            'name' => 'buy_qty',
+            'label' => 'buy_qty',
             'type' => 'float'
         ],
         [
-            'name' => 'high_price',
-            'label' => 'high_price',
+            'name' => 'sell_qty',
+            'label' => 'sell_qty',
             'type' => 'float'
         ],
         [
-            'name' => 'low_price',
-            'label' => 'low_price',
-            'type' => 'float'
+            'name' => 'buy_count',
+            'label' => 'buy_count',
+            'type' => 'integer'
+        ],
+        [
+            'name' => 'sell_count',
+            'label' => 'sell_count',
+            'type' => 'integer'
         ],
         [
             'name' => 'symbol',
@@ -80,10 +85,11 @@ class Ticker extends Base
 
     public $indexFields = [
         'timestamp',
-        'last_price',
-        'volume',
-        'high_price',
-        'low_price',
+        'price',
+        'buy_qty',
+        'sell_qty',
+        'buy_count',
+        'sell_count',
         'symbol',
         'exchange',
     ];

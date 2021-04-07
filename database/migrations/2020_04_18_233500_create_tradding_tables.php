@@ -39,7 +39,6 @@ class CreateTraddingTables extends Migration {
 		{
 			$table->string('code')->unique();
 			$table->primary('code');
-			$table->string('exchange_code');
 			$table->boolean('public_api')->nullable()->default(0);
 			$table->boolean('coinigy')->nullable()->default(0);
 			$table->boolean('ccxt')->nullable()->default(0);
@@ -47,7 +46,7 @@ class CreateTraddingTables extends Migration {
 			$table->text('about', 65535)->nullable();
 
 
-            $table->foreign('exchange_code')->references('code')->on('exchanges');
+            $table->foreign('code')->references('code')->on('exchanges');
 			$table->timestamps();
 			$table->softDeletes();
 		});

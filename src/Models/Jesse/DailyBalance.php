@@ -5,15 +5,14 @@ namespace Bancario\Models\Jesse;
 use Fabrica\Tools\Ssh;
 use Pedreiro\Models\Base;
 
-class Ticker extends Base
+class DailyBalance extends Base
 {
-    public static $apresentationName = 'Tickers';
+    public static $apresentationName = 'Balanço Diário';
 
     protected $organizationPerspective = true;
 
-    protected $table = 'ticker';
+    protected $table = 'dailybalance';
 
-    
     /**
      * The attributes that are mass assignable.
      *
@@ -21,12 +20,10 @@ class Ticker extends Base
      */
     protected $fillable = [
         'timestamp',
-        'last_price',
-        'volume',
-        'high_price',
-        'low_price',
-        'symbol',
+        'identifier',
         'exchange',
+        'asset',
+        'balance',
     ];
 
 
@@ -38,35 +35,20 @@ class Ticker extends Base
             'type' => 'integer'
         ],
         [
-            'name' => 'last_price',
-            'label' => 'last_price',
-            'type' => 'float'
+            'name' => 'identifier',
+            'label' => 'identifier',
+            'type' => 'integer'
         ],
         [
-            'name' => 'volume',
-            'label' => 'volume',
-            'type' => 'float'
-        ],
-        [
-            'name' => 'high_price',
-            'label' => 'high_price',
-            'type' => 'float'
-        ],
-        [
-            'name' => 'low_price',
-            'label' => 'low_price',
-            'type' => 'float'
-        ],
-        [
-            'name' => 'symbol',
-            'label' => 'symbol',
-            'type' => 'text'
-        ],
-        [
-            'name' => 'exchange',
-            'label' => 'Exchange',
+            'name' => 'asset',
+            'label' => 'Asset',
             'type' => 'select',
-            'relationship' => 'exchange'
+            'relationship' => 'asset'
+        ],
+        [
+            'name' => 'balance',
+            'label' => 'balance',
+            'type' => 'float'
         ],
         // [
         //     'name' => 'status',
@@ -80,12 +62,10 @@ class Ticker extends Base
 
     public $indexFields = [
         'timestamp',
-        'last_price',
-        'volume',
-        'high_price',
-        'low_price',
-        'symbol',
+        'identifier',
         'exchange',
+        'asset',
+        'balance',
     ];
 
     public $validationRules = [
@@ -113,8 +93,8 @@ class Ticker extends Base
     /**
      * Par @todo
      */
-    public function symbol()
+    public function asset()
     {
-        return $this->belongsTo(\Bancario\Models\Money\Pair::class, 'symbol', 'code');
+        return $this->belongsTo(\Bancario\Models\Money\Money::class, 'asset', 'code');
     }
 }
