@@ -23,7 +23,7 @@ class ExchangeBalance extends Base
      */
     protected $fillable = [
         'trader_id',
-        'exchange_id',
+        'exchange_code',
         'money_code',
         'balance_amount_avail',
         'balance_amount_held',
@@ -36,7 +36,7 @@ class ExchangeBalance extends Base
     
     public $formFields = [
         // [
-        //     'name' => 'exchange_id',
+        //     'name' => 'exchange_code',
         //     'label' => 'Exchange',
         //     'type' => 'select',
         //     'relationship' => 'exchange'
@@ -47,7 +47,7 @@ class ExchangeBalance extends Base
             'type' => 'text'
         ],
         [
-            'name' => 'exchange_id',
+            'name' => 'exchange_code',
             'label' => 'Exchange',
             'type' => 'select',
             'relationship' => 'exchange'
@@ -95,7 +95,7 @@ class ExchangeBalance extends Base
 
     public $indexFields = [
         'trader_id',
-        'exchange_id',
+        'exchange_code',
         'money_code',
         'balance_amount_avail',
         'balance_amount_held',
@@ -123,7 +123,7 @@ class ExchangeBalance extends Base
 
     public function exchange()
     {
-        return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_id', 'id');
+        return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_code', 'id');
     }
 
     public function money()

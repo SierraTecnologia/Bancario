@@ -24,8 +24,10 @@ class Version3CreateTraddingTables extends Migration {
 
 
 			$table->unique(['trader_id','item'], 'trader_item_config');
-			// $table->integer('exchange_id')->unsigned();
-            // $table->foreign('exchange_id')->references('id')->on('exchanges');
+			// 
+            $table->string('exchange_code');
+            $table->foreign('exchange_code')->references('code')->on('exchanges');
+            // $table->foreign('exchange_code')->references('code')->on('exchanges');
 			$table->timestamps();
 			$table->softDeletes();
         });
@@ -34,7 +36,8 @@ class Version3CreateTraddingTables extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('trader_id')->unsigned();
-			$table->integer('exchange_id')->unsigned();
+			
+            $table->string('exchange_code');
 			$table->string('auth_key')->unique();
 			$table->string('auth_secret')->nullable();
 			$table->string('auth_optional1')->nullable();
@@ -45,18 +48,19 @@ class Version3CreateTraddingTables extends Migration {
 			$table->boolean('exch_trade_enabled')->nullable();
 
             $table->foreign('trader_id')->references('id')->on('traders');
-            $table->foreign('exchange_id')->references('id')->on('exchanges');
+            $table->foreign('exchange_code')->references('code')->on('exchanges');
 			$table->timestamps();
 			$table->softDeletes();
 		});
 		Schema::create('exchange_addresses', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('exchange_id')->unsigned();
+			
+            $table->string('exchange_code');
             $table->string('money_code');
             $table->foreign('money_code')->references('code')->on('moneys');
 			$table->string('address');
-            $table->foreign('exchange_id')->references('id')->on('exchanges');
+            $table->foreign('exchange_code')->references('code')->on('exchanges');
 			$table->timestamps();
 			$table->softDeletes();
 		});
@@ -64,7 +68,8 @@ class Version3CreateTraddingTables extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('trader_id')->unsigned();
-			$table->integer('exchange_id')->unsigned();
+			
+            $table->string('exchange_code');
             $table->string('money_code');
             $table->foreign('money_code')->references('code')->on('moneys');
 			$table->float('balance_amount_avail', 10, 0)->nullable();
@@ -74,26 +79,28 @@ class Version3CreateTraddingTables extends Migration {
 			$table->float('last_price', 10, 0)->nullable();
 
             $table->foreign('trader_id')->references('id')->on('traders');
-            $table->foreign('exchange_id')->references('id')->on('exchanges');
+            $table->foreign('exchange_code')->references('code')->on('exchanges');
 			$table->timestamps();
 			$table->softDeletes();
 		});
 		Schema::create('exchange_pairs', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('exchange_id')->unsigned();
+			
+            $table->string('exchange_code');
 			$table->integer('market_id')->nullable()->default(0);
 			$table->string('exchange_pair', 90)->nullable();
 			$table->timestamps();
 			$table->softDeletes();
-			$table->index(['exchange_id','market_id','exchange_pair'], 'exchange_id2');
+			$table->index(['exchange_code','market_id','exchange_pair'], 'exchange_code2');
 
-            $table->foreign('exchange_id')->references('id')->on('exchanges');
+            $table->foreign('exchange_code')->references('code')->on('exchanges');
 		});
 		Schema::create('ohlcvs', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('exchange_id')->unsigned();
+			
+            $table->string('exchange_code');
 			$table->string('symbol', 90)->nullable();
 			$table->bigInteger('timestamp')->nullable();
 			$table->dateTime('datetime')->nullable()->index('datetime_ohlcvs');
@@ -104,15 +111,16 @@ class Version3CreateTraddingTables extends Migration {
 			$table->float('volume', 10, 0)->nullable();
 			$table->timestamps();
 			$table->softDeletes();
-			$table->unique(['exchange_id','symbol','timestamp'], 'exchange_id_ohlcvs');
+			$table->unique(['exchange_code','symbol','timestamp'], 'exchange_code_ohlcvs');
 
-            $table->foreign('exchange_id')->references('id')->on('exchanges');
+            $table->foreign('exchange_code')->references('code')->on('exchanges');
 		});
 
 		Schema::create('tickers', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('exchange_id')->unsigned();
+			
+            $table->string('exchange_code');
 			$table->string('symbol', 90)->nullable()->index('symbol');
 			$table->string('period', 90)->nullable()->index('period');
 			$table->bigInteger('open_time')->nullable()->index('open_time');
@@ -144,8 +152,8 @@ class Version3CreateTraddingTables extends Migration {
 			$table->softDeletes();
 
 
-            $table->foreign('exchange_id')->references('id')->on('exchanges');
-			$table->unique(['exchange_id', 'symbol', 'period' , 'close_time'], 'exchange_id_23');
+            $table->foreign('exchange_code')->references('code')->on('exchanges');
+			$table->unique(['exchange_code', 'symbol', 'period' , 'close_time'], 'exchange_code_23');
         });
         
 	}

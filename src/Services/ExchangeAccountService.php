@@ -23,7 +23,7 @@ class ExchangeAccountService
     {
         ExchangeAccount::create(
             [
-                'exchange_id' => 6, //Binance
+                'exchange_code' => 'binance', //6, //Binance
                 'auth_key' => 'afLPF8tuJozZFCnIYd7XMsMoS24jGh26W6kDfb2Gda6qxPjRO1np99hTmGOX733B',
                 'auth_secret' => 'XQBQAh59fUQNW7inxw7np9tWO6GelnNo9n9qqYp3mPb2Uop9phHrGvN0OJchwIGH',
             ]

@@ -67,6 +67,6 @@ class Trader extends Base
 
     // public function exchange()
     // {
-    //     return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_id', 'id');
+    //     return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_code', 'id');
     // }
 }

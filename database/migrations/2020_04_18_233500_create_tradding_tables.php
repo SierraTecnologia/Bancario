@@ -15,7 +15,8 @@ class CreateTraddingTables extends Migration {
 
 		Schema::create('exchanges', function(Blueprint $table)
 		{
-			$table->increments('id');
+			$table->string('code')->unique();
+			$table->primary('code');
 			$table->string('name', 50)->nullable()->unique('name');
 			$table->boolean('ccxt')->nullable()->default(0);
 			$table->boolean('coinigy')->nullable()->default(0)->index('coinigy');
@@ -36,8 +37,9 @@ class CreateTraddingTables extends Migration {
 		});
 		Schema::create('popular_exchanges', function(Blueprint $table)
 		{
-			$table->increments('id');
-			$table->integer('exchange_id')->unsigned();
+			$table->string('code')->unique();
+			$table->primary('code');
+			$table->string('exchange_code');
 			$table->boolean('public_api')->nullable()->default(0);
 			$table->boolean('coinigy')->nullable()->default(0);
 			$table->boolean('ccxt')->nullable()->default(0);
@@ -45,7 +47,7 @@ class CreateTraddingTables extends Migration {
 			$table->text('about', 65535)->nullable();
 
 
-            $table->foreign('exchange_id')->references('id')->on('exchanges');
+            $table->foreign('exchange_code')->references('code')->on('exchanges');
 			$table->timestamps();
 			$table->softDeletes();
 		});
@@ -65,7 +67,7 @@ class CreateTraddingTables extends Migration {
 			$table->increments('id');
 
 			$table->text('data', 65535)->nullable();
-			$table->integer('exchange_id')->unsigned();
+			$table->string('exchange_code');
 			$table->integer('money_id')->unsigned();
 			$table->bigInteger('timestamp')->nullable();
 

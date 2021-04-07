@@ -22,7 +22,7 @@ class TraddingHistory extends Base
      * @var array
      */
     protected $fillable = [
-        'exchange_id',
+        'exchange_code',
         'symbol',
         'price',
         'time',
@@ -32,7 +32,7 @@ class TraddingHistory extends Base
     
     public $formFields = [
         [
-            'name' => 'exchange_id',
+            'name' => 'exchange_code',
             'label' => 'Exchange',
             'type' => 'select',
             'relationship' => 'exchange'
@@ -63,7 +63,7 @@ class TraddingHistory extends Base
     ];
 
     public $indexFields = [
-        'exchange_id',
+        'exchange_code',
         'symbol',
         'price',
         'time',
@@ -88,6 +88,6 @@ class TraddingHistory extends Base
 
     public function exchange()
     {
-        return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_id', 'id');
+        return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_code', 'id');
     }
 }

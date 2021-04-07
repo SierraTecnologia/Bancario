@@ -25,7 +25,7 @@ class ExchangeAccount extends Base
      */
     protected $fillable = [
         'trader_id',
-        'exchange_id',
+        'exchange_code',
         'auth_key',
         'auth_secret',
         'auth_optional1',
@@ -40,7 +40,7 @@ class ExchangeAccount extends Base
     
     public $formFields = [
         // [
-        //     'name' => 'exchange_id',
+        //     'name' => 'exchange_code',
         //     'label' => 'Exchange',
         //     'type' => 'select',
         //     'relationship' => 'exchange'
@@ -51,7 +51,7 @@ class ExchangeAccount extends Base
             'type' => 'text'
         ],
         [
-            'name' => 'exchange_id',
+            'name' => 'exchange_code',
             'label' => 'Exchange',
             'type' => 'select',
             'relationship' => 'exchange'
@@ -108,7 +108,7 @@ class ExchangeAccount extends Base
 
     public $indexFields = [
         'auth_id',
-        'exchange_id',
+        'exchange_code',
         'auth_key',
         'auth_optional1',
         'auth_nickname',
@@ -137,7 +137,7 @@ class ExchangeAccount extends Base
 
     public function exchange()
     {
-        return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_id', 'id');
+        return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_code', 'id');
     }
 
     /**
@@ -167,12 +167,12 @@ class ExchangeAccount extends Base
         $time = time();
         \Bancario\Models\Tradding\TraddingHistory::updateOrCreate(
             [
-                'exchange_id' => $this->exchange_id,
+                'exchange_code' => $this->exchange_code,
                 'symbol' => $symbol,
                 'time' => $time
             ],
             [
-                'exchange_id' => $this->exchange_id,
+                'exchange_code' => $this->exchange_code,
                 'symbol' => $symbol,
                 'time' => $time,
                 'price' => $price
@@ -187,7 +187,7 @@ class ExchangeAccount extends Base
         $ticks = $this->getApi()->getCandlesticks($symbol, $candleSize);
         foreach ($ticks as $tick) {
             $arrayNew = [];
-            $arrayNew['exchange_id'] = $this->exchange_id;
+            $arrayNew['exchange_code'] = $this->exchange_code;
             $arrayNew['period'] = $candleSize;
             $arrayNew['symbol'] = $symbol;
             foreach ($tick as $indice=>$value) {
@@ -195,7 +195,7 @@ class ExchangeAccount extends Base
             }
             \Bancario\Models\Tradding\Ticker::updateOrCreate(
                 [
-                    'exchange_id' => $arrayNew['exchange_id'],
+                    'exchange_code' => $arrayNew['exchange_code'],
                     'period' => $candleSize,
                     'symbol' => $arrayNew['symbol'],
                     'close_time' => $arrayNew['close_time']],

@@ -20,13 +20,13 @@ trait OHLC
     {
         $ret = array();
         foreach ($datas as $data) {
-            $ret[$data->exchange_id]['timestamp'][]   = $data->buckettime;
-            $ret[$data->exchange_id]['date'][]   = gmdate("j-M-y", $data->buckettime);
-            $ret[$data->exchange_id]['low'][]    = $data->low;
-            $ret[$data->exchange_id]['high'][]   = $data->high;
-            $ret[$data->exchange_id]['open'][]   = $data->open;
-            $ret[$data->exchange_id]['close'][]  = $data->close;
-            $ret[$data->exchange_id]['volume'][] = $data->volume;
+            $ret[$data->exchange_code]['timestamp'][]   = $data->buckettime;
+            $ret[$data->exchange_code]['date'][]   = gmdate("j-M-y", $data->buckettime);
+            $ret[$data->exchange_code]['low'][]    = $data->low;
+            $ret[$data->exchange_code]['high'][]   = $data->high;
+            $ret[$data->exchange_code]['open'][]   = $data->open;
+            $ret[$data->exchange_code]['close'][]  = $data->close;
+            $ret[$data->exchange_code]['volume'][] = $data->volume;
         }
         foreach($ret as $ex => $opt) {
             foreach ($opt as $key => $rettemmp) {
@@ -115,7 +115,7 @@ trait OHLC
                     DB::raw(
                         "
                     SELECT time_bucket('$timescale', created_at) buckettime,
-                        exchange_id,
+                        exchange_code,
                         first(bid, created_at) as open,
                         last(bid,created_at) as close,
                         first(bid, bid) as low,
@@ -127,7 +127,7 @@ trait OHLC
                     FROM tickers
                     WHERE symbol = '$pair'
                     AND extract(epoch from created_at) > ($offset)
-                    GROUP BY exchange_id, buckettime 
+                    GROUP BY exchange_code, buckettime 
                     ORDER BY buckettime DESC   
                 "
                     )
@@ -144,7 +144,7 @@ trait OHLC
                 DB::raw(
                     "
               SELECT 
-                exchange_id,
+                exchange_code,
                 SUBSTRING_INDEX(GROUP_CONCAT(CAST(bid AS CHAR) ORDER BY created_at), ',', 1 ) AS `open`,
                 SUBSTRING_INDEX(GROUP_CONCAT(CAST(bid AS CHAR) ORDER BY bid DESC), ',', 1 ) AS `high`,
                 SUBSTRING_INDEX(GROUP_CONCAT(CAST(bid AS CHAR) ORDER BY bid), ',', 1 ) AS `low`,
@@ -157,7 +157,7 @@ trait OHLC
               FROM tickers
               WHERE symbol = '$pair'
               AND UNIX_TIMESTAMP(`created_at`) > ($offset)
-              GROUP BY exchange_id, buckettime 
+              GROUP BY exchange_code, buckettime 
               ORDER BY buckettime DESC
           "
                 )

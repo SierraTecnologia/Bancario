@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class Version6CreateTraddingTables extends Migration {
+class CreateTraddingDebugsTables extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -15,13 +15,15 @@ class Version6CreateTraddingTables extends Migration {
 		Schema::create('tradding_histories', function(Blueprint $table)
 		{
 			$table->id();
-			$table->integer('exchange_id')->unsigned();
+            $table->string('exchange_code');
 			$table->string('symbol', 10);
 			$table->float('price', 10, 0);
 			$table->integer('time')->unsigned();
 			// $table->timestamp('time')->unsigned()->default(\DB::raw('CURRENT_TIMESTAMP'));
 
-			$table->unique(['exchange_id','symbol','time'], 'tradding_price_history');
+            $table->foreign('exchange_code')->references('code')->on('exchanges');
+
+			$table->unique(['exchange_code','symbol','time'], 'tradding_price_history');
 
 		// 	$table->increments('id');
 		// 	$table->boolean('public_api')->nullable()->default(0);

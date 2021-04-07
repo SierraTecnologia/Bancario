@@ -54,7 +54,7 @@ final class WalletEntity extends AbstractEntity
         $this->eloquent = \Bancario\Models\Tradding\ExchangeBalance::firstOrCreate([
             'trader_id' => $this->trader->getId(),
             'money_code' => $this->money->getCode(),
-            'exchange_id' => 6
+            'exchange_code' => 'binance', //6
         ]);
         if (!is_null($this->eloquent->balance)) {
             $this->setBalance($this->eloquent->balance);

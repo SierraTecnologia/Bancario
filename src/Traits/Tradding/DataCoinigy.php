@@ -75,7 +75,7 @@ trait DataCoinigy
             $ins = [];
             $ins['coinigy']                 =1;
             $ins['exchange']                = $exchange['exch_name'];
-            $ins['coinigy_id']              = $exchange['exchange_id'];
+            $ins['coinigy_id']              = $exchange['exchange_code'];
             $ins['coinigy_exch_code']       = $exchange['exch_code'];
             $ins['coinigy_exch_fee']        = $exchange['exch_fee'];
             $ins['coinigy_trade_enabled']   = $exchange['exch_trade_enabled'];
@@ -103,7 +103,7 @@ trait DataCoinigy
             $exchanges = $exchanges['data'];
             foreach ($exchanges as $ex) {
                 $pair_model = new \Bancario\Models\Tradding\ExchangePair();
-                $pair_model::updateOrCreate(['exchange_id' => $ex['exchange_id'], 'market_id'=>$ex['mkt_id'], 'exchange_pair' => $ex['mkt_name']]);
+                $pair_model::updateOrCreate(['exchange_code' => $ex['exchange_code'], 'market_id'=>$ex['mkt_id'], 'exchange_pair' => $ex['mkt_name']]);
             }
             echo "Done with ". $exchange['exch_name'] ." .... \n";
         }

@@ -114,7 +114,7 @@ trait DataCcxt
                 try {
                     echo "updating $exchange / $pair data\n";
                     $pair_model = new \Bancario\Models\Tradding\ExchangePair();
-                    $pair_model::updateOrCreate(['exchange_id' => $exid, 'exchange_pair' => $pair]);
+                    $pair_model::updateOrCreate(['exchange_code' => $exid, 'exchange_pair' => $pair]);
                 } catch (AuthenticationError $e) {
                     echo "\n\t$exchange needs auth (set this exchange to -1 in the database to disable it)..\n\n";
                 } catch (BaseError $e) {
