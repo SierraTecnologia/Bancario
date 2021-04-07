@@ -24,6 +24,6 @@ Route::resource('/tickers', 'TickerController')->parameters([
     'tickers' => 'id'
 ]);
 
-Route::resource('/traders', 'TraderController')->parameters([
-    'traders' => 'id'
+Route::resource('/trades', 'TradeController')->parameters([
+    'trades' => 'id'
 ]);

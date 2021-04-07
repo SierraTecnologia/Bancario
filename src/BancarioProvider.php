@@ -63,6 +63,17 @@ class BancarioProvider extends ServiceProvider
             'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
             'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
         ],
+        [
+            'text' => 'Tradding',
+            'icon' => 'fas fa-fw fa-search',
+            'icon_color' => "blue",
+            'label_color' => "success",
+            'order' => 650,
+            'section' => "painel",
+            'feature' => 'bancario',
+            'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+            'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        ],
         'Universo' => [
             [
                 'text' => 'Bancario',
@@ -203,8 +214,8 @@ class BancarioProvider extends ServiceProvider
                 // 'access' => \Porteiro\Models\Role::$ADMIN
             ],
             [
-                'text'        => 'traders',
-                'route'       => 'admin.bancario.traders.index',
+                'text'        => 'trades',
+                'route'       => 'admin.bancario.trades.index',
                 'icon'        => 'fas fa-fw fa-ship',
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
@@ -215,6 +226,119 @@ class BancarioProvider extends ServiceProvider
                 // 'access' => \Porteiro\Models\Role::$ADMIN
             ],
         ],
+        'Tradding' => [
+            [
+                'text'        => 'Configs',
+                'route'       => 'painel.bancario.configs.index',
+                'icon'        => 'fas fa-fw fa-ship',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section' => "painel",
+                'feature' => 'bancario',
+                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+            ],
+            [
+                'text'        => 'Hist. de Preço',
+                'route'       => 'painel.bancario.histories.index',
+                'icon'        => 'fas fa-fw fa-ship',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section' => "painel",
+                'feature' => 'bancario',
+                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+            ],
+            [
+                'text'        => 'Tickers',
+                'route'       => 'painel.bancario.tickers.index',
+                'icon'        => 'fas fa-fw fa-ship',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section' => "painel",
+                'feature' => 'bancario',
+                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+            ],
+            [
+                'text'        => 'Ohlcvs',
+                'route'       => 'painel.bancario.ohlcvs.index',
+                'icon'        => 'fas fa-fw fa-ship',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section' => "painel",
+                'feature' => 'bancario',
+                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+            ],
+            [
+                'text'        => 'exchange Accounts',
+                'route'       => 'painel.bancario.exchangeAccounts.index',
+                'icon'        => 'fas fa-fw fa-ship',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section' => "painel",
+                'feature' => 'bancario',
+                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+            ],
+            [
+                'text'        => 'exchange Balances',
+                'route'       => 'painel.bancario.exchangeBalances.index',
+                'icon'        => 'fas fa-fw fa-ship',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section' => "painel",
+                'feature' => 'bancario',
+                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+            ],
+            [
+                'text'        => 'exchange Addresses',
+                'route'       => 'painel.bancario.exchangeAddresses.index',
+                'icon'        => 'fas fa-fw fa-ship',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section' => "painel",
+                'feature' => 'bancario',
+                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+            ],
+            [
+                'text'        => 'Exchanges',
+                'route'       => 'painel.bancario.exchanges.index',
+                'icon'        => 'fas fa-fw fa-ship',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section' => "painel",
+                'feature' => 'bancario',
+                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+            ],
+            [
+                'text'        => 'PopularExchanges',
+                'route'       => 'painel.bancario.popularExchanges.index',
+                'icon'        => 'fas fa-fw fa-ship',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section' => "painel",
+                'feature' => 'bancario',
+                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+            ],
+            [
+                'text'        => 'exchange Pares',
+                'route'       => 'painel.bancario.exchangePairs.index',
+                'icon'        => 'fas fa-fw fa-ship',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'section' => "painel",
+                'feature' => 'bancario',
+                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+            ],
+        ],
+
     ];
 
     /**
