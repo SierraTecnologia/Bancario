@@ -12,6 +12,8 @@ class Order extends Base
     protected $organizationPerspective = true;
 
     protected $table = 'order';
+    
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.

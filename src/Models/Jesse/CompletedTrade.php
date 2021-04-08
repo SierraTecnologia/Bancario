@@ -15,6 +15,8 @@ class CompletedTrade extends Base
     protected $organizationPerspective = true;
 
     protected $table = 'completedtrade';
+    
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.

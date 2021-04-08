@@ -12,7 +12,8 @@ class Ticker extends Base
     protected $organizationPerspective = true;
 
     protected $table = 'ticker';
-
+    
+    public $timestamps = false;
     
     /**
      * The attributes that are mass assignable.

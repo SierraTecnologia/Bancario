@@ -12,6 +12,8 @@ class OrderBook extends Base
     protected $organizationPerspective = true;
 
     protected $table = 'orderbook';
+    
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.

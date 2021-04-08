@@ -13,6 +13,8 @@ class Candle extends Base
 
     protected $table = 'candle';
     
+    public $timestamps = false;
+    
     /**
      * The attributes that are mass assignable.
      *

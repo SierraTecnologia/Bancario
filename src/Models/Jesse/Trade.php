@@ -12,6 +12,8 @@ class Trade extends Base
     protected $organizationPerspective = true;
 
     protected $table = 'trade';
+    
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.

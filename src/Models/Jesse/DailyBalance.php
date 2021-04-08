@@ -12,6 +12,8 @@ class DailyBalance extends Base
     protected $organizationPerspective = true;
 
     protected $table = 'dailybalance';
+    
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.

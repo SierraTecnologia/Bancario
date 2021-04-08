@@ -10,7 +10,7 @@ use JsonSerializable;
  *
  * @package Core\Entities
  */
-abstract class AbstractEntity extends \Muleta\Contracts\Objects\AbstractEntity
+abstract class AbstractEntity extends \Muleta\Modules\Eloquents\Displays\EntityAbstract
 {
 
 }
