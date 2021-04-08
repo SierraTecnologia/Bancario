@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Resources;
+namespace Bancario\Modules\Graph\Resources;
 
-use Illuminate\Http\Resources\Json\ResourceCollection;
 use Muleta\Modules\Eloquents\Displays\CollectionAbstract;
 
 class GraphCollection extends CollectionAbstract

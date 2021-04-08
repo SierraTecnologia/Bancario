@@ -5,13 +5,13 @@ namespace Bancario\Models\Jesse;
 use Fabrica\Tools\Ssh;
 use Pedreiro\Models\Base;
 
-class Candle extends Base
+class Graph extends Base
 {
-    public static $apresentationName = 'Candles';
+    public static $apresentationName = 'Graphs';
 
     protected $organizationPerspective = true;
 
-    protected $table = 'candle';
+    protected $table = 'graphs';
     
     public $timestamps = false;
     

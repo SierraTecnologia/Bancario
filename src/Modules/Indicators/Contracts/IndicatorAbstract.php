@@ -6,4 +6,8 @@ abstract class IndicatorAbstract
 {
     use IndicatorTrait;
 
+    public function getCode()
+    {
+        $this->code;
+    }
 }

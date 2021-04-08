@@ -20,17 +20,18 @@ class TickerController extends Controller
     public function chatdisplay()
     {
         // Params
-        $quantityCandles = 1 * 60 * 24 * 7;
+        $quantityCandles = 1 * 60 * 24 * 7 * 4;
         $exchangeCode = 'Binance';
         $symbol = 'BTC-USDT';
         // $period = '15m';
 
         // Algoritmo
-        $tickets = JesseCandle::where('exchange', $exchangeCode)->where('symbol', $symbol)
+        $tickets = JesseCandle::inExchange($exchangeCode)->forPair($symbol)
         // ->where('period', $period)
         ->orderByDesc('timestamp')
         ->limit($quantityCandles)
         ->get();
+        
         $tickets = $tickets->map(function ($tick) {
             return '{
                 x: new Date('.$tick->timestamp.'),
