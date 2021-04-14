@@ -65,19 +65,9 @@ class Trader extends Base
         // 'name' => 'Name'
     ];
 
-    // public function exchange()
-    // {
-    //     return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_code', 'id');
-    // }
-
-
-
-    public function traderTimelines()
+    public function trader()
     {
-        return $this->hasMany('Bancario\Models\Tradding\TraderTimeline');
+        return $this->belongsTo(\Bancario\Models\Trader\Trader::class, 'trader_id', 'id');
     }
-    public function traddingHistories()
-    {
-        return $this->hasMany('Bancario\Models\Tradding\TraddingHistory');
-    }
+
 }

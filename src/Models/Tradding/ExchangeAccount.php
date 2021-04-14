@@ -207,4 +207,9 @@ class ExchangeAccount extends Base
         return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_code', 'code');
     }
 
+    public function trader()
+    {
+        return $this->belongsTo(\Bancario\Models\Trader\Trader::class, 'trader_id', 'id');
+    }
+
 }

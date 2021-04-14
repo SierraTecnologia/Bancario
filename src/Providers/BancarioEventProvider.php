@@ -15,16 +15,16 @@ class BancarioEventProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        Events\TraddingPositionIncreased::class => [
-            Listeners\AddBreadMenuItem::class,
-            Listeners\AddBreadPermission::class,
-        ],
-        Events\TraddingPositionReduced::class => [
-            Listeners\DeleteBreadMenuItem::class,
-        ],
-        Events\TraddingPositionReduced::class => [
-            Listeners\ClearCachedSettingValue::class,
-        ],
+        // Events\TraddingPositionIncreased::class => [
+        //     Listeners\AddBreadMenuItem::class,
+        //     Listeners\AddBreadPermission::class,
+        // ],
+        // Events\TraddingPositionReduced::class => [
+        //     Listeners\DeleteBreadMenuItem::class,
+        // ],
+        // Events\TraddingPositionReduced::class => [
+        //     Listeners\ClearCachedSettingValue::class,
+        // ],
     ];
 
     /**

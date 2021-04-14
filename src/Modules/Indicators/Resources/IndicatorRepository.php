@@ -8,9 +8,9 @@ use Muleta\Modules\Eloquents\Displays\RepositoryAbstract;
 
 class IndicatorRepository extends RepositoryAbstract
 {
-    public function __construct(Indicator $model)
+    public function model()
     {
-        $this->model = $model;
+        return Indicator::class;
     }
 
     // /**

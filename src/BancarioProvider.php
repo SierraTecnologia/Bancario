@@ -156,7 +156,7 @@ class BancarioProvider extends ServiceProvider
             ],
             [
                 'text'        => 'completedTraders',
-                'route'       => 'admin.bancario.completedTraders.index',
+                'route'       => 'master.bancario.completedTraders.index',
                 'icon'        => 'fas fa-fw fa-ship',
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
@@ -168,7 +168,7 @@ class BancarioProvider extends ServiceProvider
             ],
             [
                 'text'        => 'dailyBalances',
-                'route'       => 'admin.bancario.dailyBalances.index',
+                'route'       => 'master.bancario.dailyBalances.index',
                 'icon'        => 'fas fa-fw fa-ship',
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
@@ -180,7 +180,7 @@ class BancarioProvider extends ServiceProvider
             ],
             [
                 'text'        => 'orderBooks',
-                'route'       => 'admin.bancario.orderBooks.index',
+                'route'       => 'master.bancario.orderBooks.index',
                 'icon'        => 'fas fa-fw fa-ship',
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
@@ -192,7 +192,7 @@ class BancarioProvider extends ServiceProvider
             ],
             [
                 'text'        => 'orders',
-                'route'       => 'admin.bancario.orders.index',
+                'route'       => 'master.bancario.orders.index',
                 'icon'        => 'fas fa-fw fa-ship',
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
@@ -204,7 +204,7 @@ class BancarioProvider extends ServiceProvider
             ],
             [
                 'text'        => 'tickers',
-                'route'       => 'admin.bancario.tickers.index',
+                'route'       => 'master.bancario.tickers.index',
                 'icon'        => 'fas fa-fw fa-ship',
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
@@ -216,7 +216,7 @@ class BancarioProvider extends ServiceProvider
             ],
             [
                 'text'        => 'trades',
-                'route'       => 'admin.bancario.trades.index',
+                'route'       => 'master.bancario.trades.index',
                 'icon'        => 'fas fa-fw fa-ship',
                 'icon_color'  => 'blue',
                 'label_color' => 'success',

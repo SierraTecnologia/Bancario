@@ -3,10 +3,10 @@ namespace Bancario\Http\Controllers\Painel;
 
 use Illuminate\Http\Request;
 use Bancario\Models\Money\Money;
-use Bancario\Models\Trader\Trader;
+use Bancario\Models\Jesse\Graph;
 use Bancario\Models\Trader\ExchangeAccount;
 
-class TraderController extends Controller
+class GraphController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +15,9 @@ class TraderController extends Controller
      */
     public function index()
     {
-        $trader = Trader::first();
+        $graph = Graph::all();
         dd(
-            $trader,
-            $trader->exchangeAccounts,
-            $trader->traderTimelines
+            $graph
         );
         // $moneys = Money::orderBy('code', 'DESC')->simplePaginate(50);
 

@@ -8,9 +8,9 @@ use Muleta\Modules\Eloquents\Displays\RepositoryAbstract;
 
 class CandleRepository extends RepositoryAbstract
 {
-    public function __construct(Candle $model)
+    public function model()
     {
-        $this->model = $model;
+        return Candle::class;
     }
 
     // /**

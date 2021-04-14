@@ -8,9 +8,9 @@ use Muleta\Modules\Eloquents\Displays\RepositoryAbstract;
 
 class StrategyRepository extends RepositoryAbstract
 {
-    public function __construct(Strategy $model)
+    public function model()
     {
-        $this->model = $model;
+        return Strategy::class;
     }
 
     // /**
