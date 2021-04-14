@@ -3,7 +3,7 @@
  * @todo
  */
 
-namespace Bancario\Models\Tradding;
+namespace Bancario\Models\Trader;
 
 use Pedreiro\Models\Base;
 
@@ -69,4 +69,20 @@ class Trader extends Base
     // {
     //     return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_code', 'id');
     // }
+
+
+
+    public function exchangeAccounts()
+    {
+        return $this->hasMany('Bancario\Models\Tradding\ExchangeAccount');
+    }
+
+    public function traderTimelines()
+    {
+        return $this->hasMany('Bancario\Models\Trader\TraderTimeline');
+    }
+    public function traddingHistories()
+    {
+        return $this->hasMany('Bancario\Models\Tradding\TraddingHistory');
+    }
 }

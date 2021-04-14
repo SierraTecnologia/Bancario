@@ -2,7 +2,7 @@
 
 namespace Bancario\Http\Controllers\Painel;
 
-use Bancario\Models\Tradding\ExchangeBalance;
+use Bancario\Models\Trader\ExchangeBalance;
 use Pedreiro\CrudController;
 
 class ExchangeBalanceController extends Controller

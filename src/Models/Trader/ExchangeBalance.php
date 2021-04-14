@@ -3,7 +3,7 @@
  * @todo
  */
 
-namespace Bancario\Models\Tradding;
+namespace Bancario\Models\Trader;
 
 use Fabrica\Tools\Ssh;
 use Pedreiro\Models\Base;
@@ -123,7 +123,7 @@ class ExchangeBalance extends Base
 
     public function exchange()
     {
-        return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_code', 'id');
+        return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_code', 'code');
     }
 
     public function money()

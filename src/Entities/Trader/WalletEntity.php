@@ -51,7 +51,7 @@ final class WalletEntity extends AbstractEntity
         // $this->setUpdatedAt(isset($attributes['updated_at']) ? new Carbon($attributes['updated_at']) : null);
         // $this->setPublishedAt(isset($attributes['published_at']) ? new Carbon($attributes['published_at']) : null);
 
-        $this->eloquent = \Bancario\Models\Tradding\ExchangeBalance::firstOrCreate([
+        $this->eloquent = \Bancario\Models\Trader\ExchangeBalance::firstOrCreate([
             'trader_id' => $this->trader->getId(),
             'money_code' => $this->money->getCode(),
             'exchange_code' => 'binance', //6

@@ -3,17 +3,17 @@
  * @todo
  */
 
-namespace Bancario\Models\Tradding;
+namespace Bancario\Models\Trader;
 
 use Pedreiro\Models\Base;
 
-class TraderTimeline extends Base
+class Trader extends Base
 {
-    public static $apresentationName = 'Timeline do Trader';
+    public static $apresentationName = 'Trader';
 
     protected $organizationPerspective = true;
 
-    protected $table = 'trader_timelines';
+    protected $table = 'traders';
     public $timestamps = false;
 
     /**
@@ -22,35 +22,17 @@ class TraderTimeline extends Base
      * @var array
      */
     protected $fillable = [
-        'trader_id',
-        'symbol',
-        'data',
-        'time',
+        'id',
     ];
 
 
     
     public $formFields = [
         [
-            'name' => 'exchange_code',
+            'name' => 'id',
             'label' => 'Exchange',
             'type' => 'select',
             'relationship' => 'exchange'
-        ],
-        [
-            'name' => 'symbol',
-            'label' => 'symbol',
-            'type' => 'text'
-        ],
-        [
-            'name' => 'price',
-            'label' => 'price',
-            'type' => 'float'
-        ],
-        [
-            'name' => 'time',
-            'label' => 'time',
-            'type' => 'timestamp'
         ],
         // [
         //     'name' => 'status',
@@ -63,10 +45,7 @@ class TraderTimeline extends Base
     ];
 
     public $indexFields = [
-        'exchange_code',
-        'symbol',
-        'price',
-        'time',
+        'id',
     ];
 
     public $validationRules = [
@@ -86,8 +65,19 @@ class TraderTimeline extends Base
         // 'name' => 'Name'
     ];
 
-    public function exchange()
+    // public function exchange()
+    // {
+    //     return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_code', 'id');
+    // }
+
+
+
+    public function traderTimelines()
     {
-        return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_code', 'id');
+        return $this->hasMany('Bancario\Models\Tradding\TraderTimeline');
+    }
+    public function traddingHistories()
+    {
+        return $this->hasMany('Bancario\Models\Tradding\TraddingHistory');
     }
 }

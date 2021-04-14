@@ -20,7 +20,7 @@ class TickerController extends Controller
     public function chatdisplay()
     {
         // Params
-        $quantityCandles = 1 * 60 * 24 * 7 * 4;
+        $quantityCandles = 1 * 60 * 24; // * 7;
         $exchangeCode = 'Binance';
         $symbol = 'BTC-USDT';
         // $period = '15m';

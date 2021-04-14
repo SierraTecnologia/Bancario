@@ -33,6 +33,7 @@ class BancarioProvider extends ServiceProvider
     public static $providers = [
 
         \Telefonica\TelefonicaProvider::class,
+        \Bancario\Providers\BancarioEventProvider::class,
 
         
     ];
@@ -48,7 +49,7 @@ class BancarioProvider extends ServiceProvider
             'label_color' => "success",
             'order' => 1550,
             'section' => "master",
-            'feature' => 'bancario',
+            'feature' => 'bancos',
             'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
             'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
         ],
@@ -59,7 +60,7 @@ class BancarioProvider extends ServiceProvider
             'label_color' => "success",
             'order' => 1450,
             'section' => "master",
-            'feature' => 'bancario',
+            'feature' => 'tradding',
             'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
             'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
         ],
@@ -70,7 +71,7 @@ class BancarioProvider extends ServiceProvider
             'label_color' => "success",
             'order' => 650,
             'section' => "painel",
-            'feature' => 'bancario',
+            'feature' => 'tradding',
             'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
             'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
         ],
@@ -82,7 +83,7 @@ class BancarioProvider extends ServiceProvider
                 'label_color' => "success",
                 'order' => 1550,
                 'section' => "admin",
-                'feature' => 'bancario',
+                'feature' => 'bancos',
                 'order' => 2840,
                 'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
                 'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
@@ -95,7 +96,7 @@ class BancarioProvider extends ServiceProvider
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
                     'section' => "admin",
-                    'feature' => 'bancario',
+                    'feature' => 'bancos',
                     'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
                     'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                     // 'access' => \Porteiro\Models\Role::$ADMIN
@@ -107,7 +108,7 @@ class BancarioProvider extends ServiceProvider
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
                     'section' => "admin",
-                    'feature' => 'bancario',
+                    'feature' => 'bancos',
                     'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
                     'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                     // 'access' => \Porteiro\Models\Role::$ADMIN
@@ -122,7 +123,7 @@ class BancarioProvider extends ServiceProvider
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
                 'section' => "master",
-                'feature' => 'bancario',
+                'feature' => 'bancos',
                 'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
                 'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                 // 'access' => \Porteiro\Models\Role::$ADMIN
@@ -134,7 +135,7 @@ class BancarioProvider extends ServiceProvider
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
                 'section' => "master",
-                'feature' => 'bancario',
+                'feature' => 'bancos',
                 'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
                 'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                 // 'access' => \Porteiro\Models\Role::$ADMIN

@@ -14,6 +14,8 @@ class Candle extends Base
     protected $table = 'candle';
     
     public $timestamps = false;
+    const UPDATED_AT = null;
+    const CREATED_AT = null;
     
     /**
      * The attributes that are mass assignable.

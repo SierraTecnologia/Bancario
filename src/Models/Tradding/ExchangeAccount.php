@@ -135,11 +135,6 @@ class ExchangeAccount extends Base
         // 'name' => 'Name'
     ];
 
-    public function exchange()
-    {
-        return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_code', 'id');
-    }
-
     /**
      * Brincando com a Api
      */
@@ -204,4 +199,12 @@ class ExchangeAccount extends Base
         }
         return $ticks;
     }
+
+
+
+    public function exchange()
+    {
+        return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_code', 'code');
+    }
+
 }
