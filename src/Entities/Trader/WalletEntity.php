@@ -19,7 +19,7 @@ final class WalletEntity extends AbstractEntity
     private $id;
     // private $createdByUserId;
     // private $description;
-    private $balance;
+    private float $balance = 0;
     private $money;
     private $trader;
     // private $createdAt;
@@ -37,7 +37,7 @@ final class WalletEntity extends AbstractEntity
             $this->setId($attributes['id']);
         }
         // $this->setCreatedByUserId($attributes['created_by_user_id'] ?? null);
-        $this->setBalance($attributes['balance'] ?? null);
+        $this->setBalance($attributes['balance'] ?? 0);
         $this->setMoney(new MoneyEntity($attributes['money'] ?? []));
         $this->setTrader(new TraderEntity($attributes['trader'] ?? []));
         // $this->setExchangeAccounts(
@@ -141,7 +141,7 @@ final class WalletEntity extends AbstractEntity
      * @param  float $quantity
      * @return $this
      */
-    private function setBalance(float $quantity): WalletEntity
+    private function setBalance(float $quantity = 0): WalletEntity
     {
         $this->balance = $quantity;
 

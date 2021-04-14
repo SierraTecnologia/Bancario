@@ -23,7 +23,7 @@ class CreateTraddingGraphs extends Migration
                 $table->string('abrangencia_type', 255)->nullable();
                 $table->bigInteger('timestamp')->nullable();
                 
-			    $table->unique(['graph_id','graph_type','abrangencia_id','abrangencia_type']);
+			    $table->unique(['graph_id','graph_type','abrangencia_id','abrangencia_type'], 'graphs_graph_abrangencia_unique');
             }
         );
         Schema::create(
@@ -40,7 +40,7 @@ class CreateTraddingGraphs extends Migration
                 $table->foreign('graph_id')->references('id')->on('graphs');
 
                 
-			    $table->unique(['graph_id','graphable_id','graphable_type','timestamp']);
+			    $table->unique(['graph_id','graphable_id','graphable_type','timestamp'], 'graphables_graph_abrangencia_unique');
 
             }
         );

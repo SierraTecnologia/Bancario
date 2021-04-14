@@ -13,7 +13,7 @@ class Trader extends Base
 
     protected $organizationPerspective = true;
 
-    protected $table = 'traders';
+    protected $table = 'trader_positions';
     public $timestamps = false;
 
     /**
