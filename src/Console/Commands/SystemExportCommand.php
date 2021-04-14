@@ -5,7 +5,7 @@ namespace Bancario\Console\Commands;
 use Illuminate\Console\Command;
 use Rap2hpoutre\FastExcel\FastExcel;
 use App\Models\User;
-USE Bancario\Models\Jesse\Candle;
+use Bancario\Models\Jesse\Candle;
 
 class SystemExportCommand extends Command
 {
@@ -40,7 +40,10 @@ class SystemExportCommand extends Command
      */
     public function handle()
     {
-
+        $repo = app(\Bancario\Modules\Graph\Resources\CandleRepository::class);
+        dd(
+            $repo->getRecentData()
+        );
         // Load users
         $candles = Candle::all();
 

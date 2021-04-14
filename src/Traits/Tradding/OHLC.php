@@ -36,7 +36,6 @@ trait OHLC
         }
         return $ret;
     }
-
     /**
      * @param string $pair
      * @param int    $limit
@@ -173,4 +172,5 @@ trait OHLC
         \Cache::put($key, $ret, 2);
         return $ret;
     }
+
 }
