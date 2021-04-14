@@ -16,9 +16,10 @@ class TraderController extends Controller
     public function index()
     {
         $trader = Trader::first();
-        // dd(
-        //     $trader->exchangeAccounts[0]->exchange_code
-        // );
+        dd(
+            // $trader
+            $trader->traderTimelines
+        );
         // $moneys = Money::orderBy('code', 'DESC')->simplePaginate(50);
 
         return view('bancario::trader.dashboard', compact('trader'));

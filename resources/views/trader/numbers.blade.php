@@ -1,6 +1,6 @@
 <?php 
 
-dd($account->exchange);
+dd($account);
 
 ?>
 

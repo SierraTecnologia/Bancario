@@ -81,8 +81,8 @@ class Trader extends Base
     {
         return $this->hasMany('Bancario\Models\Trader\TraderTimeline');
     }
-    public function traddingHistories()
-    {
-        return $this->hasMany('Bancario\Models\Tradding\TraddingHistory');
-    }
+    // public function traddingHistories()
+    // {
+    //     return $this->hasMany('Bancario\Models\Tradding\TraddingHistory');
+    // }
 }

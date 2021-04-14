@@ -7,6 +7,12 @@
 @stop
 
 @section('content')
+<?php 
+
+dd($trader->exchangeAccounts);
+
+?>
+
   @foreach ($trader->exchangeAccounts as $account)
       @include('bancario::trader.numbers', [
           'account' => $account,
