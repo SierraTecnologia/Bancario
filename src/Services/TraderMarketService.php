@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use SierraTecnologia\Customer;
-// use Bancario\Models\Tradding\TraderMarket;
+// use Bancario\Models\Trader\TraderMarket;
 // use SierraTecnologia\SierraTecnologia;
 
 /**

@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  */
 final class TradeEntity extends AbstractEntity
 {
-    // public $model = \Bancario\Models\Tradding\Trade::class;
+    // public $model = \Bancario\Models\Trader\Trade::class;
 
     private $id;
     // private $createdByUserId;

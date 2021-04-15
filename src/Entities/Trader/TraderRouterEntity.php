@@ -13,7 +13,7 @@ use Bancario\Entities\AbstractEntity;
  */
 final class TraderRouterEntity extends AbstractEntity
 {
-    // public $model = \Bancario\Models\Tradding\Trader::class;
+    // public $model = \Bancario\Models\Trader\Trader::class;
 
     private $id;
     // private $createdByUserId;
