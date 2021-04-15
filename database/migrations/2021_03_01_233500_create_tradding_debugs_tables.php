@@ -12,6 +12,17 @@ class CreateTraddingDebugsTables extends Migration {
 	 */
 	public function up()
 	{
+        if (!\Muleta\Modules\Features\Resources\FeatureHelper::hasActiveFeature(
+            [
+                'tradding',
+                'trader',
+                'crypto',
+            ]
+        )){
+            \Log::debug('Migration Ignorada por causa de Feature');
+            return ;
+        }
+
 		Schema::create('tradding_histories', function(Blueprint $table)
 		{
 			$table->id();

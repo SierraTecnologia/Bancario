@@ -2,7 +2,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMercadoEmpresasTables extends Migration
+class CreateBancarioBanksTables extends Migration
 {
 
     /**
@@ -12,6 +12,14 @@ class CreateMercadoEmpresasTables extends Migration
      */
     public function up()
     {
+        if (!\Muleta\Modules\Features\Resources\FeatureHelper::hasActiveFeature(
+            [
+                'banks',
+            ]
+        )){
+            return ;
+        }
+
         /**
          * Financeiro
          */

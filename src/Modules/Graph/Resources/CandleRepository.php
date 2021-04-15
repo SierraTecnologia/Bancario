@@ -6,9 +6,110 @@ use Illuminate\Support\Facades\Schema;
 use Bancario\Models\Jesse\Candle;
 use Muleta\Modules\Eloquents\Displays\RepositoryAbstract;
 use Illuminate\Support\Facades\DB;
+use Bancario\Models\Tradding\Exchange;
+use Bancario\Models\Jesse\Ticker as JesseTicker;
+use Bancario\Models\Jesse\Candle as JesseCandle;
+use Bancario\Modules\Metrics\Resources\MetricEntity;
 
 class CandleRepository extends RepositoryAbstract
 {
+    public $search = [
+        [
+            'name' => 'symbol',
+            'label' => 'symbol',
+            'type' => 'text'
+        ],
+        [
+            'name' => 'interval',
+            'label' => 'interval',
+            'type' => 'text'
+        ],
+        [
+            'name' => 'exchange',
+            'label' => 'Exchange',
+            'type' => 'select',
+            'relationship' => 'exchange'
+        ],
+        ['name' => 'after_date', 'label' => 'Publish Date', 'type' => 'date'],
+    ];
+
+    public $symbol = 'BTC-USDT';
+
+    public $interval = '1m';
+
+    public $exchange = 'Binance';
+    
+    public $after_date;
+
+    protected $model;
+
+    public function getRelations()
+    {
+        $relationshipOptions = [];
+        $relationshipOptions["exchange"] = Exchange::pluck('name','name');
+        return $relationshipOptions;
+    }
+
+    public function __toString() {
+        return "Candles do par ".$this->symbol." na ".$this->exchange." no intervalo ".$this->interval;
+    }
+
+    public function setSearchParamsAndReturnFields($request)
+    {
+        return $this->search;
+    }
+
+    public function getTicketsForChart()
+    {
+        // Algoritmo
+        $quantityCandles = 1 * 60 * 24; // * 7;
+        $tickets = $this->getBuilderQuery()
+        // ->where('period', $period)
+        ->orderByDesc('timestamp')
+        ->limit($quantityCandles)
+        ->get();
+        
+        return $tickets->map(function ($tick) {
+            return '{
+                x: new Date('.$tick->timestamp.'),
+                y: ['.$tick->open.', '.$tick->high.', '.$tick->low.', '.$tick->close.']
+              }';
+        });
+    }
+
+    public function getMetrics()
+    {
+        $metrics = [];
+        $metrics[] = new MetricEntity([
+            'code' => 'maxPrice',
+            'name' => 'Preço Máximo Negociado',
+            'color' => 'green',
+            'value' => $this->getBuilderQuery()->max('high'),
+            // 'value' => DB::table('orders')->max('price'),
+        ]);
+        $metrics[] = new MetricEntity([
+            'code' => 'minPrice',
+            'name' => 'Preço Máximo Negociado',
+            'color' => 'red',
+            'value' => $this->getBuilderQuery()->min('low'),
+            // 'value' => DB::table('orders')->max('price'),
+        ]);
+        $metrics[] = new MetricEntity([
+            'code' => 'avgClosePrice',
+            'name' => 'Preço Médio',
+            'color' => 'blue',
+            'value' => $this->getBuilderQuery()->avg('close'),
+            // 'value' => DB::table('orders')->max('price'),
+        ]);
+
+        return $metrics;
+    }
+
+    public function getBuilderQuery()
+    {
+        return JesseCandle::inExchange($this->exchange)->forPair($this->symbol);
+    }
+
     public function model()
     {
         return Candle::class;

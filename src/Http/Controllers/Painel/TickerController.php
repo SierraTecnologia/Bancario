@@ -6,6 +6,8 @@ use Bancario\Models\Tradding\Ticker;
 use Bancario\Models\Jesse\Ticker as JesseTicker;
 use Bancario\Models\Jesse\Candle as JesseCandle;
 use Pedreiro\CrudController;
+use Bancario\Models\Tradding\Exchange;
+use Request;
 
 class TickerController extends Controller
 {
@@ -17,28 +19,27 @@ class TickerController extends Controller
         parent::__construct();
     }
 
-    public function chatdisplay()
+    public function chatdisplay(Request $request)
     {
-        // Params
-        $quantityCandles = 1 * 60 * 24; // * 7;
-        $exchangeCode = 'Binance';
-        $symbol = 'BTC-USDT';
-        // $period = '15m';
+        $entity = app(\Bancario\Modules\Graph\Resources\CandleRepository::class);
+        // dd(
+        //     $entity->getMetrics()
+        // );
+        // $entity = new $this->model;
+        $fields = $entity->setSearchParamsAndReturnFields($request);
+        $tickets = $entity->getTicketsForChart();
+        $relationshipOptions = $entity->getRelations();
 
-        // Algoritmo
-        $tickets = JesseCandle::inExchange($exchangeCode)->forPair($symbol)
-        // ->where('period', $period)
-        ->orderByDesc('timestamp')
-        ->limit($quantityCandles)
-        ->get();
-        
-        $tickets = $tickets->map(function ($tick) {
-            return '{
-                x: new Date('.$tick->timestamp.'),
-                y: ['.$tick->open.', '.$tick->high.', '.$tick->low.', '.$tick->close.']
-              }';
-        });
-        return view('components.candlestick', compact('tickets'));
+        return view('components.candlestick', 
+            compact(
+                'tickets',
+
+                // Busca
+                'entity',
+                'fields',
+                'relationshipOptions'
+            )
+        );
     }
 
     // public function chatdisplay()

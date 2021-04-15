@@ -12,10 +12,25 @@ class CreateTraddingJesseTables extends Migration {
 	 */
 	public function up()
 	{
+        if (!\Muleta\Modules\Features\Resources\FeatureHelper::hasActiveFeature(
+            [
+                'tradding',
+                'trader',
+                'crypto',
+            ]
+        )){
+            \Log::debug('Migration Ignorada por causa de Feature');
+            return ;
+        }
+
+		/**
+		 * From Jesse
+		 */
 		Schema::create('candle', function(Blueprint $table)
 		{
 			$table->uuid('id');
-			$table->bigInteger('timestamp');
+			$table->timestamp('timestamp', $precision = 0);
+			// $table->bigInteger('timestamp');
 			$table->double('open', 8, 2);
 			$table->double('close', 8, 2);
 			$table->double('high', 8, 2);
@@ -28,6 +43,9 @@ class CreateTraddingJesseTables extends Migration {
 			$table->unique(['timestamp','exchange','symbol']);
 		});
 
+		/**
+		 * From Jesse
+		 */
 		Schema::create('completedtrade', function(Blueprint $table)
 		{
 			$table->uuid('id');
@@ -55,10 +73,14 @@ class CreateTraddingJesseTables extends Migration {
 		});
 
 
+		/**
+		 * From Jesse
+		 */
 		Schema::create('dailybalance', function(Blueprint $table)
 		{
 			$table->uuid('id');
-			$table->bigInteger('timestamp');
+			$table->timestamp('timestamp', $precision = 0);
+			// $table->bigInteger('timestamp');
 			$table->string('identifier');
 			$table->string('exchange');
 			$table->string('asset');
@@ -71,6 +93,9 @@ class CreateTraddingJesseTables extends Migration {
 
 
 
+		/**
+		 * From Jesse
+		 */
 		Schema::create('order', function(Blueprint $table)
 		{
 			$table->uuid('id');
@@ -97,10 +122,14 @@ class CreateTraddingJesseTables extends Migration {
 
 
 
+		/**
+		 * From Jesse
+		 */
 		Schema::create('orderbook', function(Blueprint $table)
 		{
 			$table->uuid('id');
-			$table->bigInteger('timestamp');
+			$table->timestamp('timestamp', $precision = 0);
+			// $table->bigInteger('timestamp');
 			$table->string('symbol');
 			$table->string('exchange');
 			$table->string('data'); // @todo tipo bytea databinario
@@ -111,10 +140,14 @@ class CreateTraddingJesseTables extends Migration {
 
 
 
+		/**
+		 * From Jesse
+		 */
 		Schema::create('ticker', function(Blueprint $table)
 		{
 			$table->uuid('id');
-			$table->bigInteger('timestamp');
+			$table->timestamp('timestamp', $precision = 0);
+			// $table->bigInteger('timestamp');
 			$table->double('last_price', 8, 2);
 			$table->double('volume', 8, 2);
 			$table->double('high_price', 8, 2);
@@ -127,11 +160,14 @@ class CreateTraddingJesseTables extends Migration {
 		});
 
 
-
+		/**
+		 * From Jesse
+		 */
 		Schema::create('trade', function(Blueprint $table)
 		{
 			$table->uuid('id');
-			$table->bigInteger('timestamp');
+			$table->timestamp('timestamp', $precision = 0);
+			// $table->bigInteger('timestamp');
 			$table->double('price', 8, 2);
 			$table->double('buy_qty', 8, 2);
 			$table->double('sell_qty', 8, 2);

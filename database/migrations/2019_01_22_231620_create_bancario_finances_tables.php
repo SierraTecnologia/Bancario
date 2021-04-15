@@ -2,7 +2,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCasaFinancesTables extends Migration
+class CreateBancarioFinancesTables extends Migration
 {
 
     /**
@@ -12,6 +12,14 @@ class CreateCasaFinancesTables extends Migration
      */
     public function up()
     {
+        if (!\Muleta\Modules\Features\Resources\FeatureHelper::hasActiveFeature(
+            [
+                'banks',
+                'casa',
+            ]
+        )){
+            return ;
+        }
 
         Schema::create(
             'transfers', function (Blueprint $table) {

@@ -13,6 +13,17 @@ class Version3CreateCryptoTables extends Migration
      */
     public function up()
     {
+        if (!\Muleta\Modules\Features\Resources\FeatureHelper::hasActiveFeature(
+            [
+                'tradding',
+                'trader',
+                'crypto',
+            ]
+        )){
+            \Log::debug('Migration Ignorada por causa de Feature');
+            return ;
+        }
+
         /**
          * Banks and Cryptos
          */

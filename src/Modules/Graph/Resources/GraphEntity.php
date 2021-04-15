@@ -4,14 +4,13 @@ namespace Bancario\Modules\Graph\Resources;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Muleta\Modules\Eloquents\Displays\EntityAbstract;
 
 /**
  * Class GraphEntity.
  *
  * @package Core\Entities
  */
-final class GraphEntity extends AbstractEntity
+final class GraphEntity extends \Muleta\Modules\Eloquents\Displays\EntityAbstract
 {
     // private $id;
     // private $createdByUserId;

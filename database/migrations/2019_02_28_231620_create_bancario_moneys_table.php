@@ -3,7 +3,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Bancario\Models\Money\Money;
 
-class CreateMoneysTable extends Migration
+class CreateBancarioMoneysTable extends Migration
 {
 
     /**
@@ -13,6 +13,17 @@ class CreateMoneysTable extends Migration
      */
     public function up()
     {
+        if (!\Muleta\Modules\Features\Resources\FeatureHelper::hasActiveFeature(
+            [
+                'banks',
+                'casa',
+                'bancario',
+                'tradding',
+                'crypto',
+            ]
+        )){
+            return ;
+        }
         
         
         /**

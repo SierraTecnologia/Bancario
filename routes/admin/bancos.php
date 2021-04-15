@@ -1,5 +1,12 @@
 <?php
 
-Route::resource('/banks', 'BankController')->parameters([
-    'banks' => 'id'
-]);
+
+if (\Muleta\Modules\Features\Resources\FeatureHelper::hasActiveFeature(
+    [
+        'banks',
+    ]
+)){
+    Route::resource('/banks', 'BankController')->parameters([
+        'banks' => 'id'
+    ]);
+}
