@@ -3,6 +3,11 @@
 namespace Bancario\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
+use Bancario\Models\Jesse\Candle;
+use Carbon\Carbon;
+
 
 class GraphUpdate extends Command
 {
@@ -37,7 +42,23 @@ class GraphUpdate extends Command
      */
     public function handle()
     {
-        $builderMetrics = new \Bancario\Modules\Graph\Builders\GraphMetricsBuilder();
-        $builderMetrics->build();
+        // Update Indicadores
+        // $builderMetrics = new \Bancario\Modules\Graph\Builders\GraphMetricsBuilder();
+        // $builderMetrics->build();
+
+        // Update OpenAt
+        Candle::where('open_at', null)
+        ->orderBy('timestamp')
+        ->chunk(
+            50, function (Collection $tickets) {
+                $tickets->each(
+                    function (Candle $ticket) {
+                        // Divide por 3 pq é em segundos e não milisegundos
+                        $ticket->open_at = Carbon::createFromTimestamp(substr($ticket->timestamp, 0, -3))->toDateTimeString();
+                        $ticket->save();
+                    }
+                );
+            }
+        );
     }
 }

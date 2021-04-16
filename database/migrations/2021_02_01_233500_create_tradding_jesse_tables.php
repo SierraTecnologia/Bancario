@@ -29,8 +29,8 @@ class CreateTraddingJesseTables extends Migration {
 		Schema::create('candle', function(Blueprint $table)
 		{
 			$table->uuid('id');
-			$table->timestamp('timestamp', $precision = 0);
-			// $table->bigInteger('timestamp');
+			// $table->timestamp('timestamp', $precision = 0);
+			$table->bigInteger('timestamp');
 			$table->double('open', 8, 2);
 			$table->double('close', 8, 2);
 			$table->double('high', 8, 2);
@@ -79,8 +79,8 @@ class CreateTraddingJesseTables extends Migration {
 		Schema::create('dailybalance', function(Blueprint $table)
 		{
 			$table->uuid('id');
-			$table->timestamp('timestamp', $precision = 0);
-			// $table->bigInteger('timestamp');
+			// $table->timestamp('timestamp', $precision = 0);
+			$table->bigInteger('timestamp');
 			$table->string('identifier');
 			$table->string('exchange');
 			$table->string('asset');
@@ -128,8 +128,8 @@ class CreateTraddingJesseTables extends Migration {
 		Schema::create('orderbook', function(Blueprint $table)
 		{
 			$table->uuid('id');
-			$table->timestamp('timestamp', $precision = 0);
-			// $table->bigInteger('timestamp');
+			// $table->timestamp('timestamp', $precision = 0);
+			$table->bigInteger('timestamp');
 			$table->string('symbol');
 			$table->string('exchange');
 			$table->string('data'); // @todo tipo bytea databinario
@@ -146,8 +146,8 @@ class CreateTraddingJesseTables extends Migration {
 		Schema::create('ticker', function(Blueprint $table)
 		{
 			$table->uuid('id');
-			$table->timestamp('timestamp', $precision = 0);
-			// $table->bigInteger('timestamp');
+			// $table->timestamp('timestamp', $precision = 0);
+			$table->bigInteger('timestamp');
 			$table->double('last_price', 8, 2);
 			$table->double('volume', 8, 2);
 			$table->double('high_price', 8, 2);
@@ -166,8 +166,8 @@ class CreateTraddingJesseTables extends Migration {
 		Schema::create('trade', function(Blueprint $table)
 		{
 			$table->uuid('id');
-			$table->timestamp('timestamp', $precision = 0);
-			// $table->bigInteger('timestamp');
+			// $table->timestamp('timestamp', $precision = 0);
+			$table->bigInteger('timestamp');
 			$table->double('price', 8, 2);
 			$table->double('buy_qty', 8, 2);
 			$table->double('sell_qty', 8, 2);

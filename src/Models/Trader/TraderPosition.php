@@ -7,7 +7,7 @@ namespace Bancario\Models\Trader;
 
 use Pedreiro\Models\Base;
 
-class Trader extends Base
+class TraderPosition extends Base
 {
     public static $apresentationName = 'Trader';
 

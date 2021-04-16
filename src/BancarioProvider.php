@@ -81,7 +81,6 @@ class BancarioProvider extends ServiceProvider
                 'icon' => 'fas fa-fw fa-search',
                 'icon_color' => "blue",
                 'label_color' => "success",
-                'order' => 1550,
                 'section' => "admin",
                 'feature' => 'bancos',
                 'order' => 2840,

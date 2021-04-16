@@ -27,7 +27,7 @@ class CandleResource extends ResourceAbstract
         return [
             // 'id'                => $this->id,
             // 'timestamp'         => $this->timestamp,
-            'tempo'              => Carbon::createFromTimestamp($this->timestamp)->toDateTimeString(),
+            'tempo'              => Carbon::createFromTimestamp(substr($ticket->timestamp, 0, -3))->toDateTimeString(),
             'open'              => (float) $this->open,
             'close'             => (float) $this->close,
             'high'              => (float) $this->high,

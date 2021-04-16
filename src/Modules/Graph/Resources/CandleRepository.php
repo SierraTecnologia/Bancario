@@ -20,9 +20,10 @@ class CandleRepository extends RepositoryAbstract
             'type' => 'text'
         ],
         [
-            'name' => 'interval',
-            'label' => 'interval',
-            'type' => 'text'
+            'name' => 'timeframe',
+            'label' => 'Timeframe Interval',
+            'type' => 'select',
+            'relationship' => 'timeframe'
         ],
         [
             'name' => 'exchange',
@@ -30,28 +31,44 @@ class CandleRepository extends RepositoryAbstract
             'type' => 'select',
             'relationship' => 'exchange'
         ],
-        ['name' => 'after_date', 'label' => 'Publish Date', 'type' => 'date'],
+        [
+            'name' => 'last_date',
+            'label' => 'Data do Último Candle',
+            'type' => 'date'
+        ],
     ];
 
     public $symbol = 'BTC-USDT';
 
-    public $interval = '1m';
+    public $timeframe = '1m';
 
     public $exchange = 'Binance';
     
-    public $after_date;
+    public $last_date;
 
     protected $model;
 
     public function getRelations()
     {
         $relationshipOptions = [];
+
+        $relationshipOptions["timeframe"] = [
+            '1m' => '1 minute',
+            '5m' => '5 minutes',
+            '10m' => '10 minutes',
+            '15m' => '15 minutes',
+            '1h' => '1 hour',
+            '4h' => '4 hours',
+            '1d' => '1 day',
+            '1w' => '1 week',
+        ];
+
         $relationshipOptions["exchange"] = Exchange::pluck('name','name');
         return $relationshipOptions;
     }
 
     public function __toString() {
-        return "Candles do par ".$this->symbol." na ".$this->exchange." no intervalo ".$this->interval;
+        return "Candles do par ".$this->symbol." na ".$this->exchange." no intervalo ".$this->timeframe;
     }
 
     public function setSearchParamsAndReturnFields($request)
@@ -107,6 +124,55 @@ class CandleRepository extends RepositoryAbstract
 
     public function getBuilderQuery()
     {
+
+
+        // $users = DB::table('candle')
+        // ->select(
+        //     DB::raw(
+        //         'time_bucket('$timescale', open_at) buckettime,
+        //         exchange,
+        //         first(open, open_at) as open,
+        //         last(close,open_at) as close,
+        //         first(low, low) as low,
+        //         last(high,high) as high,
+        //         last(timestamp, timestamp) as ola,
+        //         last(open_at, open_at) as temporal,
+        //         SUM(volume) AS volume'
+        //     )
+        // )
+        // // ->select(
+        // //     'exchange',
+        // //     'first(open, open_at) as open',
+        // //     'last(close,open_at) as close',
+        // //     'first(low, low) as low',
+        // //     'last(high,high) as high',
+        // //     'last(timestamp, timestamp) as ola',
+        // //     'last(open_at, open_at) as temporal',
+        // //     )
+        // ->groupBy('exchange, buckettime')
+        // ->get();
+        
+        // // SELECT time_bucket('$timescale', open_at) buckettime,
+        //     exchange,
+        //     first(open, open_at) as open,
+        //     last(close,open_at) as close,
+        //     first(low, low) as low,
+        //     last(high,high) as high,
+        //     last(timestamp, timestamp) as ola,
+        //     last(open_at, open_at) as temporal,
+        //     SUM(volume) AS volume ". //,
+        // //     // AVG(bid) AS avgbid,
+        // //     // AVG(ask) AS avgask,
+        // //     // AVG(volume) AS avgvolume
+        // //     "FROM candle
+        // // WHERE symbol = '$pair'
+        // // AND open_at IS NOT NULL
+        // // GROUP BY exchange, buckettime 
+        // // ORDER BY buckettime ASC   
+
+        // dd(
+        //     $users
+        // );
         return JesseCandle::inExchange($this->exchange)->forPair($this->symbol);
     }
 
@@ -139,7 +205,7 @@ class CandleRepository extends RepositoryAbstract
      *
      * @return array
      */
-    public function getRecentData($pair='BTC-USDT', $limit=168, $day_data=false, $hour=12, $periodSize='1m', $returnRS=false)
+    public function getRecentData($pair='BTC-USDT', $limit=168, $day_data=false, $hour=12, $periodSize='1h', $returnRS=false)
     {
         /**
          *  we need to cache this as many strategies will be
@@ -206,21 +272,23 @@ class CandleRepository extends RepositoryAbstract
                 $results = DB::select(
                     DB::raw(
                         "
-                    SELECT time_bucket('$timescale', date(timestamp::DATE)) buckettime,
-                        exchange_code,
-                        first(open, timestamp) as open,
-                        last(close,timestamp) as close,
+                    SELECT time_bucket('$timescale', open_at) buckettime,
+                        exchange,
+                        first(open, open_at) as open,
+                        last(close,open_at) as close,
                         first(low, low) as low,
                         last(high,high) as high,
-                        SUM(base_volume) AS volume ". //,
+                        last(timestamp, timestamp) as ola,
+                        last(open_at, open_at) as temporal,
+                        SUM(volume) AS volume ". //,
                         // AVG(bid) AS avgbid,
                         // AVG(ask) AS avgask,
-                        // AVG(base_volume) AS avgvolume
+                        // AVG(volume) AS avgvolume
                         "FROM candle
                     WHERE symbol = '$pair'
-                    AND extract(epoch from timestamp) > ($offset)
-                    GROUP BY exchange_code, buckettime 
-                    ORDER BY buckettime DESC   
+                    AND open_at IS NOT NULL
+                    GROUP BY exchange, buckettime 
+                    ORDER BY buckettime ASC   
                 "
                     )
                 );
@@ -239,31 +307,32 @@ class CandleRepository extends RepositoryAbstract
                 DB::raw(
                     "
               SELECT 
-                exchange_code,
-                SUBSTRING_INDEX(GROUP_CONCAT(CAST(bid AS CHAR) ORDER BY created_at), ',', 1 ) AS `open`,
+                exchange,
+                SUBSTRING_INDEX(GROUP_CONCAT(CAST(bid AS CHAR) ORDER BY open_at), ',', 1 ) AS `open`,
                 SUBSTRING_INDEX(GROUP_CONCAT(CAST(bid AS CHAR) ORDER BY bid DESC), ',', 1 ) AS `high`,
                 SUBSTRING_INDEX(GROUP_CONCAT(CAST(bid AS CHAR) ORDER BY bid), ',', 1 ) AS `low`,
-                SUBSTRING_INDEX(GROUP_CONCAT(CAST(bid AS CHAR) ORDER BY created_at DESC), ',', 1 ) AS `close`,
-                SUM(base_volume) AS volume,
-                ROUND((CEILING(UNIX_TIMESTAMP(`created_at`) / $timeslice) * $timeslice)) AS buckettime,
+                SUBSTRING_INDEX(GROUP_CONCAT(CAST(bid AS CHAR) ORDER BY open_at DESC), ',', 1 ) AS `close`,
+                SUM(volume) AS volume,
+                ROUND((CEILING(UNIX_TIMESTAMP(`open_at`) / $timeslice) * $timeslice)) AS buckettime,
                 round(AVG(bid),11) AS avgbid,
                 round(AVG(ask),11) AS avgask,
-                AVG(base_volume) AS avgvolume
+                AVG(volume) AS avgvolume
               FROM candle
               WHERE symbol = '$pair'
-              AND UNIX_TIMESTAMP(`created_at`) > ($offset)
-              GROUP BY exchange_code, buckettime 
+              AND open_at IS NOT NULL
+              AND UNIX_TIMESTAMP(`open_at`) > ($offset)
+              GROUP BY exchange, buckettime 
               ORDER BY buckettime DESC
           "
                 )
             );
         }
-
-        // if ($returnRS) {
-        //     $ret = $results;
-        // } else {
-        //     $ret = $this->organizePairData($results, $limit);
-        // }
+        dd($results[0]);
+        if ($returnRS) {
+            $ret = $results;
+        } else {
+            $ret = $this->organizePairData($results, $limit);
+        }
 
         // \Cache::put($key, $ret, 2);
         return $ret;
