@@ -3,9 +3,9 @@
 namespace Bancario\Repositories;
 
 use Illuminate\Support\Facades\Schema;
-use Bancario\Models\Actors\Person;
+use Bancario\Models\Money\Money;
 
-class PersonRepository
+class MoneyRepository
 {
     public function __construct(Person $model)
     {

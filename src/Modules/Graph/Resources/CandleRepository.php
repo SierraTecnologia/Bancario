@@ -10,6 +10,8 @@ use Bancario\Models\Tradding\Exchange;
 use Bancario\Models\Jesse\Ticker as JesseTicker;
 use Bancario\Models\Jesse\Candle as JesseCandle;
 use Bancario\Modules\Metrics\Resources\MetricEntity;
+use Bancario\Services\TimeScaleService;
+use Illuminate\Database\Query\Expression;
 
 class CandleRepository extends RepositoryAbstract
 {
@@ -40,7 +42,7 @@ class CandleRepository extends RepositoryAbstract
 
     public $symbol = 'BTC-USDT';
 
-    public $timeframe = '1m';
+    public $timeframe = '1d';
 
     public $exchange = 'Binance';
     
@@ -80,9 +82,9 @@ class CandleRepository extends RepositoryAbstract
     {
         // Algoritmo
         $quantityCandles = 1 * 60 * 24; // * 7;
-        $tickets = $this->getBuilderQuery()
+        $tickets = $this->getBuilderQuery($this->timeframe)
         // ->where('period', $period)
-        ->orderByDesc('timestamp')
+        ->orderByDesc('buckettime')
         ->limit($quantityCandles)
         ->get();
         
@@ -101,35 +103,35 @@ class CandleRepository extends RepositoryAbstract
             'code' => 'maxPrice',
             'name' => 'Preço Máximo Negociado',
             'color' => 'green',
-            'value' => $this->getBuilderQuery()->max('high'),
+            'value' => JesseCandle::inExchange($this->exchange)->forPair($this->symbol)->max('high'),
             // 'value' => DB::table('orders')->max('price'),
         ]);
         $metrics[] = new MetricEntity([
             'code' => 'minPrice',
             'name' => 'Preço Máximo Negociado',
             'color' => 'red',
-            'value' => $this->getBuilderQuery()->min('low'),
+            'value' => JesseCandle::inExchange($this->exchange)->forPair($this->symbol)->min('low'),
             // 'value' => DB::table('orders')->max('price'),
         ]);
         $metrics[] = new MetricEntity([
             'code' => 'avgClosePrice',
             'name' => 'Preço Médio',
             'color' => 'blue',
-            'value' => $this->getBuilderQuery()->avg('close'),
+            'value' => JesseCandle::inExchange($this->exchange)->forPair($this->symbol)->avg('close'),
             // 'value' => DB::table('orders')->max('price'),
         ]);
 
         return $metrics;
     }
 
-    public function getBuilderQuery()
+    public function getBuilderQuery($periodSize)
     {
+        $timescaleService = new TimeScaleService($periodSize);
 
-
-        // $users = DB::table('candle')
+        
         // ->select(
         //     DB::raw(
-        //         'time_bucket('$timescale', open_at) buckettime,
+        //         'time_bucket(\''.$timescaleService->getTimescale().'\', open_at) buckettime,
         //         exchange,
         //         first(open, open_at) as open,
         //         last(close,open_at) as close,
@@ -140,17 +142,28 @@ class CandleRepository extends RepositoryAbstract
         //         SUM(volume) AS volume'
         //     )
         // )
-        // // ->select(
-        // //     'exchange',
-        // //     'first(open, open_at) as open',
-        // //     'last(close,open_at) as close',
-        // //     'first(low, low) as low',
-        // //     'last(high,high) as high',
-        // //     'last(timestamp, timestamp) as ola',
-        // //     'last(open_at, open_at) as temporal',
-        // //     )
+        // $query = JesseCandle::inExchange($this->exchange)->forPair($this->symbol);
+        $query = Candle::select(
+            'exchange',
+            // 'first(open, open_at) as open',
+            // 'last(close,open_at) as close',
+            // 'first(low, low) as low',
+            // 'last(high,high) as high',
+            // 'last(timestamp, timestamp) as ola',
+            // 'last(open_at, open_at) as temporal',
+            )
+        ->addSelect(new Expression("time_bucket('{$timescaleService->getTimescale()}', open_at) AS buckettime"))
+        ->addSelect(new Expression("first(open, open_at) as open"))
+        ->addSelect(new Expression("last(close,open_at) as close"))
+        ->addSelect(new Expression("first(low, low) as low"))
+        ->addSelect(new Expression("last(high,high) as high"))
+        ->addSelect(new Expression("first(timestamp, timestamp) as timestamp"))
+        ->addSelect(new Expression("last(open_at, open_at) as time_close"))
+        ->whereNotNull('open_at')
+        ->groupBy('buckettime')->groupBy('exchange');
         // ->groupBy('exchange, buckettime')
         // ->get();
+        return $query;
         
         // // SELECT time_bucket('$timescale', open_at) buckettime,
         //     exchange,
@@ -171,9 +184,8 @@ class CandleRepository extends RepositoryAbstract
         // // ORDER BY buckettime ASC   
 
         // dd(
-        //     $users
+        //     $users[0]
         // );
-        return JesseCandle::inExchange($this->exchange)->forPair($this->symbol);
     }
 
     public function model()
@@ -205,17 +217,17 @@ class CandleRepository extends RepositoryAbstract
      *
      * @return array
      */
-    public function getRecentData($pair='BTC-USDT', $limit=168, $day_data=false, $hour=12, $periodSize='1h', $returnRS=false)
+    public function getRecentData($pair='BTC-USDT', $periodSize='1h', $limit=168, $returnRS=false)
     {
         /**
          *  we need to cache this as many strategies will be
          *  doing identical pulls for signals.
          */
         $connection_name = config('database.default');
-        $key = 'recent::'.$pair.'::'.$limit."::$day_data::$hour::$periodSize::$connection_name";
-        if(\Cache::has($key)) {
-            return \Cache::get($key);
-        }
+        // $key = 'recent::'.$pair.'::'.$limit."::$day_data::$hour::$periodSize::$connection_name";
+        // if(\Cache::has($key)) {
+        //     return \Cache::get($key);
+        // }
 
         $timeslice = 60;
         switch($periodSize) {
@@ -275,11 +287,11 @@ class CandleRepository extends RepositoryAbstract
                     SELECT time_bucket('$timescale', open_at) buckettime,
                         exchange,
                         first(open, open_at) as open,
-                        last(close,open_at) as close,
+                        last(close, open_at) as close,
                         first(low, low) as low,
-                        last(high,high) as high,
-                        last(timestamp, timestamp) as ola,
-                        last(open_at, open_at) as temporal,
+                        last(high, high) as high,
+                        last(timestamp, timestamp) as data_timestamp,
+                        last(open_at, open_at) as data_inicio,
                         SUM(volume) AS volume ". //,
                         // AVG(bid) AS avgbid,
                         // AVG(ask) AS avgask,
@@ -288,11 +300,11 @@ class CandleRepository extends RepositoryAbstract
                     WHERE symbol = '$pair'
                     AND open_at IS NOT NULL
                     GROUP BY exchange, buckettime 
-                    ORDER BY buckettime ASC   
+                    ORDER BY buckettime DESC   
                 "
                     )
                 );
-                echo "test:" . $offset;
+                // echo "test:" . $offset;
                 //code...
             } catch (\Throwable $th) {
                 dd($th);
@@ -327,15 +339,15 @@ class CandleRepository extends RepositoryAbstract
                 )
             );
         }
-        dd($results[0]);
-        if ($returnRS) {
-            $ret = $results;
-        } else {
-            $ret = $this->organizePairData($results, $limit);
-        }
+        // dd($results[0]);
+        // if ($returnRS) {
+        //     $ret = $results;
+        // } else {
+        //     $ret = $this->organizePairData($results, $limit);
+        // }
 
         // \Cache::put($key, $ret, 2);
-        return $ret;
+        return $results;
     }
 
     // /**

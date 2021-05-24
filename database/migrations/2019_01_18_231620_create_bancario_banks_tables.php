@@ -14,7 +14,7 @@ class CreateBancarioBanksTables extends Migration
     {
         if (!\Muleta\Modules\Features\Resources\FeatureHelper::hasActiveFeature(
             [
-                'banks',
+                'bancario',
             ]
         )){
             return ;
@@ -28,7 +28,7 @@ class CreateBancarioBanksTables extends Migration
                 $table->engine = 'InnoDB';
                 $table->increments('id')->unsigned();
                 $table->string('name', 255);
-                $table->string('descriptions', 255)->nullable();
+                $table->string('description', 255)->nullable();
                 $table->timestamps();
                 $table->softDeletes();
             }

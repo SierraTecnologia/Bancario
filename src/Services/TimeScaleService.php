@@ -65,6 +65,11 @@ class TimeScaleService
         // $this->currentTime = time();
     }
 
+    public function getTimescale()
+    {
+        return $this->timescale;
+    }
+
     public function getOffset($limitResults)
     {
         return ($this->currentTime - ($this->timeslice * $limit)) -1;

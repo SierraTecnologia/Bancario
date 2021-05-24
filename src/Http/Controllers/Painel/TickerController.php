@@ -30,7 +30,7 @@ class TickerController extends Controller
         $tickets = $entity->getTicketsForChart();
         $relationshipOptions = $entity->getRelations();
 
-        return view('components.candlestick', 
+        return view('bancario::components.candlestick', 
             compact(
                 'tickets',
 

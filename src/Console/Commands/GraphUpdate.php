@@ -47,18 +47,21 @@ class GraphUpdate extends Command
         // $builderMetrics->build();
 
         // Update OpenAt
-        Candle::where('open_at', null)
+        Candle::whereNull('open_at')
         ->orderBy('timestamp')
+        // ->count());
         ->chunk(
-            50, function (Collection $tickets) {
+            1000, function (Collection $tickets) {
                 $tickets->each(
                     function (Candle $ticket) {
                         // Divide por 3 pq é em segundos e não milisegundos
                         $ticket->open_at = Carbon::createFromTimestamp(substr($ticket->timestamp, 0, -3))->toDateTimeString();
                         $ticket->save();
+                        // dd($ticket);
                     }
                 );
             }
         );
+        dd(Candle::whereNull('open_at')->count());
     }
 }

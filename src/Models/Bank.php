@@ -16,7 +16,6 @@ class Bank extends Base
     protected $fillable = [
         'description',
         'name',
-        'code',
         // 'name',
         // 'agencia',
         // 'conta',
@@ -31,18 +30,18 @@ class Bank extends Base
             'type' => 'string',
             "analyzer" => "standard",
         ],
-        'code' => [
-            'type' => 'string',
-            "analyzer" => "standard",
-        ],
-        'agencia' => [
-            'type' => 'string',
-            "analyzer" => "standard",
-        ],
-        'conta' => [
-            'type' => 'string',
-            "analyzer" => "standard",
-        ],
+        // 'code' => [
+        //     'type' => 'string',
+        //     "analyzer" => "standard",
+        // ],
+        // 'agencia' => [
+        //     'type' => 'string',
+        //     "analyzer" => "standard",
+        // ],
+        // 'conta' => [
+        //     'type' => 'string',
+        //     "analyzer" => "standard",
+        // ],
     );
 
     public $formFields = [
@@ -51,14 +50,14 @@ class Bank extends Base
             'label' => 'name',
             'type' => 'text'
         ],
+        // [
+        //     'name' => 'agencia',
+        //     'label' => 'agencia',
+        //     'type' => 'text'
+        // ],
         [
-            'name' => 'agencia',
-            'label' => 'agencia',
-            'type' => 'text'
-        ],
-        [
-            'name' => 'conta',
-            'label' => 'conta',
+            'name' => 'description',
+            'label' => 'description',
             'type' => 'text'
         ],
         // [
@@ -83,24 +82,24 @@ class Bank extends Base
 
     public $indexFields = [
         'name',
-        'cpf',
+        'description',
         // 'slug',
         // 'status'
     ];
     
-    /**
-     * Get all of the slaves that are assigned this tag.
-     */
-    public function persons()
-    {
-        return $this->morphedByMany(\Illuminate\Support\Facades\Config::get('sitec.core.models.person', \Telefonica\Models\Actors\Person::class), 'bankable');
-    }
+    // /**
+    //  * Get all of the slaves that are assigned this tag.
+    //  */
+    // public function persons()
+    // {
+    //     return $this->morphedByMany(\Illuminate\Support\Facades\Config::get('sitec.core.models.person', \Telefonica\Models\Actors\Person::class), 'bankable');
+    // }
 
-    /**
-     * Get all of the users that are assigned this tag.
-     */
-    public function users()
-    {
-        return $this->morphedByMany(\Illuminate\Support\Facades\Config::get('sitec.core.models.user', \App\Models\User::class), 'bankable');
-    }
+    // /**
+    //  * Get all of the users that are assigned this tag.
+    //  */
+    // public function users()
+    // {
+    //     return $this->morphedByMany(\Illuminate\Support\Facades\Config::get('sitec.core.models.user', \App\Models\User::class), 'bankable');
+    // }
 }

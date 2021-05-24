@@ -3,7 +3,7 @@
 
 if (\Muleta\Modules\Features\Resources\FeatureHelper::hasActiveFeature(
     [
-        'banks',
+        'bancario',
     ]
 )){
     Route::resource('/bankAccounts', 'BankAccountController')->parameters([
