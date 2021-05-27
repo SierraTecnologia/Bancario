@@ -56,7 +56,7 @@
       <div class="card-body">
 
         @include('bancario::components.metrics', [
-            'metrics' => $entity->getMetrics()
+            'metrics' => $candleRepository->getMetrics()
           ])
       </div>
       <!-- /.card-body-->
@@ -74,7 +74,11 @@
         </h3>
       </div>
       <div class="card-body">
-        @include('pedreiro::form')
+        @include('pedreiro::form', [
+            'entity' => $candleRepository,
+            'fields' => $candleRepository->getSearchFields(),
+            'relationshipOptions' => $candleRepository->getRelationsFields()
+          ])
       </div>
       <!-- /.card-body-->
     </div>
@@ -91,7 +95,7 @@
         var options = {
           series: [{
           data: [
-            @foreach($tickets as $tick)
+            @foreach($candleRepository->getTicketsForChart() as $tick)
                 @if($loop->first)
                     {!! $tick !!}
                 @else
@@ -105,7 +109,7 @@
           height: 350
         },
         title: {
-          text: '{!! (string) $entity !!}',
+          text: '{!! (string) $candleRepository !!}',
           align: 'left'
         },
         xaxis: {

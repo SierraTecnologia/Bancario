@@ -5,6 +5,7 @@ namespace Bancario\Http\Controllers\Painel;
 use Bancario\Models\Tradding\Ticker;
 use Bancario\Models\Jesse\Ticker as JesseTicker;
 use Bancario\Models\Jesse\Candle as JesseCandle;
+use Bancario\Modules\Graph\Resources\CandleRepository;
 use Pedreiro\CrudController;
 use Bancario\Models\Tradding\Exchange;
 use Request;
@@ -13,31 +14,20 @@ class TickerController extends Controller
 {
     use CrudController;
 
-    public function __construct(Ticker $model)
+    public function __construct(Ticker $model, CandleRepository $repository)
     {
         $this->model = $model;
+        $this->repository = $repository;
         parent::__construct();
     }
 
     public function chatdisplay(Request $request)
     {
-        $entity = app(\Bancario\Modules\Graph\Resources\CandleRepository::class);
-        // dd(
-        //     $entity->getMetrics()
-        // );
-        // $entity = new $this->model;
-        $fields = $entity->setSearchParamsAndReturnFields($request);
-        $tickets = $entity->getTicketsForChart();
-        $relationshipOptions = $entity->getRelations();
+        $candleRepository = $this->repository;
 
         return view('bancario::components.candlestick', 
             compact(
-                'tickets',
-
-                // Busca
-                'entity',
-                'fields',
-                'relationshipOptions'
+                'candleRepository',
             )
         );
     }

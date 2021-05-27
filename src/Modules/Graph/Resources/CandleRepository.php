@@ -12,6 +12,8 @@ use Bancario\Models\Jesse\Candle as JesseCandle;
 use Bancario\Modules\Metrics\Resources\MetricEntity;
 use Bancario\Services\TimeScaleService;
 use Illuminate\Database\Query\Expression;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class CandleRepository extends RepositoryAbstract
 {
@@ -50,7 +52,22 @@ class CandleRepository extends RepositoryAbstract
 
     protected $model;
 
-    public function getRelations()
+    public function __toString() {
+        return "Candles do par ".$this->symbol." na ".$this->exchange." no intervalo ".$this->timeframe;
+    }
+
+    /**
+     * Para o formulário de filtro
+     */
+    public function getSearchFields()
+    {
+        return $this->search;
+    }
+
+    /**
+     * Para o formulário de filtro
+     */
+    public function getRelationsFields()
     {
         $relationshipOptions = [];
 
@@ -69,13 +86,12 @@ class CandleRepository extends RepositoryAbstract
         return $relationshipOptions;
     }
 
-    public function __toString() {
-        return "Candles do par ".$this->symbol." na ".$this->exchange." no intervalo ".$this->timeframe;
-    }
-
-    public function setSearchParamsAndReturnFields($request)
+    public function __construct(Request $request)
     {
-        return $this->search;
+        $this->last_date = $request->input('last_date', Carbon::now());
+        // dd(
+        //     $this->last_date
+        // );
     }
 
     public function getTicketsForChart()
@@ -87,7 +103,7 @@ class CandleRepository extends RepositoryAbstract
         ->orderByDesc('buckettime')
         ->limit($quantityCandles)
         ->get();
-        
+        // dd($tickets[count($tickets)-1]);
         return $tickets->map(function ($tick) {
             return '{
                 x: new Date('.$tick->timestamp.'),
@@ -120,7 +136,7 @@ class CandleRepository extends RepositoryAbstract
             'value' => JesseCandle::inExchange($this->exchange)->forPair($this->symbol)->avg('close'),
             // 'value' => DB::table('orders')->max('price'),
         ]);
-
+ 
         return $metrics;
     }
 
@@ -160,6 +176,7 @@ class CandleRepository extends RepositoryAbstract
         ->addSelect(new Expression("first(timestamp, timestamp) as timestamp"))
         ->addSelect(new Expression("last(open_at, open_at) as time_close"))
         ->whereNotNull('open_at')
+        ->whereDate('open_at', '<', $this->last_date)
         ->groupBy('buckettime')->groupBy('exchange');
         // ->groupBy('exchange, buckettime')
         // ->get();
@@ -208,6 +225,8 @@ class CandleRepository extends RepositoryAbstract
     }
 
     /**
+     * Ultimos 168 Registros
+     * 
      * @param string $pair
      * @param int    $limit
      * @param bool   $day_data
@@ -230,6 +249,7 @@ class CandleRepository extends RepositoryAbstract
         // }
 
         $timeslice = 60;
+        $timescale = false;
         switch($periodSize) {
         case '1m':
             $timescale = '1 minute';
@@ -268,6 +288,9 @@ class CandleRepository extends RepositoryAbstract
             $timeslice = 604800;
             break;
         }
+        if ($timescale === false) {
+            throw new Exception("Timeframe inválido. ".$periodSize, 1);
+        }
         $current_time = time();
         $offset = ($current_time - ($timeslice * $limit)) -1;
 
@@ -278,6 +301,26 @@ class CandleRepository extends RepositoryAbstract
          *
          *  none of these queries can be done through our eloquent models unfortunately.
          */
+        dd("
+        SELECT time_bucket('$timescale', open_at) buckettime,
+            exchange,
+            first(open, open_at) as open,
+            last(close, open_at) as close,
+            first(low, low) as low,
+            last(high, high) as high,
+            last(timestamp, timestamp) as data_timestamp,
+            last(open_at, open_at) as data_inicio,
+            SUM(volume) AS volume ". //,
+            // AVG(bid) AS avgbid,
+            // AVG(ask) AS avgask,
+            // AVG(volume) AS avgvolume
+            "FROM candle
+        WHERE symbol = '$pair'
+        AND open_at IS NOT NULL
+        AND extract(epoch from open_at) > ($offset)
+        GROUP BY exchange, buckettime 
+        ORDER BY buckettime DESC   
+    ");
         if ($connection_name == 'pgsql') {
             try {
                 // timescale query
@@ -299,6 +342,7 @@ class CandleRepository extends RepositoryAbstract
                         "FROM candle
                     WHERE symbol = '$pair'
                     AND open_at IS NOT NULL
+                    AND extract(epoch from open_at) > ($offset)
                     GROUP BY exchange, buckettime 
                     ORDER BY buckettime DESC   
                 "
