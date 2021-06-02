@@ -26,7 +26,7 @@ class Version3CreateTraddingTables extends Migration {
 		Schema::create('configs', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('trader_id')->nullable()->unsigned();
+			$table->uuid('trader_id')->nullable()->unsigned();
 			$table->string('item', 80)->nullable()->index('item');
 			$table->string('value', 1500)->nullable();
 
@@ -45,7 +45,7 @@ class Version3CreateTraddingTables extends Migration {
 		Schema::create('exchange_accounts', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('trader_id')->unsigned();
+			$table->uuid('trader_id')->unsigned()->nullable();
 			
             $table->string('exchange_code');
 			$table->string('auth_key')->unique();
@@ -77,7 +77,7 @@ class Version3CreateTraddingTables extends Migration {
 		Schema::create('exchange_balances', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('trader_id')->unsigned();
+			$table->uuid('trader_id')->unsigned();
 			
             $table->string('exchange_code');
             $table->string('money_code');

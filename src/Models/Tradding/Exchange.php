@@ -170,6 +170,11 @@ class Exchange extends Base
         // 'name' => 'Name'
     ];
 
+    public function getName()
+    {
+        return $this->name;
+    }
+
     // public function exchange()
     // {
     //     return $this->belongsTo(\Bancario\Models\Tradding\Exchange::class, 'exchange_code', 'id');

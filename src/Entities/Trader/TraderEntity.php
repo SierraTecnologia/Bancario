@@ -71,10 +71,10 @@ final class TraderEntity extends AbstractEntity
     }
 
     /**
-     * @param  int $id
+     * @param  string $id
      * @return $this
      */
-    private function setId(int $id): TraderEntity
+    private function setId(string $id): TraderEntity
     {
         $this->id = $id;
 
@@ -82,9 +82,9 @@ final class TraderEntity extends AbstractEntity
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }

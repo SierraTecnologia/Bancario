@@ -26,7 +26,7 @@ class CreateTraderTables extends Migration {
 		Schema::create('trader_positions', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('trader_id')->unsigned();
+			$table->uuid('trader_id')->unsigned();
 			
             $table->string('exchange_code');
             $table->string('money_code');

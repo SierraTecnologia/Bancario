@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Bancario\Models\Trader\Asset;
 
 class CreateTraddingTables extends Migration {
 
@@ -22,6 +23,37 @@ class CreateTraddingTables extends Migration {
             \Log::debug('Migration Ignorada por causa de Feature');
             return ;
         }
+
+        /**
+         * CriptoAtivos
+         */
+        Schema::create(
+            'assets', function (Blueprint $table) {
+                $table->engine = 'InnoDB';
+                $table->string('code')->unique();
+                $table->primary('code');
+                $table->string('name', 255)->nullable();
+                $table->string('description', 255)->nullable();
+                $table->string('symbol', 255)->nullable();
+                $table->integer('status')->default(1);
+                $table->string('circulating_supply')->nullable();
+                $table->timestamps();
+                $table->softDeletes();
+            }
+        );
+        Schema::create(
+            'assetables', function (Blueprint $table) {
+                $table->engine = 'InnoDB';
+                $table->string('assetable_id')->nullable();
+                $table->string('assetable_type', 255)->nullable();
+                $table->string('asset_code');
+                $table->foreign('asset_code')->references('code')->on('assets');
+                $table->float('value', 8, 2)->default(0);
+                $table->timestamps();
+                $table->softDeletes();
+            }
+        );
+		$this->assets();
 
 		Schema::create('exchanges', function(Blueprint $table)
 		{
@@ -67,21 +99,28 @@ class CreateTraddingTables extends Migration {
 
 		Schema::create('traders', function(Blueprint $table)
 		{
-			$table->increments('id');
+            $table->uuid('id')->primary();
 			$table->string('name')->nullable();
-			$table->string('exchange_code')->nullable();
-			$table->boolean('backtest')->nullable()->default(1);
+			$table->string('exchange_code');
+			$table->boolean('is_backtest')->default(true);
+			$table->timestamp('processing_time');
 			$table->timestamps();
 			$table->softDeletes();
 		});
-		Schema::create('trade_balances', function(Blueprint $table)
+		Schema::create('trader_histories', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('asset_code')->nullable();
-			$table->float('balance', 10, 0)->nullable();
+			
+            $table->enum('type', \Bancario\Models\Trader\TraderHistory::TYPES); //->default(\Bancario\Models\Trader\TraderHistory::MISCELLANEOUS);			
 
-			$table->integer('trader_id')->unsigned();
+			$table->string('asset_code')->nullable();
+
+			$table->float('value', 10, 0); // Em valor Absoluto
+
+			$table->uuid('trader_id')->unsigned();
             $table->foreign('trader_id')->references('id')->on('traders');
+			
+			$table->timestamp('processing_time');
 			$table->timestamps();
 			$table->softDeletes();
 		});
@@ -96,7 +135,7 @@ class CreateTraddingTables extends Migration {
 			$table->timestampTz('data_at', $precision = 0)->nullable();
 			$table->text('data', 65535)->nullable();
 
-			$table->integer('trader_id')->unsigned();
+			$table->uuid('trader_id')->unsigned();
             $table->foreign('trader_id')->references('id')->on('traders');
 			$table->timestamps();
 			$table->softDeletes();
@@ -109,11 +148,20 @@ class CreateTraddingTables extends Migration {
 
 		// 	$table->bigInteger('timestamp')->nullable();
 
-		// 	$table->integer('trader_id')->unsigned();
+		// 	$table->uuid('trader_id')->unsigned();
         //     $table->foreign('trader_id')->references('id')->on('traders');
 		// 	$table->timestamps();
 		// 	$table->softDeletes();
 		// });
+
+
+
+
+
+
+
+
+		
 	}
 
 
@@ -126,9 +174,32 @@ class CreateTraddingTables extends Migration {
 	{
 		Schema::drop('trade_histories');
 		Schema::drop('trader_timelines');
+		Schema::drop('trade_balances');
 		Schema::drop('traders');
 		Schema::drop('popular_exchanges');
 		Schema::drop('exchanges');
+		Schema::drop('assetables');
+		Schema::drop('assets');
 	}
 
+    public function assets()
+    {
+        // Add Assets
+        Asset::firstOrCreate(
+            [
+                'code' => 'BTC',
+                'name' => 'Bitcoin',
+                'symbol' => 'BTC',
+                'status' => 1
+            ]
+        );
+        Asset::firstOrCreate(
+            [
+                'code' => 'USDT',
+                'name' => 'Dolar Tether',
+                'symbol' => 'USDT',
+                'status' => 1
+            ]
+        );
+    }
 }

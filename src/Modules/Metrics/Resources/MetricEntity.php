@@ -94,10 +94,10 @@ final class MetricEntity extends \Muleta\Modules\Eloquents\Displays\EntityAbstra
     }
 
     /**
-     * @param  string $value
+     * @param  $value
      * @return $this
      */
-    private function setValue(string $value): MetricEntity
+    private function setValue($value): MetricEntity
     {
         $this->value = $value;
 
@@ -105,9 +105,9 @@ final class MetricEntity extends \Muleta\Modules\Eloquents\Displays\EntityAbstra
     }
 
     /**
-     * @return string
+     * 
      */
-    public function getValue(): string
+    public function getValue()
     {
         return $this->value;
     }

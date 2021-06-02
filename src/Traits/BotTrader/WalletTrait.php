@@ -2,6 +2,8 @@
 
 namespace Bancario\Traits\BotTrader;
 
+use Bancario\Modules\OpenBanking\Domain\AssetCode;
+
 /**
  *
  */
@@ -30,7 +32,7 @@ trait WalletTrait
      */
     public function sellNow()
     {
-        $this->line('vendendo');
+        $this->line('Vai vender!');
         $this->tempPrecoUltimaOperacao = $this->getPrecoNow();
         ++$this->tempQntOperacaoVenda;
         $this->tempQntOperacaoCompra = 0;
@@ -53,12 +55,17 @@ trait WalletTrait
             ' Vendendo: Operando '.$vo.' BTC\'s'
         );
 
-        // 3.0
-        $this->trader->traddingAsset('BTC', 'USDT', $vo, $this->taxa);
-
         $this->pv = $this->getPrecoNow();
         $this->pc = $this->pv;
         $this->tempAcabouDeOperar = true;
+
+        // 3.0
+        $this->trader->traddingAsset(
+            AssetCode::fromString('BTC'),
+            AssetCode::fromString('USDT'),
+            $vo,
+            $this->taxa
+        );
     }
     /**
      * Operacao de Compra
@@ -67,7 +74,7 @@ trait WalletTrait
      */
     public function buyNow()
     {
-        $this->line('comprando');
+        $this->line('Vai comprar');
         $this->tempPrecoUltimaOperacao = $this->getPrecoNow();
         ++$this->tempQntOperacaoCompra;
         $this->tempQntOperacaoVenda = 0;
@@ -89,12 +96,18 @@ trait WalletTrait
             ' Comprando: Operando '.$vo.' USDT\'s'
         );
 
-        // 3.0
-        $this->trader->traddingAsset('USDT', 'BTC', $vo, $this->taxa);
-
         $this->pc = $this->getPrecoNow();
         $this->pv = $this->pc;
         $this->tempAcabouDeOperar = true;
+
+
+        // 3.0 // Nota Tabela de Tradding
+        $this->trader->traddingAsset(
+            AssetCode::fromString('USDT'),
+            AssetCode::fromString('BTC'),
+            $vo,
+            $this->taxa
+        );
     }
 
 

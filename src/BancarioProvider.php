@@ -49,7 +49,7 @@ class BancarioProvider extends ServiceProvider
             'label_color' => "success",
             'order' => 1550,
             'section' => "master",
-            'feature' => 'bancos',
+            'feature' => 'bancario',
             'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
             'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
         ],
@@ -82,10 +82,35 @@ class BancarioProvider extends ServiceProvider
                 'icon_color' => "blue",
                 'label_color' => "success",
                 'section' => "admin",
-                'feature' => 'bancos',
+                'feature' => 'bancario',
                 'order' => 2840,
                 'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
                 'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+            ],
+            [
+                'text' => 'Tradding',
+                'icon' => 'fas fa-fw fa-search',
+                'icon_color' => "blue",
+                'label_color' => "success",
+                'section' => "admin",
+                'feature' => 'tradding',
+                'order' => 2840,
+                'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+            ],
+            'Tradding' => [
+                [
+                    'text'        => 'CriptoAtivos',
+                    'route'       => 'admin.bancario.assets.index',
+                    'icon'        => 'fas fa-fw fa-coins',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    'section' => "admin",
+                    'feature' => 'tradding',
+                    'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+                    'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                    // 'access' => \Porteiro\Models\Role::$ADMIN
+                ],
             ],
             'Bancario' => [
                 [
@@ -95,7 +120,7 @@ class BancarioProvider extends ServiceProvider
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
                     'section' => "admin",
-                    'feature' => 'bancos',
+                    'feature' => 'bancario',
                     'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
                     'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                     // 'access' => \Porteiro\Models\Role::$ADMIN
@@ -107,7 +132,7 @@ class BancarioProvider extends ServiceProvider
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
                     'section' => "admin",
-                    'feature' => 'bancos',
+                    'feature' => 'bancario',
                     'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
                     'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                     // 'access' => \Porteiro\Models\Role::$ADMIN
@@ -122,7 +147,7 @@ class BancarioProvider extends ServiceProvider
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
                 'section' => "master",
-                'feature' => 'bancos',
+                'feature' => 'bancario',
                 'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
                 'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                 // 'access' => \Porteiro\Models\Role::$ADMIN
@@ -134,7 +159,7 @@ class BancarioProvider extends ServiceProvider
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
                 'section' => "master",
-                'feature' => 'bancos',
+                'feature' => 'bancario',
                 'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
                 'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                 // 'access' => \Porteiro\Models\Role::$ADMIN

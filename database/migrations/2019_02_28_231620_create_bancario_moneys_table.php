@@ -46,7 +46,7 @@ class CreateBancarioMoneysTable extends Migration
         Schema::create(
             'moneyables', function (Blueprint $table) {
                 $table->engine = 'InnoDB';
-                $table->string('valor', 255)->nullable();
+                $table->string('value', 255)->nullable();
                 $table->string('moneyable_id')->nullable();
                 $table->string('moneyable_type', 255)->nullable();
                 $table->string('money_code');

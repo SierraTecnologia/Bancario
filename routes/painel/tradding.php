@@ -23,8 +23,9 @@ if (\Muleta\Modules\Features\Resources\FeatureHelper::hasActiveFeature(
 //         'namespace' => 'Master'
 //     ], function () {
 
-
-    Route::get('traders', 'TraderController@index')->name('traders.index');
+    Route::resource('/traders', 'TraderController')->parameters([
+        'traders' => 'id'
+    ]);
 
 
 

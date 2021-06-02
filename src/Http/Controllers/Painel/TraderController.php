@@ -15,115 +15,109 @@ class TraderController extends Controller
      */
     public function index()
     {
-        $trader = Trader::first();
-        dd(
-            $trader,
-            $trader->exchangeAccounts,
-            $trader->traderTimelines
-        );
+        $traders = Trader::orderBy('processing_time', 'DESC')->with('assets')->with('histories')->simplePaginate(50);
         // $moneys = Money::orderBy('code', 'DESC')->simplePaginate(50);
 
-        return view('bancario::trader.dashboard', compact('trader'));
+        // return view('bancario::painel.traders.index', compact('trader'));
+        
+        // if (auth()->user() && auth()->user()->isAdmin()) {
+        //     $traders = Trader::allTeams()->orderBy('name', 'ASC')->simplePaginate(50);
+        // } else {
+        //     $traders = Trader::orderBy('name', 'ASC')->simplePaginate(50);
+        // }
+
+        return view('bancario::painel.traders.index', compact('traders'));
     }
 
-    // /**
-    //  * Show the form for creating a new resource.
-    //  *
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function create()
-    // {
-    //     return view('root.moneys.create');
-    // }
 
-    // /**
-    //  * Store a newly created resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request $request
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function store(Request $request)
-    // {
-    //     $request->validate(
-    //         [
-    //         'money_name'=>'required',
-    //         'money_price'=> 'required|integer',
-    //         'money_qty' => 'required|integer'
-    //         ]
-    //     );
-    //     $money = new Money(
-    //         [
-    //         'money_name' => $request->get('money_name'),
-    //         'money_price'=> $request->get('money_price'),
-    //         'money_qty'=> $request->get('money_qty')
-    //         ]
-    //     );
-    //     $money->save();
-    //     return redirect('/root/root/moneys')->with('success', 'Money has been added');
-    // }
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $trader = Trader::findOrFail($id);
 
-    // /**
-    //  * Display the specified resource.
-    //  *
-    //  * @param  int $code
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function show($code)
-    // {
-    //     $money = Money::findOrFail($code);
-    //     return view('root.moneys.show', compact('money'));
-    // }
+        // $playlists = Playlist::fromTeam($trader->team_id)->orderBy('name', 'ASC')->get()->pluck('name', 'id');
+        // $playlists[0] = 'Sem Playlist';
 
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  *
-    //  * @param  int $code
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function edit($code)
-    // {
-    //     $money = Money::findOrFail($code);
+        // $computers = Computer::fromTeam($trader->team_id)->isBlock()->where('is_active', true)->where('trader_id', null)->orderBy('name', 'ASC')->get()->pluck('name', 'id');
+        // $computers = $computers->diff($trader->computers->pluck('name', 'id'));
+        return view('bancario::painel.traders.show', compact(
+            'trader',
+            // 'playlists', 'computers'
+        ));
+    }
 
-    //     return view('root.moneys.edit', compact('money'));
-    // }
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('bancario::painel.traders.create');
+    }
 
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request $request
-    //  * @param  int                      $code
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function update(Request $request, $code)
-    // {
-    //     $request->validate(
-    //         [
-    //         'money_name'=>'required',
-    //         'money_price'=> 'required|integer',
-    //         'money_qty' => 'required|integer'
-    //         ]
-    //     );
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $trader = new Trader();
+        $trader->validateAndSetFromRequestAndSave($request);
+        return redirect('/painel/traders')->with('success', 'Grupo foi adicionado com sucesso');
+    }
 
-    //     $money = Money::findOrFail($code);
-    //     $money->money_name = $request->get('money_name');
-    //     $money->money_price = $request->get('money_price');
-    //     $money->money_qty = $request->get('money_qty');
-    //     $money->save();
 
-    //     return redirect('/root/root/moneys')->with('success', 'Money has been updated');
-    // }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $trader = Trader::findOrFail($id);
 
-    // /**
-    //  * Remove the specified resource from storage.
-    //  *
-    //  * @param  int $code
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function destroy($code)
-    // {
-    //     $money = Money::findOrFail($code);
-    //     $money->delete();
+        return view('bancario::painel.traders.edit', compact('trader'));
+    }
 
-    //     return redirect('/root/root/moneys')->with('success', 'Money has been deleted Successfully');
-    // }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $trader = Trader::findOrFail($id);
+        $trader->validateAndSetFromRequestAndSave($request);
+
+        return redirect('/painel/traders')->with('success', 'Grupo foi atualizado com sucesso');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        if (auth()->user()->isAdmin()) {
+            $trader = Trader::allTeams()->findOrFail($id);
+        } else {
+            $trader = Trader::findOrFail($id);
+        }
+        $trader->delete();
+
+        return redirect('/painel/traders')->with('success', 'Grupo foi deletado com sucesso');
+    }
 }
