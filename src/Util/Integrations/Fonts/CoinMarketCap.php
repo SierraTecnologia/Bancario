@@ -5,7 +5,7 @@
 
 namespace Bancario\Util\Integrations\Fonts;
 
-use App\Logic\Integrations\Integration;
+use Bancario\Modules\Logic\Integrations\Integration;
 use App\Models\Identitys\Customer;
 use Bancario\Models\Banks\CreditCard;
 use App\Models\Shopping\Order;

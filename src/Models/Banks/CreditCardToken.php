@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Muleta\Traits\Models\EloquentGetTableNameTrait;
 use Muleta\Traits\ManipuleTokenTrait;
 
-use App\Logic\Integrations\Gateways\Mundipagg;
+use Bancario\Modules\Logic\Integrations\Gateways\Mundipagg;
 use Illuminate\Support\Facades\Log;
 
 use App\Util\Validate;

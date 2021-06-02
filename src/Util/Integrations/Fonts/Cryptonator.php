@@ -7,7 +7,7 @@
 
 namespace Bancario\Util\Integrations\Fonts;
 
-use App\Logic\Integrations\Integration;
+use Bancario\Modules\Logic\Integrations\Integration;
 use Bancario\Models\Money\Money;
 use App\Models\User;
 use Bancario\Models\Money\MoneyConversionPrice;
