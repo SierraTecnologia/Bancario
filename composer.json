@@ -32,6 +32,10 @@
         "sierratecnologia/crypto": "dev-master",
         "sierratecnologia/payment-laravel": "dev-master"
     },
+    "suggest": {
+        "jaggedsoft/php-binance-api": "binance",
+        "vittominacori/coinmarketcap-php": "coinmarketcap"
+    },
     "autoload": {
         "classmap": [
             "database/seeds",

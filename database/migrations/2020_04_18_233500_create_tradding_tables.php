@@ -68,17 +68,33 @@ class CreateTraddingTables extends Migration {
 		Schema::create('traders', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->string('name')->nullable();
+			$table->string('exchange_code')->nullable();
+			$table->boolean('backtest')->nullable()->default(1);
 			$table->timestamps();
 			$table->softDeletes();
 		});
+		Schema::create('trade_balances', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('asset_code')->nullable();
+			$table->float('balance', 10, 0)->nullable();
+
+			$table->integer('trader_id')->unsigned();
+            $table->foreign('trader_id')->references('id')->on('traders');
+			$table->timestamps();
+			$table->softDeletes();
+		});
+
+
 		Schema::create('trader_timelines', function(Blueprint $table)
 		{
 			$table->increments('id');
 
+			$table->string('type');
+			$table->string('message', 65535)->nullable();
+			$table->timestampTz('data_at', $precision = 0)->nullable();
 			$table->text('data', 65535)->nullable();
-			$table->string('exchange_code');
-			$table->integer('money_id')->unsigned();
-			$table->bigInteger('timestamp')->nullable();
 
 			$table->integer('trader_id')->unsigned();
             $table->foreign('trader_id')->references('id')->on('traders');
@@ -86,18 +102,18 @@ class CreateTraddingTables extends Migration {
 			$table->softDeletes();
 		});
         
-		Schema::create('trade_histories', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->text('about', 65535)->nullable();
+		// Schema::create('trade_histories', function(Blueprint $table)
+		// {
+		// 	$table->increments('id');
+		// 	$table->text('about', 65535)->nullable();
 
-			$table->bigInteger('timestamp')->nullable();
+		// 	$table->bigInteger('timestamp')->nullable();
 
-			$table->integer('trader_id')->unsigned();
-            $table->foreign('trader_id')->references('id')->on('traders');
-			$table->timestamps();
-			$table->softDeletes();
-		});
+		// 	$table->integer('trader_id')->unsigned();
+        //     $table->foreign('trader_id')->references('id')->on('traders');
+		// 	$table->timestamps();
+		// 	$table->softDeletes();
+		// });
 	}
 
 

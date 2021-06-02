@@ -17,7 +17,7 @@ namespace Bancario\Util\Integrations\Exchanges;
  */
 class Binance
 {
-    private $api;
+    public $api;
 
     public function __construct($apikey, $secret)
     {

@@ -53,6 +53,9 @@ trait WalletTrait
             ' Vendendo: Operando '.$vo.' BTC\'s'
         );
 
+        // 3.0
+        $this->trader->traddingAsset('BTC', 'USDT', $vo, $this->taxa);
+
         $this->pv = $this->getPrecoNow();
         $this->pc = $this->pv;
         $this->tempAcabouDeOperar = true;
@@ -85,6 +88,9 @@ trait WalletTrait
             $this->tempQntOperacaoCompra.
             ' Comprando: Operando '.$vo.' USDT\'s'
         );
+
+        // 3.0
+        $this->trader->traddingAsset('USDT', 'BTC', $vo, $this->taxa);
 
         $this->pc = $this->getPrecoNow();
         $this->pv = $this->pc;
