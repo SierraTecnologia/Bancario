@@ -113,7 +113,7 @@ class CreateTraddingTables extends Migration {
 			
             $table->enum('type', \Bancario\Models\Trader\TraderHistory::TYPES); //->default(\Bancario\Models\Trader\TraderHistory::MISCELLANEOUS);			
 
-			$table->string('asset_code')->nullable();
+			$table->string('asset_code');
 
 			$table->float('value', 10, 0); // Em valor Absoluto
 
@@ -124,15 +124,39 @@ class CreateTraddingTables extends Migration {
 			$table->timestamps();
 			$table->softDeletes();
 		});
+		Schema::create('trader_orders', function(Blueprint $table)
+		{
+			$table->increments('id');
+			
+			$table->string('asset_seller_code');
+			$table->string('asset_buyer_code');
+
+			$table->float('value', 10, 0); // Em valor Absoluto
+			$table->float('price', 10, 0); // Em valor Absoluto
+			$table->float('taxa', 10, 0); // Em valor Absoluto
+
+			$table->uuid('trader_id')->unsigned();
+            $table->foreign('trader_id')->references('id')->on('traders');
+			
+			$table->timestamp('processing_time');
+
+			$table->json('vars')->nullable();
+
+			$table->timestamps();
+			$table->softDeletes();
+		});
 
 
+		/**
+		 * @todo Decidir se vai usar
+		 */
 		Schema::create('trader_timelines', function(Blueprint $table)
 		{
 			$table->increments('id');
 
 			$table->string('type');
 			$table->string('message', 65535)->nullable();
-			$table->timestampTz('data_at', $precision = 0)->nullable();
+			$table->timestampTz('processing_time', $precision = 0)->nullable();
 			$table->text('data', 65535)->nullable();
 
 			$table->uuid('trader_id')->unsigned();
@@ -172,9 +196,9 @@ class CreateTraddingTables extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('trade_histories');
+		Schema::drop('trader_histories');
 		Schema::drop('trader_timelines');
-		Schema::drop('trade_balances');
+		Schema::drop('trader_balances');
 		Schema::drop('traders');
 		Schema::drop('popular_exchanges');
 		Schema::drop('exchanges');
@@ -198,6 +222,54 @@ class CreateTraddingTables extends Migration {
                 'code' => 'USDT',
                 'name' => 'Dolar Tether',
                 'symbol' => 'USDT',
+                'status' => 1
+            ]
+        );
+        Asset::firstOrCreate(
+            [
+                'code' => 'SOL',
+                'name' => 'Solana',
+                'symbol' => 'SOL',
+                'status' => 1
+            ]
+        );
+        Asset::firstOrCreate(
+            [
+                'code' => 'BNB',
+                'name' => 'Binance Coin',
+                'symbol' => 'BNB',
+                'status' => 1
+            ]
+        );
+        Asset::firstOrCreate(
+            [
+                'code' => 'UNI',
+                'name' => 'Uniswap',
+                'symbol' => 'UNI',
+                'status' => 1
+            ]
+        );
+        Asset::firstOrCreate(
+            [
+                'code' => 'LTC',
+                'name' => 'Litecoin',
+                'symbol' => 'LTC',
+                'status' => 1
+            ]
+        );
+        Asset::firstOrCreate(
+            [
+                'code' => 'XMR',
+                'name' => 'Monero',
+                'symbol' => 'XMR',
+                'status' => 1
+            ]
+        );
+        Asset::firstOrCreate(
+            [
+                'code' => 'WAVES',
+                'name' => 'Waves',
+                'symbol' => 'WAVES',
                 'status' => 1
             ]
         );

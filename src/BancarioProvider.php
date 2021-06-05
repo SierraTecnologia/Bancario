@@ -43,6 +43,29 @@ class BancarioProvider extends ServiceProvider
      */
     public static $menuItens = [
         [
+            'text'        => 'Trader Backtests',
+            'route'       => 'painel.bancario.traders.index',
+            'icon'        => 'fas fa-fw fa-ship',
+            'icon_color'  => 'blue',
+            'label_color' => 'success',
+            'section' => "painel",
+            'feature' => 'tradding',
+            'dev_status'  => 1, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+            'level'       => 1, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+            // 'access' => \Porteiro\Models\Role::$ADMIN
+        ],
+        [
+            'text' => 'Tradding',
+            'icon' => 'fas fa-fw fa-search',
+            'icon_color' => "blue",
+            'label_color' => "success",
+            'order' => 650,
+            'section' => "painel",
+            'feature' => 'tradding',
+            'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
+            'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        ],
+        [
             'text' => 'Bancario',
             'icon' => 'fas fa-fw fa-search',
             'icon_color' => "blue",
@@ -60,17 +83,6 @@ class BancarioProvider extends ServiceProvider
             'label_color' => "success",
             'order' => 1450,
             'section' => "master",
-            'feature' => 'tradding',
-            'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
-            'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        ],
-        [
-            'text' => 'Tradding',
-            'icon' => 'fas fa-fw fa-search',
-            'icon_color' => "blue",
-            'label_color' => "success",
-            'order' => 650,
-            'section' => "painel",
             'feature' => 'tradding',
             'dev_status'  => 2, // 0 (Desabilitado), 1 (Ativo), 2 (Em Dev)
             'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
@@ -100,7 +112,7 @@ class BancarioProvider extends ServiceProvider
             ],
             'Tradding' => [
                 [
-                    'text'        => 'CriptoAtivos',
+                    'text'        => 'Cripto Ativos',
                     'route'       => 'admin.bancario.assets.index',
                     'icon'        => 'fas fa-fw fa-coins',
                     'icon_color'  => 'blue',

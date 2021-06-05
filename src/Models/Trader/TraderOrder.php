@@ -7,14 +7,24 @@ namespace Bancario\Models\Trader;
 
 use Pedreiro\Models\Base;
 
-class TraderPosition extends Base
+class TraderOrder extends Base
 {
-    public static $apresentationName = 'Trader';
+    public static $apresentationName = 'Trader Orders';
 
     protected $organizationPerspective = true;
 
-    protected $table = 'trader_positions';
-    public $timestamps = false;
+    protected $table = 'trader_orders';
+    public $timestamps = true;
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'processing_time' => 'datetime',
+        'vars' => 'json',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -23,9 +33,15 @@ class TraderPosition extends Base
      */
     protected $fillable = [
         'id',
+        'trader_id',
+        'asset_seller_code',
+        'asset_buyer_code',
+        'value',
+        'price',
+        'taxa',
+        'processing_time',
+        'vars',
     ];
-
-
     
     public $formFields = [
         [

@@ -15,7 +15,11 @@ class TraderController extends Controller
      */
     public function index()
     {
-        $traders = Trader::orderBy('processing_time', 'DESC')->with('assets')->with('histories')->simplePaginate(50);
+        $traders = Trader::orderBy('processing_time', 'DESC')
+            ->with('assets')
+            ->with('histories')
+            ->with('orders')
+            ->simplePaginate(50);
         // $moneys = Money::orderBy('code', 'DESC')->simplePaginate(50);
 
         // return view('bancario::painel.traders.index', compact('trader'));
@@ -39,6 +43,8 @@ class TraderController extends Controller
     public function show($id)
     {
         $trader = Trader::findOrFail($id);
+
+        // dd($trader->metrics());
 
         // $playlists = Playlist::fromTeam($trader->team_id)->orderBy('name', 'ASC')->get()->pluck('name', 'id');
         // $playlists[0] = 'Sem Playlist';

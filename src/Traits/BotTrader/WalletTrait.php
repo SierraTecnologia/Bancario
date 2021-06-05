@@ -40,6 +40,20 @@ trait WalletTrait
         // Desconta em BTC
         $vo = $this->getQuantidadeAVender();
 
+
+
+        // 3.0
+        $this->trader->traddingAsset(
+            AssetCode::fromString('BTC'),
+            AssetCode::fromString('USDT'),
+            $vo, // Quantidade Vendida do Primeiro Ativo (BTC)
+            $this->getPrecoNow(),
+            $this->taxa
+        );
+
+
+
+
         // Remover Saldo da Carteira
         $this->wallets['BTC']->removeFromBalance($vo);
         $this->saldoBTC -= $vo;
@@ -58,14 +72,6 @@ trait WalletTrait
         $this->pv = $this->getPrecoNow();
         $this->pc = $this->pv;
         $this->tempAcabouDeOperar = true;
-
-        // 3.0
-        $this->trader->traddingAsset(
-            AssetCode::fromString('BTC'),
-            AssetCode::fromString('USDT'),
-            $vo,
-            $this->taxa
-        );
     }
     /**
      * Operacao de Compra
@@ -84,6 +90,18 @@ trait WalletTrait
         $this->wallets['USDT']->removeFromBalance($vo);
         $this->saldoUSDT -= $vo;
 
+
+
+        // 3.0
+        $this->trader->traddingAsset(
+            AssetCode::fromString('USDT'),
+            AssetCode::fromString('BTC'),
+            $vo, // Quantidade Vendida do Primeiro Ativo (USDT)
+            $this->getPrecoNow(),
+            $this->taxa
+        );
+
+
         // Recebe em BTC
         $this->gastoTaxaUSDT += $vo*($this->taxa/100);
         $vo = $vo*(1-$this->taxa/100);
@@ -100,14 +118,6 @@ trait WalletTrait
         $this->pv = $this->pc;
         $this->tempAcabouDeOperar = true;
 
-
-        // 3.0 // Nota Tabela de Tradding
-        $this->trader->traddingAsset(
-            AssetCode::fromString('USDT'),
-            AssetCode::fromString('BTC'),
-            $vo,
-            $this->taxa
-        );
     }
 
 

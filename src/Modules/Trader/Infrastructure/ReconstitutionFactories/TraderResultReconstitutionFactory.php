@@ -21,7 +21,7 @@ use Bancario\Modules\Trader\Domain\TraderOrder;
 
 use Bancario\Modules\OpenBanking\Infrastructure\ReconstitutionFactories\TraderAssetReconstitutionFactory;
 
-class TraderReconstitutionFactory
+class TraderResultReconstitutionFactory
 {
     /**
      * @var TraderAssetReconstitutionFactory

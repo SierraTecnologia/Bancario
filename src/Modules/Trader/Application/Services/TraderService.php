@@ -86,7 +86,7 @@ class TraderService
         // $this->storeService->create(new CreateStoreCommand($traderId));
 
         $trader = $this->traderFactory->create(
-            $traderId, $command, $exchange, Collection::make(), Carbon::now()
+            $traderId, $command, $exchange, Collection::make(), Carbon::now(), Collection::make(), Collection::make()
             // $inventory
         );
 

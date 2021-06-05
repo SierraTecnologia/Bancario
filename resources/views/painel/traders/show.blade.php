@@ -94,24 +94,47 @@
     <div class="row">
 
         <div class="col-xs-8 col-sm-8 col-md-8">
-
+          <div class="box box-solid card card-solid">
+              <div class="box-header card-header with-border">
+                  <h3 class="box-title card-title">
+                      Operações
+                  </h3>
+              </div>
+              <!-- /.box-header card-header -->
+              <div class="box-body card-body">
+                  @include('bancario::painel.traders.partials.orders', ['orders' => $trader->orders])
+              </div>
+              <!-- /.box-body card-body -->
+          </div>
         </div>
 
 
 
         <div class="col-xs-4 col-sm-4 col-md-4">
-        <div class="box box-solid card card-solid">
-            <div class="box-header card-header with-border">
-                <h3 class="box-title card-title">
-                    Histórico do Saldo
-                </h3>
-            </div>
-            <!-- /.box-header card-header -->
-            <div class="box-body card-body">
-                @include('bancario::painel.traders.partials.histories', ['histories' => $trader->histories])
-            </div>
-            <!-- /.box-body card-body -->
-        </div>
+          <div class="box box-solid card card-solid">
+              <div class="box-header card-header with-border">
+                  <h3 class="box-title card-title">
+                      Investimento
+                  </h3>
+              </div>
+              <!-- /.box-header card-header -->
+              <div class="box-body card-body">
+                  @include('bancario::painel.traders.partials.investiments', ['assets' => $trader->assets, 'investiments' => $trader->investiments()])
+              </div>
+              <!-- /.box-body card-body -->
+          </div>
+          <div class="box box-solid card card-solid">
+              <div class="box-header card-header with-border">
+                  <h3 class="box-title card-title">
+                      Histórico do Saldo
+                  </h3>
+              </div>
+              <!-- /.box-header card-header -->
+              <div class="box-body card-body">
+                  @include('bancario::painel.traders.partials.histories', ['histories' => $trader->histories])
+              </div>
+              <!-- /.box-body card-body -->
+          </div>
         </div>
     </div>
     

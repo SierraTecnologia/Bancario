@@ -21,7 +21,7 @@ class SystemExportCommand extends Command
      *
      * @var string
      */
-    protected $description = '';
+    protected $description = 'Exportar candles';
 
     /**
      * Create a new command instance.

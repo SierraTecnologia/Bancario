@@ -87,6 +87,17 @@ class Trader
     //  */
     // private $profilePictureId;
 
+
+    /**
+     * @var Collection
+     */
+    private $histories;
+
+    /**
+     * @var Collection
+     */
+    private $orders;
+
     public function __construct(
         TraderId $id,
         string $name,
@@ -95,7 +106,7 @@ class Trader
         bool $isBacktest,
         // int $levelId,
         // string $locationId,
-        Carbon $processingTime
+        Carbon $processingTime,
         // Gender $gender,
         // int $xp,
         // Reputation $reputation,
@@ -105,6 +116,8 @@ class Trader
         // Inventory $inventory
         // int $userId = null,
         // ImageId $profilePictureId = null
+        Collection $histories,
+        Collection $orders
     )
     {
         $this->id = $id;
@@ -123,6 +136,8 @@ class Trader
         // $this->inventory = $inventory;
     //     $this->userId = $userId;
     //     $this->profilePictureId = $profilePictureId;
+        $this->histories = $histories;
+        $this->orders = $orders;
     }
 
     public function getId(): TraderId
@@ -222,11 +237,12 @@ class Trader
         AssetCode $sellerAssetCode,
         AssetCode $buyerAssetCode,
         float $value,
-        float $taxa = 0
+        float $pricePayed,
+        float $taxaInPercent = 0 // Em Porcentagem
     )
     {
         /**
-         * Primeiro Vende
+         * Primeiro Vende o Ativo
          */
         if (!$sellerAsset = $this->findAsset($sellerAssetCode)) {
             throw new Exception('Você não possui esse ativo');
@@ -248,34 +264,63 @@ class Trader
             ]
         );
 
+
+        /**
+         * Calculos
+         */
+        $gastoComTaxa = $value*($taxaInPercent/100);
+        $valueDescontadoATaxa = $value*(1-$taxaInPercent/100);
+        $valueToBuy = $valueDescontadoATaxa*$pricePayed;
+
+
         /**
          * Depois Compra
          */
         if (!$buyerAsset = $this->findAsset($buyerAssetCode)) {
             $traderModel->assets()->attach($buyerAsset->toString(), [
-                'value' => $value
+                'value' => $valueToBuy
             ]);
             
             $traderReconstitutionFactory = app(TraderReconstitutionFactory::class);
             $this->assets = $traderReconstitutionFactory->reconstituteAssets($traderModel);
         } else {
             // Update Quantidade no Banco
-            $buyerAsset->deposit($value);
+            $buyerAsset->deposit($valueToBuy);
             $traderModel->assets()->updateExistingPivot($buyerAssetCode->toString(), ['value' => $buyerAsset->getValue()]);
         }
-
         $traderModel->histories()->create(
             [
                 'type' => TraderHistory::BUYING,
                 'asset_code' => $buyerAssetCode->toString(),
-                'value' => $value,
+                'value' => $valueToBuy,
                 'processing_time' => now()
             ]
         );
         
+        $traderModel->orders()->create(
+            [
+                'asset_seller_code' => $sellerAssetCode->toString(),
+                'asset_buyer_code' => $buyerAssetCode->toString(),
+                'value' => $value,
+                'price' => $pricePayed,
+                'taxa' => $gastoComTaxa,
+                'processing_time' => now()
+            ]
+        );
         $this->updateProcessingTime();
     }
 
+
+
+
+    public function getHistories(): Collection
+    {
+        return $this->histories;
+    }
+
+    /**
+     * 
+     */
     protected function updateProcessingTime()
     {
         $this->processingTime = Carbon::now();

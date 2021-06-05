@@ -7,6 +7,8 @@ namespace Bancario\Models\Trader;
 
 use Pedreiro\Models\Base;
 use Muleta\Traits\UsesStringId;
+use Illuminate\Support\Facades\DB;
+use Bancario\Models\Trader\TraderHistory;
 
 class Trader extends Base
 {
@@ -111,7 +113,12 @@ class Trader extends Base
     public function histories()
     {
         return $this->hasMany('Bancario\Models\Trader\TraderHistory')
-        ->orderBy('processing_time');
+        ->orderBy('processing_time', 'DESC');
+    }
+    public function orders()
+    {
+        return $this->hasMany('Bancario\Models\Trader\TraderOrder')
+        ->orderBy('processing_time', 'DESC');
     }
 
 
@@ -127,6 +134,64 @@ class Trader extends Base
     public function traderTimelines()
     {
         return $this->hasMany('Bancario\Models\Trader\TraderTimeline');
+    }
+
+
+
+
+
+    public function deposits()
+    {
+        return $this->hasMany('Bancario\Models\Trader\TraderHistory')->select(DB::raw('count(*) as quantify, asset_code, sum(value) as total_value'))
+        ->where('type', TraderHistory::DEPOSIT)
+        ->groupBy('asset_code')->get();
+    }
+
+
+    public function withdraws()
+    {
+        return $this->hasMany('Bancario\Models\Trader\TraderHistory')->select(DB::raw('count(*) as quantify, asset_code, sum(value) as total_value'))
+        ->where('type', TraderHistory::WITHDRAW)
+        ->groupBy('asset_code')->get();
+    }
+
+    public function investiments()
+    {
+        return $this->hasMany('Bancario\Models\Trader\TraderHistory')->select(DB::raw('count(*) as quantify, asset_code, sum(value) as total_value'))
+        ->whereIn(
+            'type',
+            [
+                TraderHistory::DEPOSIT,
+                TraderHistory::WITHDRAW
+            ]
+        )
+        ->groupBy('asset_code')->get();
+    }
+
+    public function metrics()
+    {
+        // // $data = DB::table("products")
+        // return $this->hasMany('Bancario\Models\Trader\TraderHistory')
+        //     ->select("trader_histories.asset_code",
+
+        //         DB::raw("(SELECT SUM(trader_histories.value) as total_deposit FROM trader_histories
+
+        //                     WHERE trader_histories.type = '".TraderHistory::DEPOSIT."'
+
+        //                     GROUP BY trader_histories.asset_code) as total_deposits"),
+
+        //         DB::raw("(SELECT SUM(trader_histories.value) as total_deposit FROM trader_histories
+
+        //         WHERE trader_histories.type = '".TraderHistory::WITHDRAW."'
+
+        //         GROUP BY trader_histories.asset_code) as total_withdraws")
+        //         // DB::raw("(SELECT SUM(products_sell.sell) FROM products_sell
+
+        //         //             WHERE products_sell.product_id = products.id
+
+        //         //             GROUP BY products_sell.product_id) as product_sell"))
+        //     )
+        //     ->groupBy('asset_code')->get();
     }
     
 }

@@ -16,7 +16,7 @@ class GraphUpdate extends Command
      *
      * @var string
      */
-    protected $signature = 'graph:update';
+    protected $signature = 'tradding:aftersync';
 
     /**
      * The console command description.

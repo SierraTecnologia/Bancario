@@ -9,9 +9,9 @@ use Bancario\Modules\Trader\Domain\TraderId;
 use Bancario\Modules\Trader\Infrastructure\ReconstitutionFactories\TraderReconstitutionFactory;
 use Muleta\Traits\GeneratesUuid;
 use Exception;
-use Muleta\Modules\Eloquents\Displays\RepositoryAbstract;
+// use Muleta\Modules\Eloquents\Displays\RepositoryAbstract;
 
-class TraderRepository extends RepositoryAbstract implements TraderRepositoryInterface
+class TraderRepository implements TraderRepositoryInterface
 {
     use GeneratesUuid;
 

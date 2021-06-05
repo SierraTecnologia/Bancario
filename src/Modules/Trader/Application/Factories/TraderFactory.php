@@ -20,7 +20,8 @@ use Illuminate\Support\Collection;
 class TraderFactory
 {
     public function create(
-        TraderId $traderId, CreateTraderCommand $command, Exchange $exchange, Collection $assets, Carbon $processingTime/*, Inventory $inventory*/): Trader
+        TraderId $traderId, CreateTraderCommand $command, Exchange $exchange, Collection $assets, Carbon $processingTime, 
+        Collection $histories, Collection $orders/*, Inventory $inventory*/): Trader
     {
         return new Trader(
             $traderId,
@@ -28,7 +29,7 @@ class TraderFactory
             $exchange->getId(),
             $assets,
             $command->getIsBacktest(),
-            $processingTime
+            $processingTime,
             // $exchange->getStartingLocationId(),
             // new Gender($command->getGender()),
             // 0,
@@ -48,6 +49,8 @@ class TraderFactory
             // ]),
             // $inventory,
             // $command->getUserId()
+            $histories,
+            $orders
         );
     }
 }
