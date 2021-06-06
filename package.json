@@ -22,9 +22,11 @@
         "vue": "^2.5.17"
     },
     "dependencies": {
+        "apexcharts": "^3.26.0",
         "gojs": "^2.0.9",
         "laravel-echo": "^1.5.3",
         "socket.io-client": "^2.2.0",
+        "vue-apexcharts": "^1.6.0",
         "vue2-admin-lte": "^0.4.3",
         "vuefinder": "^0.2.0"
     }

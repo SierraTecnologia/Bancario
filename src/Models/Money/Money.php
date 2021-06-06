@@ -3,38 +3,31 @@
 namespace Bancario\Models\Money;
 
 use Illuminate\Support\Facades\Hash;
-use Muleta\Traits\Models\EloquentGetTableNameTrait;
 use App\Models\Model;
 
 class Money extends Model
 {
-    use EloquentGetTableNameTrait;
+    protected $organizationPerspective = false;
 
-    protected static $organizationPerspective = false;
+    protected $table = 'moneys';    
 
-    /**
-     * Tipos de Moeda ()
-     */
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    public static $BRAZILIAN_REAL = 1;
-
-    protected $table = 'moneys';                                                                                               
+    public $incrementing = false;
+    protected $casts = [
+        'code' => 'string',
+    ];
+    protected $primaryKey = 'code';
+    protected $keyType = 'string';                                                                                           
                                                                                                                                                                                                  
     public $errorMessage = null;                                                                                                                                                                 
                                                                                                                                                                                                  
     public static function rules()                                                                                                                                                               
     {                                                                                                                                                                                            
-        return [                                                                                                                                                                                 
-            'name' => 'required|name|max:255',                                                                                                                                    
-            'slug' => 'required|slug|max:255',
-            // Simbolo de 3 letras: Real (BRL), Bitcoin (BTC)                                                                                                                                
-            'symbol' => 'required|slug|max:255',
+        return [                                                                                                                                          
+            'code' => 'required|slug|max:255',                                                                                                                                                                      
+            'name' => 'required|name|max:255',
+            'description' => 'required|name|max:255',
             // Volume Transacionado usando a própria moeda
+            'symbol' => 'required|name|max:255',
             'circulating_supply' => 'required',                                                                                                                                     
             'status' => 'required|min:0|max:1',
         ];
@@ -47,8 +40,69 @@ class Money extends Model
      */
     protected $fillable = [
         'name',
-        'slug',
+        'code',
         'description',
         'status',
+        'symbol',
+        'circulating_supply',
     ];
+
+    public $indexFields = [
+        'name',
+        'code',
+        'description',
+        'status',
+        'symbol',
+        'circulating_supply',
+    ];
+
+    public $formFields = [
+        [
+            'name' => 'code',
+            'label' => 'code',
+            'type' => 'text'
+        ],
+        [
+            'name' => 'name',
+            'label' => 'name',
+            'type' => 'text'
+        ],
+        [
+            'name' => 'description',
+            'label' => 'description',
+            'type' => 'text'
+        ],
+        [
+            'name' => 'symbol',
+            'label' => 'symbol',
+            'type' => 'text'
+        ],
+        [
+            'name' => 'circulating_supply',
+            'label' => 'circulating_supply',
+            'type' => 'text'
+        ],
+        [
+            'name' => 'status',
+            'label' => 'status',
+            'type' => 'text'
+        ],
+    ];
+
+    /**
+     * Register events
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(
+            function ($model) {
+                
+                
+            }
+        );
+    }
 }

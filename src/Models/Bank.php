@@ -16,7 +16,6 @@ class Bank extends Base
     protected $fillable = [
         'description',
         'name',
-        'code',
         // 'name',
         // 'agencia',
         // 'conta',
@@ -31,33 +30,76 @@ class Bank extends Base
             'type' => 'string',
             "analyzer" => "standard",
         ],
-        'code' => [
-            'type' => 'string',
-            "analyzer" => "standard",
-        ],
-        'agencia' => [
-            'type' => 'string',
-            "analyzer" => "standard",
-        ],
-        'conta' => [
-            'type' => 'string',
-            "analyzer" => "standard",
-        ],
+        // 'code' => [
+        //     'type' => 'string',
+        //     "analyzer" => "standard",
+        // ],
+        // 'agencia' => [
+        //     'type' => 'string',
+        //     "analyzer" => "standard",
+        // ],
+        // 'conta' => [
+        //     'type' => 'string',
+        //     "analyzer" => "standard",
+        // ],
     );
-    
-    /**
-     * Get all of the slaves that are assigned this tag.
-     */
-    public function persons()
-    {
-        return $this->morphedByMany(\Illuminate\Support\Facades\Config::get('sitec.core.models.person', \Telefonica\Models\Actors\Person::class), 'bankable');
-    }
 
-    /**
-     * Get all of the users that are assigned this tag.
-     */
-    public function users()
-    {
-        return $this->morphedByMany(\Illuminate\Support\Facades\Config::get('sitec.core.models.user', \App\Models\User::class), 'bankable');
-    }
+    public $formFields = [
+        [
+            'name' => 'name',
+            'label' => 'name',
+            'type' => 'text'
+        ],
+        // [
+        //     'name' => 'agencia',
+        //     'label' => 'agencia',
+        //     'type' => 'text'
+        // ],
+        [
+            'name' => 'description',
+            'label' => 'description',
+            'type' => 'text'
+        ],
+        // [
+        //     'name' => 'slug',
+        //     'label' => 'slug',
+        //     'type' => 'text'
+        // ],
+        // [
+        //     'name' => 'status',
+        //     'label' => 'Status',
+        //     'type' => 'checkbox'
+        // ],
+        // [
+        //     'name' => 'status',
+        //     'label' => 'Enter your content here',
+        //     'type' => 'textarea'
+        // ],
+        // ['name' => 'publish_on', 'label' => 'Publish Date', 'type' => 'date'],
+        // ['name' => 'category_id', 'label' => 'Category', 'type' => 'select', 'relationship' => 'category'],
+        // ['name' => 'tags', 'label' => 'Tags', 'type' => 'select_multiple', 'relationship' => 'tags'],
+    ];
+
+    public $indexFields = [
+        'name',
+        'description',
+        // 'slug',
+        // 'status'
+    ];
+    
+    // /**
+    //  * Get all of the slaves that are assigned this tag.
+    //  */
+    // public function persons()
+    // {
+    //     return $this->morphedByMany(\Illuminate\Support\Facades\Config::get('sitec.core.models.person', \Telefonica\Models\Actors\Person::class), 'bankable');
+    // }
+
+    // /**
+    //  * Get all of the users that are assigned this tag.
+    //  */
+    // public function users()
+    // {
+    //     return $this->morphedByMany(\Illuminate\Support\Facades\Config::get('sitec.core.models.user', \App\Models\User::class), 'bankable');
+    // }
 }
