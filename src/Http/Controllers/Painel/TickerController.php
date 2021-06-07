@@ -24,7 +24,7 @@ class TickerController extends Controller
     public function chatdisplay(Request $request)
     {
         $candleRepository = $this->repository;
-dd($candleRepository);
+
         return view('bancario::components.candlestick', 
             compact(
                 'candleRepository',

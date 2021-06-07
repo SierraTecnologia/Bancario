@@ -9,7 +9,7 @@
 @section('content')
 <?php 
 
-dd($trader->exchangeAccounts);
+// dd($trader->exchangeAccounts);
 
 ?>
 

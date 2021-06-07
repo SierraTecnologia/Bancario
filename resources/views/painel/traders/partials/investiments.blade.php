@@ -32,9 +32,6 @@ $data = [];
                 <td>{{$data[$investiment->asset_code]}}</td>
                 <td>{{$data[$investiment->asset_code]}}</td>
             </tr>
-    <?php 
-    dd($data[$investiment->asset_code]);
-    ?>
             @endforeach
         </tbody>
     </table>

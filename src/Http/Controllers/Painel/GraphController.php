@@ -16,9 +16,9 @@ class GraphController extends Controller
     public function index()
     {
         $graph = Graph::all();
-        dd(
-            $graph
-        );
+        // dd(
+        //     $graph
+        // );
         // $moneys = Money::orderBy('code', 'DESC')->simplePaginate(50);
 
         return view('bancario::trader.dashboard', compact('trader'));
