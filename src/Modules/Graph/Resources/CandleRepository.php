@@ -175,8 +175,8 @@ class CandleRepository extends RepositoryAbstract
         ->addSelect(new Expression("last(high,high) as high"))
         ->addSelect(new Expression("first(timestamp, timestamp) as timestamp"))
         ->addSelect(new Expression("last(open_at, open_at) as time_close"))
-        ->addSelect(new Expression("AVG(count)
-        OVER(PARTITION BY buckettime ORDER BY buckettime, open_at ROWS BETWEEN CURRENT ROW AND 7 Following) AS mediamovel_setedias"))
+        // ->addSelect(new Expression("AVG(count)
+        // OVER(PARTITION BY buckettime ORDER BY buckettime, open_at ROWS BETWEEN CURRENT ROW AND 7 Following) AS mediamovel_setedias"))
         ->whereNotNull('open_at')
         ->whereDate('open_at', '<', $this->last_date)
         ->groupBy('buckettime')->groupBy('exchange');
