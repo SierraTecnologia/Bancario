@@ -178,10 +178,12 @@ class CandleRepository extends RepositoryAbstract
         // ->addSelect(new Expression("AVG(count)
         // OVER(PARTITION BY buckettime ORDER BY buckettime, open_at ROWS BETWEEN CURRENT ROW AND 7 Following) AS mediamovel_setedias"))
         ->whereNotNull('open_at')
-        ->whereDate('open_at', '<', $this->last_date)
+        // ->whereDate('open_at', '<', $this->last_date)
         ->groupBy('buckettime')->groupBy('exchange');
         // ->groupBy('exchange, buckettime')
         // ->get();
+
+        // dd($query->toSql());
         return $query;
         
         // // SELECT time_bucket('$timescale', open_at) buckettime,

@@ -22,43 +22,44 @@ class ResultsFactory
     public function create(Trader $trader): Collection
     {
 
-        return $trader->getAssets()->mapWithKeys(function (AssetModel $assetModel) use ($trader) {
+        return Collection::make([]);
+        // return $trader->getAssets()->mapWithKeys(function (AssetModel $assetModel) use ($trader) {
 
-            $totalValue = $trader->getAssets()->sum(function (AssetModel $subAssetModel) {
+        //     $totalValue = $trader->getAssets()->sum(function (AssetModel $subAssetModel) {
 
-                dd('a', $subAssetModel);
-            });
+        //         dd('a', $subAssetModel);
+        //     });
 
 
-            $key = $assetModel->getId();
-            $traderAsset = $this->traderAssetReconstitutionFactory->reconstitute($assetModel);
+        //     $key = $assetModel->getId();
+        //     $traderAsset = $this->traderAssetReconstitutionFactory->reconstitute($assetModel);
 
-            return [$key => $traderAsset];
-        });
-        return new Character(
-            $characterId,
-            $race->getId(),
-            1,
-            $race->getStartingLocationId(),
-            $command->getName(),
-            new Gender($command->getGender()),
-            0,
-            new Reputation(0),
-            new Attributes([
-                'strength' => $race->getStrength(),
-                'agility' => $race->getAgility(),
-                'constitution' => $race->getConstitution(),
-                'intelligence' => $race->getIntelligence(),
-                'charisma' => $race->getCharisma(),
-                'unassigned' => 0,
-            ]),
-            HitPoints::byRace($race),
-            new Statistics([
-                'battlesLost' => 0,
-                'battlesWon' => 0,
-            ]),
-            $inventory,
-            $command->getUserId()
-        );
+        //     return [$key => $traderAsset];
+        // });
+        // return new Character(
+        //     $characterId,
+        //     $race->getId(),
+        //     1,
+        //     $race->getStartingLocationId(),
+        //     $command->getName(),
+        //     new Gender($command->getGender()),
+        //     0,
+        //     new Reputation(0),
+        //     new Attributes([
+        //         'strength' => $race->getStrength(),
+        //         'agility' => $race->getAgility(),
+        //         'constitution' => $race->getConstitution(),
+        //         'intelligence' => $race->getIntelligence(),
+        //         'charisma' => $race->getCharisma(),
+        //         'unassigned' => 0,
+        //     ]),
+        //     HitPoints::byRace($race),
+        //     new Statistics([
+        //         'battlesLost' => 0,
+        //         'battlesWon' => 0,
+        //     ]),
+        //     $inventory,
+        //     $command->getUserId()
+        // );
     }
 }
