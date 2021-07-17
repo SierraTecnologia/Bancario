@@ -46,6 +46,7 @@ class GraphUpdate extends Command
         // $builderMetrics = new \Bancario\Modules\Graph\Builders\GraphMetricsBuilder();
         // $builderMetrics->build();
 
+        \Log::info('Eecutando DEpois !2'.Candle::whereNotNull('open_at')->count());
         // Update OpenAt
         Candle::whereNull('open_at')
         ->orderBy('timestamp')
@@ -62,6 +63,6 @@ class GraphUpdate extends Command
                 );
             }
         );
-        dd(Candle::whereNull('open_at')->count());
+        \Log::info('Eecutando DEpois !3');
     }
 }

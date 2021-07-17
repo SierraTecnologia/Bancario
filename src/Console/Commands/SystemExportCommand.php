@@ -41,9 +41,9 @@ class SystemExportCommand extends Command
     public function handle()
     {
         $repo = app(\Bancario\Modules\Graph\Resources\CandleRepository::class);
-        dd(
-            $repo->getRecentData()
-        );
+        // dd(
+        //     $repo->getRecentData()
+        // );
         // Load users
         $candles = Candle::all();
 

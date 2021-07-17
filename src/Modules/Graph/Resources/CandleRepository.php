@@ -175,13 +175,15 @@ class CandleRepository extends RepositoryAbstract
         ->addSelect(new Expression("last(high,high) as high"))
         ->addSelect(new Expression("first(timestamp, timestamp) as timestamp"))
         ->addSelect(new Expression("last(open_at, open_at) as time_close"))
-        ->addSelect(new Expression("AVG(count)
-        OVER(PARTITION BY buckettime ORDER BY buckettime, open_at ROWS BETWEEN CURRENT ROW AND 7 Following) AS mediamovel_setedias"))
+        // ->addSelect(new Expression("AVG(count)
+        // OVER(PARTITION BY buckettime ORDER BY buckettime, open_at ROWS BETWEEN CURRENT ROW AND 7 Following) AS mediamovel_setedias"))
         ->whereNotNull('open_at')
-        ->whereDate('open_at', '<', $this->last_date)
+        // ->whereDate('open_at', '<', $this->last_date)
         ->groupBy('buckettime')->groupBy('exchange');
         // ->groupBy('exchange, buckettime')
         // ->get();
+
+        // dd($query->toSql());
         return $query;
         
         // // SELECT time_bucket('$timescale', open_at) buckettime,
@@ -303,26 +305,26 @@ class CandleRepository extends RepositoryAbstract
          *
          *  none of these queries can be done through our eloquent models unfortunately.
          */
-        dd("
-        SELECT time_bucket('$timescale', open_at) buckettime,
-            exchange,
-            first(open, open_at) as open,
-            last(close, open_at) as close,
-            first(low, low) as low,
-            last(high, high) as high,
-            last(timestamp, timestamp) as data_timestamp,
-            last(open_at, open_at) as data_inicio,
-            SUM(volume) AS volume ". //,
-            // AVG(bid) AS avgbid,
-            // AVG(ask) AS avgask,
-            // AVG(volume) AS avgvolume
-            "FROM candle
-        WHERE symbol = '$pair'
-        AND open_at IS NOT NULL
-        AND extract(epoch from open_at) > ($offset)
-        GROUP BY exchange, buckettime 
-        ORDER BY buckettime DESC   
-    ");
+    //     dd("
+    //     SELECT time_bucket('$timescale', open_at) buckettime,
+    //         exchange,
+    //         first(open, open_at) as open,
+    //         last(close, open_at) as close,
+    //         first(low, low) as low,
+    //         last(high, high) as high,
+    //         last(timestamp, timestamp) as data_timestamp,
+    //         last(open_at, open_at) as data_inicio,
+    //         SUM(volume) AS volume ". //,
+    //         // AVG(bid) AS avgbid,
+    //         // AVG(ask) AS avgask,
+    //         // AVG(volume) AS avgvolume
+    //         "FROM candle
+    //     WHERE symbol = '$pair'
+    //     AND open_at IS NOT NULL
+    //     AND extract(epoch from open_at) > ($offset)
+    //     GROUP BY exchange, buckettime 
+    //     ORDER BY buckettime DESC   
+    // ");
         if ($connection_name == 'pgsql') {
             try {
                 // timescale query
